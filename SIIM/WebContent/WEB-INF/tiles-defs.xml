@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://struts.apache.org/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+
+	<!-- ======================================================= -->
+	<!-- Master definition -->
+	<!-- ======================================================= -->
+
+	<!-- Doc index page description -->
+	<definition name=".base" path="/jsp/tiles/layout.jsp">
+		<put name="title" value="Main Layout" />
+		<put name="header" value="/jsp/tiles/header.jsp" />
+		<put name="menu" value="/jsp/tiles/menu.jsp" />
+		<put name="footer" value="/jsp/tiles/footer.jsp" />
+		<put name="body" value="doc.portal.body" />
+	</definition>
+
+	<!-- ========== PAGES ========== -->
+
+
+	<definition name=".index" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/index.jsp" />
+	</definition>
+
+
+	<definition name=".error" extends=".base">
+		<put name="title" value="Error en SIIFs" />
+		<put name="body" value="/jsp/error.jsp" />
+	</definition>
+
+</tiles-definitions>
