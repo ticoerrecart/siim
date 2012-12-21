@@ -1,0 +1,122 @@
+.jqueryslidemenu {
+	font: bold 12px Verdana;
+	background: #4B8A08; /*#5FB404;*/
+	width: 100%;
+	padding-left: 10px;
+	border-bottom: 1px solid #4B8A08;
+	border-top: 1px solid #4B8A08;
+	/*background: url('boton6.GIF');*/
+}
+
+.jqueryslidemenu ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	background: #4B8A08;
+}
+
+/*Top level list items*/
+.jqueryslidemenu ul li {
+	position: relative;
+	/*position: absolute;
+margin-top: 20px;
+margin-left: 10px;*/
+	display: inline;
+	float: left;
+	background: #4B8A08;
+}
+
+/*Top level menu link items style*/
+.jqueryslidemenu ul li a {
+	display: block;
+	/*background: #414141; /*background of tabs (default state)*/
+	/*background: #0B6138;*/ /*background: transparent url('boton6.GIF');*/
+	color: white;
+	padding: 8px 10px;
+	border-right: 1px solid white;
+	color: #2d2b2b;
+	text-decoration: none;
+	background: #4B8A08;
+}
+
+* html .jqueryslidemenu ul li a {
+	/*IE6 hack to get sub menu links to behave correctly*/
+	display: inline-block;
+}
+
+.jqueryslidemenu ul li a:link,.jqueryslidemenu ul li a:visited {
+	color: white;
+	/*color: #5E7830;*/
+}
+
+.jqueryslidemenu ul li a:hover {
+	/*background: transparent url('boton7.GIF');*/
+	background: #5FB404; /*#4B8A08;*/
+	color: white;
+}
+
+/*1st sub level menu*/
+.jqueryslidemenu ul li ul {
+	position: absolute;
+	left: 0;
+	display: block;
+	visibility: hidden;
+}
+
+/*Sub level menu list items (undo style from Top level List Items)*/
+.jqueryslidemenu ul li ul li {
+	display: list-item;
+	float: none;
+}
+
+/*All subsequent sub menu levels vertical offset after 1st level sub menu */
+.jqueryslidemenu ul li ul li ul {
+	top: 0;
+}
+
+/* Sub level menu links style */
+.jqueryslidemenu ul li ul li a {
+	font: normal 13px Verdana;
+	width: 160px; /*width of sub menus*/
+	padding: 5px;
+	margin: 0;
+	border-top-width: 0;
+	border-bottom: 1px solid white;
+	/*background: transparent url('boton4.GIF');*/
+}
+
+.jqueryslidemenuz ul li ul li a:hover { /*sub menus hover style*/
+	background: #eff9ff;
+	color: white;
+}
+
+/* ######### CSS classes applied to down and right arrow images  ######### */
+.downarrowclass {
+	position: absolute;
+	top: 12px;
+	right: 7px;
+}
+
+.rightarrowclass {
+	position: absolute;
+	top: 6px;
+	right: 5px;
+}
+
+.fondoHeader {
+	background-image: url(../imagenes/Arba.jpg);
+	text-decoration: none;
+	margin: 0px;
+	background-repeat: no-repeat;
+	padding: 0px;
+	background-color: #FFFFFF;
+}
+
+.fondoFooter {
+	background-image: url(../imagenes/footer.jpg);
+	text-decoration: none;
+	margin: 0px;
+	background-repeat: no-repeat;
+	padding: 0px;
+	background-color: #696565;
+}

@@ -1,0 +1,81 @@
+/*  Calendar header text  */
+.xpcalHeader {
+	padding-left: 3;
+	padding-right: 3;
+	FONT-WEIGHT: bold;
+	FONT-SIZE: 11pt;
+	COLOR: #ffffff;
+	FONT-FAMILY: Trebuchet MS, arial, verdana, sans-serif;
+	background-color: #0054e3;
+	background-image: url(../imagenes/calendar/TaskBarBG.gif);
+	background-repeat: repeat-x;
+}
+
+.xpcalCellLines {
+	BACKGROUND-COLOR: #cccccc;
+}
+
+.xpcalBorder {
+	BACKGROUND-COLOR: #0054e3;
+}
+
+.xpcalSeperator {
+	BACKGROUND-COLOR: #ffc73c;
+	height: 3;
+	background-image: url(../imagenes/calendar/progressBar.gif);
+	background-repeat: repeat-x;
+}
+
+/*  Days of the week text  */
+.xpcalDayLabels {
+	background-color: #b3d7ff;
+	font-family: verdana, sans-serif;
+	font-size: 8pt;
+	color: darkblue;
+	font-weight: bold;
+	text-align: center;
+}
+
+A.xpcalDayLabels {
+	color: #444444;
+}
+
+/*  Days of the month text and links */
+.xpcalCurrentDay,.xpcalWeekday,.xpcalWeekend,.xpcalEvent,.xpcalSelectedDay
+	{
+	background-color: #ffffff;
+	font-family: verdana, sans-serif;
+	font-size: 8pt;
+	color: #333333;
+	text-align: center;
+}
+
+/*  Calendar hilited day  */
+.xpcalCurrentDay {
+	background-color: #ffffcc;
+	font-weight: bold;
+	color: #000000;
+}
+
+/*  Calendar selected day  */
+.xpcalSelectedDay {
+	background-color: #B0C4DE;
+	font-weight: bold;
+	border-width: 0;
+	border-style: solid;
+	border-top-color: #000080;
+	border-left-color: #000080;
+	border-bottom-color: #000080;
+	border-right-color: #000080;
+}
+
+.xpcalWeekend {
+	background-color: #e8eff9;
+}
+
+.xpcalEvent {
+	font-weight: bold;
+	color: #000000;
+	background-color: #FFFFD7;
+	text-decoration: underline;
+}

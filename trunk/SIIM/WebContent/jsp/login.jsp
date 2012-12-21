@@ -24,7 +24,7 @@
 		<tr>
 			<td colspan="4" height="26em" align="center" class="azulAjustado">
 				<CENTER>
-					<b><bean:message key='SIIF.label.Bienvenido'/></b>
+					<b><bean:message key='SIIM.label.Bienvenido'/></b>
 				</CENTER>
 			</td> 
 		</tr>  
@@ -37,7 +37,7 @@
 					<img src="<html:rewrite page='/imagenes/personitas.jpg'/>" width="33" height="32" alt="Roles">
 				</div>
 			</td>
-			<td width="25%"><b><bean:message key='SIIF.label.Usuario'/></b></td>
+			<td width="25%"><b><bean:message key='SIIM.label.Usuario'/></b></td>
 			<td align="left">
 				<html:text styleId="idUsuario" property="usuario" styleClass="botonerab" size="15" value="c"/>
 			</td>
@@ -49,7 +49,7 @@
 					<img src="<html:rewrite page='/imagenes/llaves.gif'/>" width="33" height="32" alt="Roles">
 				</div>
 			</td>
-			<td><b><bean:message key='SIIF.label.Contrasenia'/></b></td>
+			<td><b><bean:message key='SIIM.label.Contrasenia'/></b></td>
 			<td align="left">
 				<html:password property="password"	styleClass="botonerab" size="15" value="c"></html:password>
 			</td>

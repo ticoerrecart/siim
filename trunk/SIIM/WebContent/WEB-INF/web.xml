@@ -11,7 +11,7 @@
 	
 	<context-param>
 	   <param-name>webAppRootKey</param-name>
-	   <param-value>webapp.root</param-value>
+	   <param-value>webapp.root2</param-value>
 	</context-param>
 	
 	<context-param>
