@@ -13,7 +13,7 @@
 		</td>
 		<td width="50%" style="text-align: center; font-weight: bold"><jsp:useBean
 			id="now" class="java.util.Date" /> <br>
-		SIIF <br>
+		SIIM <br>
 		Usuario: <label id="usuario"></label> <br>
 		Roles: <label id="roles"></label> <br>
 		Fecha: <fmt:formatDate value="${now}" pattern="dd/MM/yyyy" /> <br>

@@ -52,4 +52,32 @@ public class Constantes {
 		
 		public static final String ERROR_RECUPERACION_MENU = "Ha ocurrido un error en la recuperación del menú";
 	// FIN ROL	
+		
+	// LOCALIDAD
+		public static final String EXISTE_LOCALIDAD = "Ya existe una Localidad con éste nombre";
+	
+		public static final String EXITO_ALTA_LOCALIDAD = "La Localidad se ha dado de alta con exito";
+	
+		public static final String EXITO_MODIFICACION_LOCALIDAD = "La Localidad se ha modificado con exito";
+		
+		public static final String ERROR_ALTA_LOCALIDAD = "Ha ocurrido un error en el alta de la localidad";
+		
+		public static final String ERROR_RECUPERACION_LOCALIDAD = "Ha ocurrido un error en la recuperación de la localidad";
+		
+		public static final String ERROR_RECUPERACION_LOCALIDADES = "Ha ocurrido un error en la recuperación de las localidades";
+	// FIN LOCALIDAD
+		
+	// PERIODO
+		public static final String EXISTE_PERIODO = "Ya existe un período con éste nombre";
+	
+		public static final String EXITO_ALTA_PERIODO = "El período se ha dado de alta con exito";
+	
+		public static final String EXITO_MODIFICACION_PERIODO = "El período se ha modificado con exito";
+		
+		public static final String ERROR_ALTA_PERIODO = "Ha ocurrido un error en el alta del período";
+		
+		public static final String ERROR_RECUPERACION_PERIODO = "Ha ocurrido un error en la recuperación del período";
+		
+		public static final String ERROR_RECUPERACION_PERIODOS = "Ha ocurrido un error en la recuperación de los períodos";
+	// FIN PERIODO			
 }
