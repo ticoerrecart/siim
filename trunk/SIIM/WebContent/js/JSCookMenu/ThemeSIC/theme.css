@@ -1,0 +1,189 @@
+/* ThemeSICMenu Style Sheet */
+.ThemeSICMenu,.ThemeSICSubMenuTable {
+	font-family: verdana, arial, sans-serif;
+	font-size: 13px;
+	padding: 0;
+	white-space: nowrap;
+	cursor: default;
+}
+
+.ThemeSICSubMenu {
+	position: absolute;
+	visibility: hidden;
+	overflow: hidden;
+	padding: 1px 1px 1px 1px;
+	/*com adrian	background:	#F6F6F6 url(menubg.gif) repeat-y scroll 0%; */
+	background: #F6F6F6 url(menubgsic.gif) repeat-y scroll 0%;
+	/*imagen de la barrita lateral izquierda de los sobmenu*/
+	background-position: left;
+	border: 1px solid #C3DAF9; /*borde submenu*/
+	/* com adrian border:		1px solid #002D96; es el borde de submenus */
+}
+
+.ThemeSICSubMenuTable {
+	overflow: hidden;
+}
+
+.ThemeSICMainItem,.ThemeSICMainItemHover,.ThemeSICMainItemActive,.ThemeSICMenuItem,.ThemeSICMenuItemHover,.ThemeSICMenuItemActive
+	{
+	border: 0;
+	cursor: default;
+	white-space: nowrap;
+}
+
+.ThemeSICMainItem { /*com adrian	background-color:	#A1C0F5;*/
+	background-color: #C3DAF9; /*adrian*/
+	background: url(bg.gif); /*adrian*/
+}
+
+.ThemeSICMainItemHover,.ThemeSICMainItemActive {
+	background: url(mainmenubg.gif);
+}
+
+.ThemeSICMenuItem {
+	background-color: transparent;
+}
+
+.ThemeSICMenuItemHover,.ThemeSICMenuItemActive {
+	background: url(item-over.gif); /* adrian */
+	/*com adrian	background-color:	#FFEEC2; */
+}
+
+/* horizontal main menu */
+.ThemeSICMainItem { /*padding:	1px 2px 1px 1px; adrian*/
+	padding: 1px; /*tenia 1 adrian*/
+	border: 2px solid #A3CAE9; /* #B3CAE9; #C3DAF9; tenia 0 adrian*/
+}
+
+td.ThemeSICMainItemHover,td.ThemeSICMainItemActive {
+	padding: 1px;
+	border: 2px solid #C3DAF9;
+	/* com adrian	border:		1px solid #000080; el borde al seleccionar el mneu principal*/
+}
+
+.ThemeSICMainFolderLeft,.ThemeSICMainItemLeft,.ThemeSICMainFolderText,.ThemeSICMainItemText,.ThemeSICMainFolderRight,.ThemeSICMainItemRight
+	{
+	background-color: inherit;
+}
+
+/* vertical main menu sub components */
+td.ThemeSICMainFolderLeft,td.ThemeSICMainFolderLeft,td.ThemeSICMainItemLeft,td.ThemeSICMainItemLeft
+	{
+	padding: 1px 2px 1px 1px;
+	border: 0;
+	background-color: inherit;
+}
+
+td.ThemeSICMainFolderText,td.ThemeSICMainFolderText,td.ThemeSICMainItemText,td.ThemeSICMainItemText
+	{
+	padding: 1px 5px 1px 5px;
+	border: 0;
+	background-color: inherit;
+}
+
+td.ThemeSICMainItemRight,td.ThemeSICMainFolderRight {
+	padding: 1px 1px 1px 0px;
+	border: 0;
+	background-color: inherit;
+}
+
+tr.ThemeSICMainItemHover td.ThemeSICMainFolderLeft,tr.ThemeSICMainItemActive td.ThemeSICMainFolderLeft,tr.ThemeSICMainItemHover td.ThemeSICMainItemLeft,tr.ThemeSICMainItemActive td.ThemeSICMainItemLeft
+	{
+	padding: 0px 2px 0px 0px;
+	border-width: 1px 0px 1px 1px;
+	border-style: solid;
+	border-color: #000080;
+	background-color: inherit;
+}
+
+tr.ThemeSICMainItemHover td.ThemeSICMainFolderText,tr.ThemeSICMainItemActive td.ThemeSICMainFolderText,tr.ThemeSICMainItemHover td.ThemeSICMainItemText,tr.ThemeSICMainItemActive td.ThemeSICMainItemText
+	{
+	padding: 0px 5px 0px 5px;
+	border-width: 1px 0px 1px 0px;
+	border-style: solid;
+	border-color: #000080;
+	background-color: inherit;
+}
+
+tr.ThemeSICMainItemHover td.ThemeSICMainFolderRight,tr.ThemeSICMainItemActive td.ThemeSICMainFolderRight,tr.ThemeSICMainItemHover td.ThemeSICMainItemRight,tr.ThemeSICMainItemActive td.ThemeSICMainItemRight
+	{
+	padding: 0px;
+	border-width: 1px 1px 1px 0px;
+	border-style: solid;
+	border-color: #000080;
+	background-color: inherit;
+}
+
+/* sub menu sub components */
+.ThemeSICMenuFolderLeft,.ThemeSICMenuItemLeft,.ThemeSICMenuFolderText,.ThemeSICMenuItemText,.ThemeSICMenuFolderRight,.ThemeSICMenuItemRight
+	{
+	border: 0;
+	white-space: nowrap;
+	background-color: inherit;
+}
+
+.ThemeSICMenuFolderLeft,.ThemeSICMenuItemLeft {
+	padding: 3px 3px 3px 2px;
+}
+
+.ThemeSICMenuFolderText,.ThemeSICMenuItemText {
+	padding: 3px 5px 3px 5px;
+	white-space: nowrap;
+}
+
+.ThemeSICMenuFolderRight,.ThemeSICMenuItemRight {
+	padding: 3px 1px 3px 0px;
+}
+
+.ThemeSICMenuItemHover .ThemeSICMenuFolderLeft,.ThemeSICMenuItemActive .ThemeSICMenuFolderLeft,.ThemeSICMenuItemHover .ThemeSICMenuItemLeft,.ThemeSICMenuItemActive .ThemeSICMenuItemLeft
+	{
+	padding: 2px 3px 2px 1px;
+	border-width: 1px 0px 1px 1px;
+	border-style: solid;
+	border-color: #C3DAF9 /*#000080;  */
+}
+
+.ThemeSICMenuItemHover .ThemeSICMenuFolderText,.ThemeSICMenuItemActive .ThemeSICMenuFolderText,.ThemeSICMenuItemHover .ThemeSICMenuItemText,.ThemeSICMenuItemActive .ThemeSICMenuItemText
+	{
+	padding: 2px 5px 2px 5px;
+	border-width: 1px 0px 1px 0px;
+	border-style: solid;
+	border-color: #C3DAF9 /*	#000080; */
+}
+
+.ThemeSICMenuItemHover .ThemeSICMenuFolderRight,.ThemeSICMenuItemActive .ThemeSICMenuFolderRight,.ThemeSICMenuItemHover .ThemeSICMenuItemRight,.ThemeSICMenuItemActive .ThemeSICMenuItemRight
+	{
+	padding: 2px 0px 2px 0px;
+	border-width: 1px 1px 1px 0px;
+	border-style: solid;
+	border-color: #C3DAF9 /*#000080;*/
+}
+
+/* menu splits */
+.ThemeSICMenuSplit {
+	margin: 2px;
+	height: 1px;
+	overflow: hidden;
+	background-color: inherit;
+	border-top: 1px solid #6A8CCB;
+}
+
+/* image shadow animation */ /*
+	seq1:	image for normal
+	seq2:	image for hover and active
+
+	To use, in the icon field, input the following:
+	<img class="seq1" src="normal.gif" /><img class="seq2" src="hover.gif" />
+*/
+.ThemeSICMenuItem img.seq1 {
+	display: inline;
+}
+
+.ThemeSICMenuItemHover seq2,.ThemeSICMenuItemActive seq2 {
+	display: inline;
+}
+
+.ThemeSICMenuItem .seq2,.ThemeSICMenuItemHover .seq1,.ThemeSICMenuItemActive .seq1
+	{
+	display: none;
+}
