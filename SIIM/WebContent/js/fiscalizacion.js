@@ -141,7 +141,7 @@
 
 	}
 //----------------------------------------------------------------------------------------------------------------------------
-	//tener en cuenta que el largo está en mts y los diámetros en cm!!!!
+	//tener en cuenta que el largo estï¿½ en mts y los diï¿½metros en cm!!!!
 	function calcularVolumen() {
 		var ok = true;
 		var cantidadDeFilas = $('#tablaMuestras [id*=fila]').size();
@@ -179,7 +179,7 @@
 			}
 		}else{
 			var idTipoProductoForestal = $('#idTipoProductoForestal').val();
-			if(idTipoProductoForestal!=3){//si no es Leña
+			if(idTipoProductoForestal!=3){//si no es Leï¿½a
 				alert("Debe Agregar alguna muestra");
 				$("#idCantMuestras").focus();
 				ok=false;
@@ -228,7 +228,7 @@
 	/*
 	<option value="1">Rollizos</option>
 <option value="2">Fustes</option>
-<option value="3">Leña</option>
+<option value="3">Leï¿½a</option>
 <option value="4">Postes</option>
 <option value="5">Trineos</option>		
 */
@@ -295,14 +295,25 @@
 /*
 	'1', 'Rollizos'
 	'2', 'Fustes'
-	'3', 'Leña'
+	'3', 'Leï¿½a'
 	'4', 'Postes'
 	'5', 'Trineos'
  */
+	
 	function actualizarMuestras() {
-		//$('#cantidadMts').val('');
-		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
-		if (idTipoProductoForestal == 2 || idTipoProductoForestal == 5){
+		 
+		var idTipoProductoForestal = $('#idTipoProductoForestal').val();	
+		alert(idTipoProductoForestal);
+		TipoProductoForestalFachada.getCantidadDiametros(idTipoProductoForestal,actualizarMuestrasCallback );		
+	}
+	
+	function actualizarMuestrasCallback(cant) {
+		//$('#cantidadMts').val('');	
+		
+		alert(cant);
+		
+		//if (idTipoProductoForestal == 2 || idTipoProductoForestal == 5){
+		if (cant == 2){
 			if($('#tablaMuestras [id*=fila]').size() > 0){
 				$('#tablaMuestras').show();
 				$('#calcularVolumen').show();
@@ -315,7 +326,8 @@
 			$("#cantidadUnidades").attr("readonly",false);
 
 			$('#trMuestras').show();
-		}  else if (idTipoProductoForestal == 1 || idTipoProductoForestal == 4 ){
+		//}  else if (idTipoProductoForestal == 1 || idTipoProductoForestal == 4 ){
+		}else if (cant == 1){
 			if($('#tablaMuestras [id*=fila]').size() > 0){
 				$('#tablaMuestras').show();
 				$('#calcularVolumen').show();
