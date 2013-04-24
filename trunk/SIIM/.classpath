@@ -26,13 +26,11 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-validator-1.1.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dsn.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dwr-3.0 RC2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ehcache-1.2.3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-3.2.6.ga.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-annotations-3.3.0.ga.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-commons-annotations-3.3.0.ga.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/imap.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/iText-2.1.7.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasperreports-4.5.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcommon-1.0.0-rc1.jar"/>
@@ -43,13 +41,9 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mail-1.4.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mail.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mailapi.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-3.1.7-bin.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/oro-2.0.7.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/persistence-api-1.0.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/pop3.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/smtp.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-2.5.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-beans-2.0.8.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-2.0.8.jar"/>
