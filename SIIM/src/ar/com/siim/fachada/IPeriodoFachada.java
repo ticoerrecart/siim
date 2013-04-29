@@ -8,17 +8,17 @@ import ar.com.siim.negocio.exception.NegocioException;
 
 public interface IPeriodoFachada {
 
-	public List<Periodo> getPeriodos() throws NegocioException;
+	public List<Periodo> getPeriodos();
 
-	public Periodo getPeriodoPorId(Long id) throws NegocioException;
+	public Periodo getPeriodoPorId(Long id);
 
 	public boolean existePeriodo(PeriodoDTO periodo);
 
 	public void altaPeriodo(PeriodoDTO periodoDTO) throws NegocioException;
 
-	public List<PeriodoDTO> getPeriodosDTO() throws NegocioException;
+	public List<PeriodoDTO> getPeriodosDTO();
 
-	public PeriodoDTO getPeriodoDTOPorId(Long id) throws NegocioException;
+	public PeriodoDTO getPeriodoDTOPorId(Long id);
 
 	public void modificacionPeriodo(PeriodoDTO periodoDTO)
 			throws NegocioException;

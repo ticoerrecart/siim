@@ -22,22 +22,15 @@ public class LocalidadFachada implements ILocalidadFachada {
 		this.localidadDAO = laLocalidaDAO;
 	}
 
-	public List<Localidad> getLocalidades() throws NegocioException {
-		try{
-			return localidadDAO.getLocalidades();
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public List<Localidad> getLocalidades(){
+
+		return localidadDAO.getLocalidades();	
 	}
 
-	public Localidad getLocalidadPorId(Long id) throws NegocioException {
-		try{
-			return localidadDAO.getLocalidadPorId(id);
+	public Localidad getLocalidadPorId(Long id){
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		return localidadDAO.getLocalidadPorId(id);
+			
 	}
 
 	public boolean existeLocalidad(LocalidadDTO localidad) {
@@ -53,33 +46,22 @@ public class LocalidadFachada implements ILocalidadFachada {
 		}			
 	}
 	
-	public List<LocalidadDTO> getLocalidadesDTO() throws NegocioException{
+	public List<LocalidadDTO> getLocalidadesDTO(){
+
+		List<LocalidadDTO> localidadesDTO = new ArrayList<LocalidadDTO>();
+		List<Localidad> localidades = localidadDAO.getLocalidades();
 		
-		try{
-			List<LocalidadDTO> localidadesDTO = new ArrayList<LocalidadDTO>();
-			List<Localidad> localidades = localidadDAO.getLocalidades();
-			
-			for (Localidad localidad : localidades) {
-				localidadesDTO.add(ProviderDTO.getLocalidadDTO(localidad));
-			}
-			
-			return localidadesDTO;
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		for (Localidad localidad : localidades) {
+			localidadesDTO.add(ProviderDTO.getLocalidadDTO(localidad));
+		}
+		
+		return localidadesDTO;		
 	}	
 	
-	public LocalidadDTO getLocalidadDTOPorId(Long id) throws NegocioException{
-		
-		try{
-			Localidad localidad = localidadDAO.getLocalidadPorId(id);
-			
-			return ProviderDTO.getLocalidadDTO(localidad);
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public LocalidadDTO getLocalidadDTOPorId(Long id){
+
+		Localidad localidad = localidadDAO.getLocalidadPorId(id);	
+		return ProviderDTO.getLocalidadDTO(localidad);			
 	}
 	
 	public void modificacionLocalidad(LocalidadDTO localidadDTO) throws NegocioException{

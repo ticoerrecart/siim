@@ -18,46 +18,26 @@ import ar.com.siim.utils.Constantes;
 
 public class LoginDAO extends HibernateDaoSupport {
 
-	public Usuario login(String usuario, String password) throws DataBaseException {
+	public Usuario login(String usuario, String password) throws NegocioException {
 
-		try{
-			Criteria criteria = getSession().createCriteria(Usuario.class);
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("nombreUsuario", usuario))
-					.add(Restrictions.eq("password", password))
-					.add(Restrictions.eq("habilitado", true)));
-	
-			List<Usuario> usuarios = criteria.list();
-	
-			if (usuarios.size() == 0) {
-				throw new DataBaseException(Constantes.USUARIO_INVALIDO);
-			}
-			
-			return (Usuario) usuarios.get(0);
+		Criteria criteria = getSession().createCriteria(Usuario.class);
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("nombreUsuario", usuario))
+				.add(Restrictions.eq("password", password))
+				.add(Restrictions.eq("habilitado", true)));
 
-		} catch (DataBaseException he) {
-			throw he;			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_LOGIN_USUARIO);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_LOGIN_USUARIO);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_LOGIN_USUARIO);
-		}			
+		List<Usuario> usuarios = criteria.list();
+
+		if (usuarios.size() == 0) {
+			throw new NegocioException(Constantes.USUARIO_INVALIDO);
+		}
+		
+		return (Usuario) usuarios.get(0);			
 	}
 
-	public Usuario getUsuario(Long id) throws DataBaseException {
+	public Usuario getUsuario(Long id){
 
-		try{
-			Usuario u = (Usuario) this.getHibernateTemplate().get(Usuario.class, id);
-			return u;
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_USUARIO);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_USUARIO);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_USUARIO);
-		}			
+		Usuario u = (Usuario) this.getHibernateTemplate().get(Usuario.class, id);
+		return u;		
 	}
 
 	private void xtestRol() {

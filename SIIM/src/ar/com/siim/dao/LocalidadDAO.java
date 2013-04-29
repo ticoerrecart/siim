@@ -15,30 +15,14 @@ import ar.com.siim.utils.Constantes;
 
 public class LocalidadDAO extends HibernateDaoSupport {
 
-	public List<Localidad> getLocalidades() throws DataBaseException {
-		try{
-			return getHibernateTemplate().loadAll(Localidad.class);
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDADES);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDADES);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDADES);
-		}			
+	public List<Localidad> getLocalidades(){
+
+		return getHibernateTemplate().loadAll(Localidad.class);
 	}
 
-	public Localidad getLocalidadPorId(Long id) throws DataBaseException {
-		try{
-			return (Localidad) getHibernateTemplate().get(Localidad.class, id);
-						
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDAD);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDAD);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDAD);
-		}			
+	public Localidad getLocalidadPorId(Long id){
+
+		return (Localidad) getHibernateTemplate().get(Localidad.class, id);		
 	}
 
 	public boolean existeLocalidad(String nombre, Long id) {
