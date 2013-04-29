@@ -10,6 +10,8 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.struts.DispatchActionSupport;
 
+import ar.com.siim.negocio.exception.NegocioException;
+import ar.com.siim.utils.MyLogger;
 import ar.com.siim.dto.UsuarioDTO;
 import ar.com.siim.fachada.ILoginFachada;
 import ar.com.siim.struts.actions.forms.LoginForm;
@@ -37,9 +39,15 @@ public class LoginAction extends DispatchActionSupport {
 
 			request.getSession().setAttribute(Constantes.USER_LABEL_SESSION, usrDTO);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+			MyLogger.log("Se logueo el usuario: " + usrDTO.getNombreUsuario());
+			
+		} catch (NegocioException ne) {
+			request.setAttribute("error", ne.getMessage());	
 			strForward = "errorLogin";
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -54,12 +62,16 @@ public class LoginAction extends DispatchActionSupport {
 		try {
 
 			HttpSession session = request.getSession();
+			UsuarioDTO usrDTO = (UsuarioDTO)session.getAttribute(Constantes.USER_LABEL_SESSION);
 			session.setAttribute(Constantes.USER_LABEL_SESSION, null);
 			session.invalidate();
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			strForward = "errorLogin";
+			MyLogger.log("Se deslogueo el usuario: " + usrDTO.getNombreUsuario());
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);

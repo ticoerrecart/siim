@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.struts.DispatchActionSupport;
 
+import ar.com.siim.utils.MyLogger;
 import ar.com.siim.dto.UsuarioDTO;
 import ar.com.siim.fachada.IMenuFachada;
 import ar.com.siim.negocio.ItemMenu;
@@ -59,9 +60,8 @@ public class MenuAction extends DispatchActionSupport {
 			request.getSession().setAttribute("username", username);
 			request.getSession().setAttribute("roles", rolesStr);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			mapping.findForward("error");
+		} catch (Throwable e) {
+			MyLogger.logError(e);
 		}
 		return null;
 	}

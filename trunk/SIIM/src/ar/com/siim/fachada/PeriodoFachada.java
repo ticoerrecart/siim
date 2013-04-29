@@ -22,22 +22,14 @@ public class PeriodoFachada implements IPeriodoFachada {
 		this.PeriodoDAO = laPeriodoAO;
 	}
 
-	public List<Periodo> getPeriodos() throws NegocioException {
-		try{
-			return PeriodoDAO.getPeriodos();
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public List<Periodo> getPeriodos(){
+
+		return PeriodoDAO.getPeriodos();	
 	}
 
-	public Periodo getPeriodoPorId(Long id) throws NegocioException {
-		try{
-			return PeriodoDAO.getPeriodoPorId(id);
+	public Periodo getPeriodoPorId(Long id){
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		return PeriodoDAO.getPeriodoPorId(id);			
 	}
 
 	public boolean existePeriodo(PeriodoDTO Periodo) {
@@ -45,51 +37,32 @@ public class PeriodoFachada implements IPeriodoFachada {
 	}
 
 	public void altaPeriodo(PeriodoDTO PeriodoDTO) throws NegocioException {
-		try{
-			PeriodoDAO.alta_modficacion_Periodo(ProviderDominio.getPeriodo(PeriodoDTO));
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+
+		PeriodoDAO.alta_modficacion_Periodo(ProviderDominio.getPeriodo(PeriodoDTO));
 	}
 	
-	public List<PeriodoDTO> getPeriodosDTO() throws NegocioException{
+	public List<PeriodoDTO> getPeriodosDTO(){
+
+		List<PeriodoDTO> periodosDTO = new ArrayList<PeriodoDTO>();
+		List<Periodo> periodos = PeriodoDAO.getPeriodos();
 		
-		try{
-			List<PeriodoDTO> periodosDTO = new ArrayList<PeriodoDTO>();
-			List<Periodo> periodos = PeriodoDAO.getPeriodos();
-			
-			for (Periodo Periodo : periodos) {
-				periodosDTO.add(ProviderDTO.getPeriodoDTO(Periodo));
-			}
-			
-			return periodosDTO;
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		for (Periodo Periodo : periodos) {
+			periodosDTO.add(ProviderDTO.getPeriodoDTO(Periodo));
+		}
+		
+		return periodosDTO;
 	}	
 	
-	public PeriodoDTO getPeriodoDTOPorId(Long id) throws NegocioException{
+	public PeriodoDTO getPeriodoDTOPorId(Long id){
+
+		Periodo Periodo = PeriodoDAO.getPeriodoPorId(id);
 		
-		try{
-			Periodo Periodo = PeriodoDAO.getPeriodoPorId(id);
-			
-			return ProviderDTO.getPeriodoDTO(Periodo);
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		return ProviderDTO.getPeriodoDTO(Periodo);
 	}
 	
 	public void modificacionPeriodo(PeriodoDTO PeriodoDTO) throws NegocioException{
-		
-		try{
-			Periodo Periodo = PeriodoDAO.getPeriodoPorId(PeriodoDTO.getId());	
-			PeriodoDAO.alta_modficacion_Periodo(ProviderDominio.getPeriodo(Periodo,PeriodoDTO));
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		Periodo Periodo = PeriodoDAO.getPeriodoPorId(PeriodoDTO.getId());	
+		PeriodoDAO.alta_modficacion_Periodo(ProviderDominio.getPeriodo(Periodo,PeriodoDTO));		
 	}
 }
