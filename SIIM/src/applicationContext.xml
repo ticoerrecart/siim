@@ -52,7 +52,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="loginDAO" class="ar.com.siim.dao.LoginDAO" parent="abstractRepository" />
 	<bean id="localidadDAO" class="ar.com.siim.dao.LocalidadDAO" parent="abstractRepository" />
 	<bean id="periodoDAO" class="ar.com.siim.dao.PeriodoDAO" parent="abstractRepository" />	
-	
+	<bean id="entidadDAO" class="ar.com.siim.dao.EntidadDAO" parent="abstractRepository" />	
+	<bean id="rolDAO" class="ar.com.siim.dao.RolDAO" parent="abstractRepository" />
+	<bean id="usuarioDAO" class="ar.com.siim.dao.UsuarioDAO" parent="abstractRepository" />
 	
 	<!--  *******************-->
 	<!--     Fachadas   -->
@@ -146,6 +148,76 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 
+	<!-- ENTIDAD --> 
+	<bean id="entidadFachadaImpl" class="ar.com.siim.fachada.EntidadFachada">
+		<constructor-arg ref="entidadDAO" />
+		<constructor-arg ref="localidadFachada" />
+	</bean>	
+
+	<bean id="entidadFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="entidadFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siim.fachada.IEntidadFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- ROL --> 
+	<bean id="rolFachadaImpl" class="ar.com.siim.fachada.RolFachada">
+		<constructor-arg ref="rolDAO" />
+		<constructor-arg ref="entidadDAO" />
+		<constructor-arg ref="usuarioDAO" />
+	</bean>	
+
+	<bean id="rolFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="rolFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siim.fachada.IRolFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- USUARIO --> 
+	<bean id="usuarioFachadaImpl" class="ar.com.siim.fachada.UsuarioFachada">
+		<constructor-arg ref="usuarioDAO" />
+		<constructor-arg ref="entidadFachada" />
+		<constructor-arg ref="rolFachada" />
+	</bean>	
+
+	<bean id="usuarioFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="usuarioFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siim.fachada.IUsuarioFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
 
 	<!--  *******************-->
 	<!--       Parameters    -->

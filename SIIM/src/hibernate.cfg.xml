@@ -26,6 +26,10 @@
 		<mapping class='ar.com.siim.negocio.Usuario' />
 		<mapping class='ar.com.siim.negocio.Localidad' />
 		<mapping class='ar.com.siim.negocio.Periodo' />
+		<mapping class='ar.com.siim.negocio.Entidad' />
+		<mapping class='ar.com.siim.negocio.RecursosNaturales' />
+		<mapping class='ar.com.siim.negocio.Productor' />
+		<mapping class='ar.com.siim.negocio.Localizacion' />		
 
 	</session-factory>
 </hibernate-configuration>

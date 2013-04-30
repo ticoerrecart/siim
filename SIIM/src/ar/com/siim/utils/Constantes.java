@@ -10,11 +10,11 @@ public class Constantes {
 	// USUARIO
 		public static final String TITULO_ALTA_USUARIO = "Alta de Usuario";
 	
-		public static final String TITULO_MODIFICACION_USUARIO = "ModificaciÛn de Usuario";//solo para cuando no es Administrador
+		public static final String TITULO_MODIFICACION_USUARIO = "Modificaci√≥n de Usuario";//solo para cuando no es Administrador
 	
-		public static final String EXISTE_USUARIO = "Ya existe un Usuario con Èste nombre";
+		public static final String EXISTE_USUARIO = "Ya existe un Usuario con este nombre";
 		
-		public static final String USUARIO_INVALIDO = "Usuario y/o ContraseÒa invalido";
+		public static final String USUARIO_INVALIDO = "Usuario y/o Contrase√±a invalido";
 	
 		public static final String EXITO_ALTA_USUARIO = "El Usuario se ha dado de alta con exito";
 	
@@ -22,11 +22,11 @@ public class Constantes {
 		
 		public static final String ERROR_ALTA_USUARIO = "Ha ocurrido un error en el alta del usuario";
 		
-		public static final String ERROR_MODIFICACION_USUARIO = "Ha ocurrido un error en la modificaciÛn del usuario";
+		public static final String ERROR_MODIFICACION_USUARIO = "Ha ocurrido un error en la modificaci√≥n del usuario";
 		
-		public static final String ERROR_RECUPERACION_USUARIOS = "Ha ocurrido un error en la recuperaciÛn de los usuarios";
+		public static final String ERROR_RECUPERACION_USUARIOS = "Ha ocurrido un error en la recuperaci√≥n de los usuarios";
 		
-		public static final String ERROR_RECUPERACION_USUARIO = "Ha ocurrido un error en la recuperaciÛn del usuario";
+		public static final String ERROR_RECUPERACION_USUARIO = "Ha ocurrido un error en la recuperaci√≥n del usuario";
 		
 		public static final String ERROR_LOGIN_USUARIO = "Ha ocurrido un error en el login del usuario";
 	// FIN USUARIO
@@ -42,19 +42,19 @@ public class Constantes {
 		
 		public static final String ERROR_ALTA_ROL = "Ha ocurrido un error en el alta del rol";
 		
-		public static final String ERROR_MODIFICACION_ROL = "Ha ocurrido un error en la modificaciÛn del rol";
+		public static final String ERROR_MODIFICACION_ROL = "Ha ocurrido un error en la modificaci√≥n del rol";
 		
-		public static final String ERROR_RECUPERACION_ROLES = "Ha ocurrido un error en la recuperaciÛn de los roles";
+		public static final String ERROR_RECUPERACION_ROLES = "Ha ocurrido un error en la recuperaci√≥n de los roles";
 		
-		public static final String ERROR_RECUPERACION_ROL = "Ha ocurrido un error en la recuperaciÛn del rol";
+		public static final String ERROR_RECUPERACION_ROL = "Ha ocurrido un error en la recuperaci√≥n del rol";
 		
-		public static final String ERROR_RECUPERACION_MENUES = "Ha ocurrido un error en la recuperaciÛn de los menues";
+		public static final String ERROR_RECUPERACION_MENUES = "Ha ocurrido un error en la recuperaci√≥n de los menues";
 		
-		public static final String ERROR_RECUPERACION_MENU = "Ha ocurrido un error en la recuperaciÛn del men˙";
+		public static final String ERROR_RECUPERACION_MENU = "Ha ocurrido un error en la recuperaci√≥n del men√∫";
 	// FIN ROL	
 		
 	// LOCALIDAD
-		public static final String EXISTE_LOCALIDAD = "Ya existe una Localidad con Èste nombre";
+		public static final String EXISTE_LOCALIDAD = "Ya existe una Localidad con este nombre";
 	
 		public static final String EXITO_ALTA_LOCALIDAD = "La Localidad se ha dado de alta con exito";
 	
@@ -62,22 +62,48 @@ public class Constantes {
 		
 		public static final String ERROR_ALTA_LOCALIDAD = "Ha ocurrido un error en el alta de la localidad";
 		
-		public static final String ERROR_RECUPERACION_LOCALIDAD = "Ha ocurrido un error en la recuperaciÛn de la localidad";
+		public static final String ERROR_RECUPERACION_LOCALIDAD = "Ha ocurrido un error en la recuperaci√≥n de la localidad";
 		
-		public static final String ERROR_RECUPERACION_LOCALIDADES = "Ha ocurrido un error en la recuperaciÛn de las localidades";
+		public static final String ERROR_RECUPERACION_LOCALIDADES = "Ha ocurrido un error en la recuperaci√≥n de las localidades";
 	// FIN LOCALIDAD
 		
 	// PERIODO
-		public static final String EXISTE_PERIODO = "Ya existe un perÌodo con Èste nombre";
+		public static final String EXISTE_PERIODO = "Ya existe un per√≠odo con este nombre";
 	
-		public static final String EXITO_ALTA_PERIODO = "El perÌodo se ha dado de alta con exito";
+		public static final String EXITO_ALTA_PERIODO = "El per√≠odo se ha dado de alta con exito";
 	
-		public static final String EXITO_MODIFICACION_PERIODO = "El perÌodo se ha modificado con exito";
+		public static final String EXITO_MODIFICACION_PERIODO = "El per√≠odo se ha modificado con exito";
 		
-		public static final String ERROR_ALTA_PERIODO = "Ha ocurrido un error en el alta del perÌodo";
+		public static final String ERROR_ALTA_PERIODO = "Ha ocurrido un error en el alta del per√≠odo";
 		
-		public static final String ERROR_RECUPERACION_PERIODO = "Ha ocurrido un error en la recuperaciÛn del perÌodo";
+		public static final String ERROR_RECUPERACION_PERIODO = "Ha ocurrido un error en la recuperaci√≥n del per√≠odo";
 		
-		public static final String ERROR_RECUPERACION_PERIODOS = "Ha ocurrido un error en la recuperaciÛn de los perÌodos";
-	// FIN PERIODO			
+		public static final String ERROR_RECUPERACION_PERIODOS = "Ha ocurrido un error en la recuperaci√≥n de los per√≠odos";
+	// FIN PERIODO	
+		
+	// ENTIDAD
+		public static final String TITULO_ALTA_ENTIDAD = "Alta de Entidad";
+
+		public static final String TITULO_MODIFICACION_ENTIDAD = "Modificaci√≥n de Entidad";
+
+		public static final String EXITO_MODIFICACION_ENTIDAD = "La Entidad se ha modificado con exito";
+
+		public static final String EXITO_ALTA_ENTIDAD = "La Entidad se ha dado de alta con exito";
+
+		public static final String EXISTE_ENTIDAD = "Ya existe una Entidad con √©ste nombre";
+		
+		public static final String EXISTE_ENTIDAD_CON_MATRICULA = "Ya existe una Entidad con √©ste nro de matr√≠cula";
+
+		public static final String ENTIDAD_RN = "RN";
+
+		public static final String ERROR_RECUPERAR_OFICINAS_FORESTALES = "Ha ocurrido un error en la recuperaci√≥n de las oficinas forestales";
+
+		public static final String ERROR_MODIFICACION_ENTIDAD = "Ha ocurrido un error en la modificaci√≥n de la entidad";
+
+		public static final String ERROR_RECUPERACION_ENTIDAD = "Ha ocurrido un error en la recuperaci√≥n de la entidad";
+
+		public static final String ERROR_ALTA_ENTIDAD = "Ha ocurrido un error en el alta de la entidad";
+
+		public static final String ERROR_RECUPERAR_PRODUCTORES = "Ha ocurrido un error en la recuperaci√≥n de los productores";
+	// FIN ENTIDAD
 }

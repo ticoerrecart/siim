@@ -11,6 +11,12 @@
 		<form-bean name="periodoForm"
 			type="ar.com.siim.struts.actions.forms.PeriodoForm">
 		</form-bean>
+		<form-bean name="entidadForm"
+			type="ar.com.siim.struts.actions.forms.EntidadForm">
+		</form-bean>	
+		<form-bean name="usuarioForm"
+			type="ar.com.siim.struts.actions.forms.UsuarioForm">
+		</form-bean>
 	</form-beans>
 
 	<global-exceptions></global-exceptions>
@@ -87,6 +93,41 @@
 			<forward name="exitoRecuperarPeriodos" path=".recuperarPeriodos" />
 		</action>
 		<!-- FIN PERIODO -->			
+		
+		<!-- ENTIDAD -->
+		<action path="/entidad" type="ar.com.siim.struts.actions.EntidadAction"
+			parameter="metodo" name="entidadForm" scope="request">
+			<forward name="cargarAltaEntidad" path=".altaEntidad" />
+			<forward name="exitoAltaEntidad" path="/entidad.do?metodo=cargarAltaEntidad" />
+			<forward name="exitoCargarEntidadAModificar" path="/jsp/bloqueAltaEntidad.jsp" />
+			<forward name="exitoModificacionEntidad"
+				path="/cargarEntidadesAModificar.do?metodo=cargarEntidadesAModificar" />
+			<forward name="errorAltaEntidad" path="/entidad.do?metodo=cargarAltaEntidad" />
+		</action>
+
+		<action path="/cargarEntidadesAModificar" type="ar.com.siim.struts.actions.EntidadAction"
+			parameter="metodo">
+			<forward name="exitoRecuperarEntidades" path=".recuperarEntidades" />
+		</action>
+		<!-- FIN ENTIDAD -->		
+		
+		<!-- USUARIO -->
+		<action path="/usuario" type="ar.com.siim.struts.actions.UsuarioAction"
+			parameter="metodo" name="usuarioForm" scope="request">
+			<forward name="cargarAltaUsuario" path=".altaUsuario" />
+			<forward name="exitoAltaUsuario" path="/usuario.do?metodo=cargarAltaUsuario" />
+			<forward name="exitoCargarUsuarioAModificar" path="/jsp/bloqueAltaUsuario.jsp" />
+			<forward name="errorAltaUsuario" path="/usuario.do?metodo=cargarAltaUsuario" />
+			<forward name="exitoModificacionUsuario"
+				path="/cargarUsuariosAModificar.do?metodo=cargarUsuariosAModificar" />
+		</action>
+
+		<action path="/cargarUsuariosAModificar" type="ar.com.siim.struts.actions.UsuarioAction"
+			parameter="metodo">
+			<forward name="exitoRecuperarUsuarios" path=".recuperarUsuarios" />
+			<forward name="exitoCargarUsuarioAModificar" path=".altaUsuario" />
+		</action>
+		<!-- FIN USUARIO -->		
 		
 	</action-mappings>
 
