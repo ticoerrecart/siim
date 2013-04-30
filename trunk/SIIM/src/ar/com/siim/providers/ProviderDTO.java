@@ -3,6 +3,8 @@ package ar.com.siim.providers;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.com.siim.dto.EntidadDTO;
+import ar.com.siim.negocio.Entidad;
 import ar.com.siim.dto.PeriodoDTO;
 import ar.com.siim.negocio.Periodo;
 import ar.com.siim.dto.LocalidadDTO;
@@ -27,7 +29,7 @@ public abstract class ProviderDTO {
 			usuarioDTO.setNombreUsuario(usuario.getNombreUsuario());
 			usuarioDTO.setPassword(usuario.getPassword());
 			usuarioDTO.setRol(ProviderDTO.getRolDTO(usuario.getRol()));
-			//usuarioDTO.setEntidad(ProviderDTO.getEntidadDTO(usuario.getEntidad()));
+			usuarioDTO.setEntidad(ProviderDTO.getEntidadDTO(usuario.getEntidad()));
 			usuarioDTO.setHabilitado(usuario.isHabilitado());
 			
 			return usuarioDTO;
@@ -95,5 +97,24 @@ public abstract class ProviderDTO {
 			periodoDTO.setPeriodo(periodo.getPeriodo());
 			
 			return periodoDTO;
-		}		
+		}
+		
+		public static EntidadDTO getEntidadDTO(Entidad entidad) {
+
+			EntidadDTO entidadDTO = new EntidadDTO();
+
+			entidadDTO.setId(entidad.getId());
+			entidadDTO.setNombre(entidad.getNombre());
+			entidadDTO.setDireccion(entidad.getDireccion());
+			entidadDTO.setTelefono(entidad.getTelefono());
+			entidadDTO.setEmail(entidad.getEmail());
+			entidadDTO.setLocalidad(ProviderDTO.getLocalidadDTO(entidad.getLocalidad()));
+			entidadDTO.setTipoEntidadDesc(entidad.getTipoEntidad());
+			entidadDTO.setTipoEntidad(entidad.getIdTipoEntidad());
+			entidadDTO.setNroMatricula(entidad.getNroMatricula());
+			entidadDTO.setCuit(entidad.getCuit());
+			entidadDTO.setCodigoPostal(entidad.getCodigoPostal());
+
+			return entidadDTO;
+		}			
 }

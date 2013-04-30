@@ -8,7 +8,8 @@
 <div>
 <table class="header">
 	<tr>
-		<td width="25%" height="65"><img src="../../imagenes/Arba.jpg">
+		<!--<td width="25%" height="65"><img height="145%" width="62%" src="../../imagenes/logoSIIM.jpg">-->
+		 <td width="25%" height="65"><img src="../../imagenes/Arba.jpg">
 		<!--  <td width="25%" height="65"><img src="../../imagenes/logo5.JPG"> -->
 		</td>
 		<td width="50%" style="text-align: center; font-weight: bold"><jsp:useBean

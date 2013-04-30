@@ -4,7 +4,16 @@
 
 <dwr>
 	<allow>
-
+		<convert converter="bean" match="ar.com.siim.negocio.Rol">
+			<param name="include" value="id, rol" />
+		</convert>
+		<convert converter="bean" match="ar.com.siim.dto.RolDTO">
+			<param name="include" value="id, rol, menues" />
+		</convert>	
+		
+		<create creator="spring" javascript="RolFachada">
+			<param name="beanName" value="rolFachada" />
+		</create>		
 		
 	</allow>
 

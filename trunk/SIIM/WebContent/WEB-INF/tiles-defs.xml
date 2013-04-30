@@ -51,6 +51,30 @@
 	</definition>
 	<!-- FIN PERIODO -->
 
+	<!-- ENTIDAD -->
+	<definition name=".altaEntidad" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaEntidad.jsp" />
+	</definition>
+
+	<definition name=".recuperarEntidades" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/recuperarEntidades.jsp" />
+	</definition>
+	<!-- FIN ENTIDAD -->
+
+	<!-- USUARIO -->
+	<definition name=".altaUsuario" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaUsuario.jsp" />
+	</definition>
+
+	<definition name=".recuperarUsuarios" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/recuperarUsuarios.jsp" />
+	</definition>
+	<!-- FIN USUARIO -->
+
 	<definition name=".error" extends=".base">
 		<put name="title" value="Error en SIIMs" />
 		<put name="body" value="/jsp/error.jsp" />

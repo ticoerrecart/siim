@@ -10,13 +10,13 @@ public class UsuarioDTO {
 
 	private RolDTO rol;
 	
-	//private EntidadDTO entidad;
+	private EntidadDTO entidad;
 	
 	private boolean habilitado;
 	
 	public UsuarioDTO(){
 		
-		//entidad = new EntidadDTO();
+		entidad = new EntidadDTO();
 		rol = new RolDTO();
 	}
 	
@@ -52,13 +52,13 @@ public class UsuarioDTO {
 		this.rol = rol;
 	}
 
-	/*public EntidadDTO getEntidad() {
+	public EntidadDTO getEntidad() {
 		return entidad;
 	}
 
 	public void setEntidad(EntidadDTO entidad) {
 		this.entidad = entidad;
-	}*/
+	}
 
 	public boolean isHabilitado() {
 		return habilitado;

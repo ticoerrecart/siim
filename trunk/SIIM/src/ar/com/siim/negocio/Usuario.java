@@ -32,10 +32,10 @@ public class Usuario {
 	@JoinColumn(name = "rol_fk")
 	private Rol rol;
 
-	/*@ManyToOne()
+	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "entidad_fk")
-	private Entidad entidad;*/
+	private Entidad entidad;
 
 	public String getNombreUsuario() {
 		return nombreUsuario;
@@ -61,13 +61,13 @@ public class Usuario {
 		this.rol = rol;
 	}
 
-	/*public Entidad getEntidad() {
+	public Entidad getEntidad() {
 		return entidad;
 	}
 
 	public void setEntidad(Entidad entidad) {
 		this.entidad = entidad;
-	}*/
+	}
 
 	public Long getId() {
 		return id;
