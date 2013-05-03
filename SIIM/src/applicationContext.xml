@@ -55,6 +55,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="entidadDAO" class="ar.com.siim.dao.EntidadDAO" parent="abstractRepository" />	
 	<bean id="rolDAO" class="ar.com.siim.dao.RolDAO" parent="abstractRepository" />
 	<bean id="usuarioDAO" class="ar.com.siim.dao.UsuarioDAO" parent="abstractRepository" />
+	<bean id="tipoProductoDAO" class="ar.com.siim.dao.TipoProductoDAO" parent="abstractRepository" />
 	
 	<!--  *******************-->
 	<!--     Fachadas   -->
@@ -97,6 +98,28 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="loginFachadaImpl" />
 		</property>
 		<property name="proxyInterfaces" value="ar.com.siim.fachada.ILoginFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- TIPO PRODUCTO --> 
+	<bean id="tipoProductoFachadaImpl" class="ar.com.siim.fachada.TipoProductoFachada">
+		<constructor-arg ref="tipoProductoDAO" />
+	</bean>	
+
+	<bean id="tipoProductoFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="tipoProductoFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siim.fachada.ITipoProductoFachada" />
 		<property name="transactionAttributes">
 			<props>
 				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>

@@ -11,8 +11,10 @@ import ar.com.siim.dto.LocalidadDTO;
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.dto.ItemMenuDTO;
 import ar.com.siim.dto.RolDTO;
+import ar.com.siim.dto.TipoProductoDTO;
 import ar.com.siim.negocio.ItemMenu;
 import ar.com.siim.negocio.Rol;
+import ar.com.siim.negocio.TipoProducto;
 import ar.com.siim.providers.ProviderDTO;
 import ar.com.siim.dto.UsuarioDTO;
 import ar.com.siim.negocio.Usuario;
@@ -116,5 +118,15 @@ public abstract class ProviderDTO {
 			entidadDTO.setCodigoPostal(entidad.getCodigoPostal());
 
 			return entidadDTO;
-		}			
+		}	
+		
+		public static TipoProductoDTO getTipoProductoDTO(TipoProducto tipoProducto){
+			
+			TipoProductoDTO tipoProdDTO = new TipoProductoDTO();
+			tipoProdDTO.setId(tipoProducto.getId());
+			tipoProdDTO.setNombre(tipoProducto.getNombre());
+			tipoProdDTO.setRegaliaMinera(tipoProducto.getRegaliaMinera());
+			
+			return tipoProdDTO;
+		}
 }
