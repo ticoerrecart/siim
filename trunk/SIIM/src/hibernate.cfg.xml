@@ -29,7 +29,8 @@
 		<mapping class='ar.com.siim.negocio.Entidad' />
 		<mapping class='ar.com.siim.negocio.RecursosNaturales' />
 		<mapping class='ar.com.siim.negocio.Productor' />
-		<mapping class='ar.com.siim.negocio.Localizacion' />		
+		<mapping class='ar.com.siim.negocio.Localizacion' />
+		<mapping class='ar.com.siim.negocio.TipoProducto' />		
 
 	</session-factory>
 </hibernate-configuration>

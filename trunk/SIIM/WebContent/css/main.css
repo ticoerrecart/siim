@@ -81,6 +81,17 @@
 	color: black;
 }
 
+.grisSubtituloCenter {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	background-color: #BDBDBD;
+	text-align: center;
+	vertical-align: middle;
+	font-style: normal;
+	color: black;
+}
+
 .verdeSubtitulo {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
