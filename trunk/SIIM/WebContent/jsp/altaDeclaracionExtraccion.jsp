@@ -13,7 +13,9 @@
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
 <script type="text/javascript"
-	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>		
+	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>
+<script type="text/javascript"
+	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>			
 <script type="text/javascript"
 	src="<html:rewrite page='/js/fiscalizacion.js'/>"></script>
 
@@ -391,7 +393,26 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 
 function cambiarProductor(){
 
-	$('#idProductor').val();
+	var idProductor = $('#idProductor').val();
+
+	if(idProductor != "-1"){
+		
+		EntidadFachada.getEntidadDTO(idProductor,cambiarProductorCallback );	
+	}
+	else{
+		$('#nomProductor').val("");
+		$('#domProductor').val("");
+		$('#locProductor').val("");
+		$('#telProductor').val("");
+	}	
+}
+
+function cambiarProductorCallback(productor) {
+	
+	dwr.util.setValue("nomProductor", productor.nombre);
+	dwr.util.setValue("domProductor", productor.direccion);
+	dwr.util.setValue("locProductor", productor.localidad.nombre);
+	dwr.util.setValue("telProductor", productor.telefono);				
 }
 
 function calcularImporteTotal(){
@@ -479,6 +500,52 @@ function calcularVolumenTotalTrimestre(nroTrimestre){
 							</option>
 						</c:forEach>
 					</select>
+			</td>
+		</tr>
+		<tr>
+			<td height="10" colspan="4"></td>
+		</tr>
+		<tr>
+			<td colspan="4">		
+				<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
+					<tr>
+						<td colspan="4" class="grisSubtitulo"><bean:message key='SIIM.subTitulo.DatosProductor'/></td>
+					</tr>
+					<tr>
+						<td colspan="4" height="10"></td>
+					</tr>			
+					<tr>
+						<td width="20%" class="botoneralNegritaRight">
+							Nombre y Apellido
+						</td>
+						<td width="30%" align="left">
+							<input id="nomProductor" class="botonerab" type="text" size="30" readonly="readonly">
+						</td>					
+						<td width="20%" class="botoneralNegritaRight">
+							Domicilio
+						</td>
+						<td align="left">
+							<input id="domProductor" class="botonerab" type="text" size="30" readonly="readonly">
+						</td>
+					</tr>
+					<tr>
+						<td width="20%" class="botoneralNegritaRight">
+							Localidad
+						</td>
+						<td width="30%" align="left">
+							<input id="locProductor" class="botonerab" type="text" size="30" readonly="readonly">
+						</td>					
+						<td width="20%" class="botoneralNegritaRight">
+							Telefono
+						</td>
+						<td align="left">
+							<input id="telProductor" class="botonerab" type="text" size="30" readonly="readonly">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4" height="10"></td>
+					</tr>				
+				</table>		
 			</td>
 		</tr>
 		<tr>
