@@ -2,6 +2,7 @@ package ar.com.siim.providers;
 
 import java.util.ArrayList;
 
+import ar.com.siim.dto.LocalizacionDTO;
 import ar.com.siim.dto.RolDTO;
 import ar.com.siim.negocio.ItemMenu;
 import ar.com.siim.dto.UsuarioDTO;
@@ -10,6 +11,7 @@ import ar.com.siim.negocio.Usuario;
 import ar.com.siim.dto.EntidadDTO;
 import ar.com.siim.enums.TipoDeEntidad;
 import ar.com.siim.negocio.Entidad;
+import ar.com.siim.negocio.Localizacion;
 import ar.com.siim.negocio.Productor;
 import ar.com.siim.negocio.RecursosNaturales;
 import ar.com.siim.dto.PeriodoDTO;
@@ -113,4 +115,16 @@ public abstract class ProviderDominio {
 
 		return rol;
 	}	
+	
+	public static Localizacion getLocalizacion(LocalizacionDTO localizacionDTO, Entidad productor){
+		
+		Localizacion localizacion = new Localizacion();
+		localizacion.setExpediente(localizacionDTO.getExpediente());
+		localizacion.setProductor(productor);
+		localizacion.setRazonSocial(localizacionDTO.getRazonSocial());
+		localizacion.setResolucion(localizacionDTO.getResolucion());
+		localizacion.setSuperficie(localizacionDTO.getSuperficie());
+		
+		return localizacion;
+	}
 }

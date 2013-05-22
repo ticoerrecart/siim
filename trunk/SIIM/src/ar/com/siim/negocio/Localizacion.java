@@ -1,13 +1,9 @@
 package ar.com.siim.negocio;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -26,9 +22,15 @@ public class Localizacion {
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "entidad_fk")
-	protected Entidad productorForestal;
-
-	private String nombre;
+	protected Entidad productor;
+	
+	private String expediente;
+	
+	private String razonSocial;
+	
+	private String resolucion;
+	
+	private double superficie;
 	
 	public Long getId() {
 		return id;
@@ -38,20 +40,44 @@ public class Localizacion {
 		this.id = id;
 	}
 
-	public Entidad getProductorForestal() {
-		return productorForestal;
+	public Entidad getProductor() {
+		return productor;
 	}
 
-	public void setProductorForestal(Entidad productorForestal) {
-		this.productorForestal = productorForestal;
+	public void setProductor(Entidad productor) {
+		this.productor = productor;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getExpediente() {
+		return expediente;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setExpediente(String expediente) {
+		this.expediente = expediente;
+	}
+
+	public String getRazonSocial() {
+		return razonSocial;
+	}
+
+	public void setRazonSocial(String razonSocial) {
+		this.razonSocial = razonSocial;
+	}
+
+	public String getResolucion() {
+		return resolucion;
+	}
+
+	public void setResolucion(String resolucion) {
+		this.resolucion = resolucion;
+	}
+
+	public double getSuperficie() {
+		return superficie;
+	}
+
+	public void setSuperficie(double superficie) {
+		this.superficie = superficie;
 	}
 
 }

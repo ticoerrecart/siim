@@ -110,4 +110,9 @@ public class Constantes {
 	// TIPO DE PRODUCTO
 		public static final String EXITO_MODIFICACION_TIPO_PRODUCTO = "El Tipo de Producto se ha modificado con exito";		
 	// FIN TIPO DE PRODUCTO	
+		
+	// LOCALIZACION
+		public static final String TITULO_ALTA_LOCALIZACION = "Alta de Zona de Extracción Minera";
+		
+	// FIN LOCALIZACION	
 }
