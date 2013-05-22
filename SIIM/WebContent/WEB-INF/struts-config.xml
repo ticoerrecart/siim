@@ -19,6 +19,9 @@
 		</form-bean>
 		<form-bean name="declaracionExtraccionForm"
 			type="ar.com.siim.struts.actions.forms.DeclaracionExtraccionForm">
+		</form-bean>
+		<form-bean name="tipoProductoForm"
+			type="ar.com.siim.struts.actions.forms.TipoProductoForm">
 		</form-bean>		
 	</form-beans>
 
@@ -117,6 +120,19 @@
 			<forward name="exitoCargarUsuarioAModificar" path=".altaUsuario" />
 		</action>
 		<!-- FIN USUARIO -->		
+		
+		<!-- TIPO PRODUCTO -->
+		<action path="/tipoProducto" type="ar.com.siim.struts.actions.TipoProductoAction"
+			parameter="metodo" name="tipoProductoForm" scope="request">
+			<forward name="exitoModificacionTipoProducto"
+				path="/recuperarTipoProducto.do?metodo=cargarModificacionTipoProductoForestal" />							
+		</action>		
+		<action path="/recuperarTipoProducto" 
+			type="ar.com.siim.struts.actions.TipoProductoAction" parameter="metodo">
+			<forward name="exitoCargarModificacionTipoProducto" path=".modificacionTipoProducto" />
+			<forward name="exitoRecuperarTipoProducto" path="/jsp/bloqueModificacionTipoProducto.jsp" />			
+		</action>
+		<!-- FIN TIPO PRODUCTO -->		
 		
 		<!-- DECLARACION EXTRACCION -->
 		<action path="/declaracionExtraccion" type="ar.com.siim.struts.actions.DeclaracionExtraccionAction"

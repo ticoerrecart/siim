@@ -220,3 +220,8 @@ function contextRoot (){
 	var secondSlashPosition = path.indexOf('/',1);
 	return path.slice(firstSlashPosition,secondSlashPosition);
 }
+
+function evitarAutoSubmit(e) { 
+	  tecla = (document.all) ? e.keyCode :e.which; 
+	  return (tecla!=13); 
+} 
