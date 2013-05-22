@@ -49,7 +49,7 @@ public class Entidad implements Comparable<Entidad> {
 
 	private Integer codigoPostal;
 
-	@OneToMany(mappedBy = "productorForestal")
+	@OneToMany(mappedBy = "productor")
 	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
 	private List<Localizacion> localizaciones;
 

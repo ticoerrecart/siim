@@ -83,6 +83,14 @@
 	</definition>
 	<!-- FIN TIPO PRODUCTO -->
 
+	<!-- LOCALIZACION -->
+	<definition name=".altaLocalizacion"
+		extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/altaLocalizacion.jsp" />
+	</definition>
+	<!-- FIN LOCALIZACION -->
+
 	<!-- DECLARACION EXTRACCION -->
 	<definition name=".altaDeclaracionExtraccion" extends=".base">
 		<put name="title" value="SIIMs" />

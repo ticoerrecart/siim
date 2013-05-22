@@ -10,9 +10,11 @@ import ar.com.siim.negocio.Periodo;
 import ar.com.siim.dto.LocalidadDTO;
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.dto.ItemMenuDTO;
+import ar.com.siim.dto.LocalizacionDTO;
 import ar.com.siim.dto.RolDTO;
 import ar.com.siim.dto.TipoProductoDTO;
 import ar.com.siim.negocio.ItemMenu;
+import ar.com.siim.negocio.Localizacion;
 import ar.com.siim.negocio.Rol;
 import ar.com.siim.negocio.TipoProducto;
 import ar.com.siim.providers.ProviderDTO;
@@ -128,5 +130,18 @@ public abstract class ProviderDTO {
 			tipoProdDTO.setRegaliaMinera(tipoProducto.getRegaliaMinera());
 			
 			return tipoProdDTO;
+		}
+		
+		public static LocalizacionDTO getLocalizacionDTO(Localizacion localizacion){
+			
+			LocalizacionDTO localizacionDTO = new LocalizacionDTO();
+			localizacionDTO.setExpediente(localizacion.getExpediente());
+			localizacionDTO.setId(localizacion.getId());
+			localizacionDTO.setProductor(ProviderDTO.getEntidadDTO(localizacion.getProductor()));
+			localizacionDTO.setRazonSocial(localizacion.getRazonSocial());
+			localizacionDTO.setResolucion(localizacion.getResolucion());
+			localizacionDTO.setSuperficie(localizacion.getSuperficie());
+			
+			return localizacionDTO;
 		}
 }

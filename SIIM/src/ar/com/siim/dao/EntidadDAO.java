@@ -76,12 +76,15 @@ public class EntidadDAO extends HibernateDaoSupport {
 	public List<Entidad> getEntidades(TipoDeEntidad tipoDeEntidad){
 
 		List<Entidad> productores = null;
-		Criteria criteria = null;
+		/*Criteria criteria = null;
 		if (tipoDeEntidad == TipoDeEntidad.PRD) {
 			criteria = getSession().createCriteria(Productor.class);
 			productores = criteria.list();
-		}
-
+		}*/
+		
+		Criteria criteria = getSession().createCriteria(tipoDeEntidad.getClase());
+		productores = criteria.list();
+		
 		return productores;		
 	}
 	
