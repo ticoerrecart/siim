@@ -106,4 +106,8 @@ public class Constantes {
 
 		public static final String ERROR_RECUPERAR_PRODUCTORES = "Ha ocurrido un error en la recuperación de los productores";
 	// FIN ENTIDAD
+		
+	// TIPO DE PRODUCTO
+		public static final String EXITO_MODIFICACION_TIPO_PRODUCTO = "El Tipo de Producto se ha modificado con exito";		
+	// FIN TIPO DE PRODUCTO	
 }
