@@ -56,6 +56,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="rolDAO" class="ar.com.siim.dao.RolDAO" parent="abstractRepository" />
 	<bean id="usuarioDAO" class="ar.com.siim.dao.UsuarioDAO" parent="abstractRepository" />
 	<bean id="tipoProductoDAO" class="ar.com.siim.dao.TipoProductoDAO" parent="abstractRepository" />
+	<bean id="localizacionDAO" class="ar.com.siim.dao.LocalizacionDAO" parent="abstractRepository" />
 	
 	<!--  *******************-->
 	<!--     Fachadas   -->
@@ -235,6 +236,29 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="usuarioFachadaImpl" />
 		</property>
 		<property name="proxyInterfaces" value="ar.com.siim.fachada.IUsuarioFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- LOCALIZACION --> 
+	<bean id="localizacionFachadaImpl" class="ar.com.siim.fachada.LocalizacionFachada">
+		<constructor-arg ref="localizacionDAO" />
+		<constructor-arg ref="entidadFachada" />
+	</bean>	
+
+	<bean id="localizacionFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="localizacionFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siim.fachada.ILocalizacionFachada" />
 		<property name="transactionAttributes">
 			<props>
 				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>

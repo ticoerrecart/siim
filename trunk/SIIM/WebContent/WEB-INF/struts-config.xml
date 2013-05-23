@@ -140,15 +140,18 @@
 		<!-- LOCALIZACION -->
 		<action path="/localizacion" type="ar.com.siim.struts.actions.LocalizacionAction"
 			parameter="metodo" name="localizacionForm" scope="request">
-			<forward name="exitoCargarAltaLocalizacion"
-				path=".altaLocalizacion" />							
+			<forward name="exitoCargarAltaLocalizacion" path=".altaLocalizacion" />							
+			<forward name="exitoAltaLocalizacion" path="/localizacion.do?metodo=cargarAltaLocalizacion" />
+			<forward name="exitoCargarLocalizacionesParaModificar" path="/jsp/bloqueLocalizacionesParaModificar.jsp" />
+			<forward name="exitoCargarLocalizacionParaModificar" path="/jsp/bloqueAltaModificacionLocalizacion.jsp" />
+			<forward name="exitoModificacionLocalizacion" path="/localizacion.do?metodo=cargarModificacionLocalizacion" />				
 		</action>		
 		<!-- FIN LOCALIZACION -->
 		
 		<!-- DECLARACION EXTRACCION -->
 		<action path="/declaracionExtraccion" type="ar.com.siim.struts.actions.DeclaracionExtraccionAction"
 			parameter="metodo" name="declaracionExtraccionForm" scope="request">
-			<forward name="exitoCargaAltaDeclaracionExtraccion" path=".altaDeclaracionExtraccion" />
+			<forward name="exitoCargaAltaDeclaracionExtraccion" path=".altaDeclaracionExtraccion" />					
 		</action>
 		<!-- FIN DECLARACION EXTRACCION -->
 		

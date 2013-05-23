@@ -15,7 +15,9 @@
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>
 <script type="text/javascript"
-	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>			
+	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
+<script type="text/javascript"
+	src="<html:rewrite page='/dwr/interface/LocalizacionFachada.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/fiscalizacion.js'/>"></script>
 
@@ -396,14 +398,21 @@ function cambiarProductor(){
 	var idProductor = $('#idProductor').val();
 
 	if(idProductor != "-1"){
-		
-		EntidadFachada.getEntidadDTO(idProductor,cambiarProductorCallback );	
+		$('#idZonaExtraccion').attr('disabled',false);
+		EntidadFachada.getEntidadDTO(idProductor,cambiarProductorCallback );
+
+		LocalizacionFachada.getLocalizacionesPorProductorDTO(idProductor,actualizarZonasExtraccionCallback);
 	}
 	else{
 		$('#nomProductor').val("");
 		$('#domProductor').val("");
 		$('#locProductor').val("");
 		$('#telProductor').val("");
+
+		dwr.util.removeAllOptions("idZonaExtraccion");
+		var data = [ { razonSocial:"-Seleccione una Zona-", id:-1 }];
+		dwr.util.addOptions("idZonaExtraccion", data, "id", "razonSocial");		
+		$('#idZonaExtraccion').attr('disabled','disabled');		
 	}	
 }
 
@@ -413,6 +422,13 @@ function cambiarProductorCallback(productor) {
 	dwr.util.setValue("domProductor", productor.direccion);
 	dwr.util.setValue("locProductor", productor.localidad.nombre);
 	dwr.util.setValue("telProductor", productor.telefono);				
+}
+
+function actualizarZonasExtraccionCallback(zonas){
+	dwr.util.removeAllOptions("idZonaExtraccion");
+	var data = [ { razonSocial:"-Seleccione una Zona-", id:-1 }];
+	dwr.util.addOptions("idZonaExtraccion", data, "id", "razonSocial");	
+	dwr.util.addOptions("idZonaExtraccion", zonas,"id","razonSocial");	
 }
 
 function calcularImporteTotal(){
@@ -475,8 +491,8 @@ function calcularVolumenTotalTrimestre(nroTrimestre){
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
 			<td align="left">
 				<select id="idProductor" name="declaracion.productor.id" class="botonerab" onchange="cambiarProductor();">
-					<c:forEach items="${productores}" var="prod">
-						<option value="-1">- Seleccione un Productor -</option>
+					<option value="-1">- Seleccione un Productor -</option>
+					<c:forEach items="${productores}" var="prod">						
 						<option value="${prod.id}">
 							<c:out value="${prod.nombre}"></c:out>
 						</option>
@@ -575,7 +591,7 @@ function calcularVolumenTotalTrimestre(nroTrimestre){
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
-							<select id="idZonaExtraccion" class="botonerab"">
+							<select id="idZonaExtraccion" class="botonerab" disabled="disabled">
 								<option value="-1">--Seleccione una Zona--</option>
 							</select>					
 						</td>						

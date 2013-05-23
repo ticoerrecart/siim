@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.negocio.exception.DataBaseException;
+import ar.com.siim.negocio.exception.NegocioException;
 import ar.com.siim.utils.Constantes;
 
 public class LocalidadDAO extends HibernateDaoSupport {
@@ -38,22 +39,22 @@ public class LocalidadDAO extends HibernateDaoSupport {
 		return (localidades.size() > 0);
 	}
 
-	public void alta_modficacion_Localidad(Localidad localidad) throws DataBaseException {
+	public void alta_modficacion_Localidad(Localidad localidad) throws NegocioException {
 
 		try{
 			if (existeLocalidad(localidad.getNombre(), localidad.getId())) {
-				throw new DataBaseException(Constantes.EXISTE_LOCALIDAD);
+				throw new NegocioException(Constantes.EXISTE_LOCALIDAD);
 			}
 			this.getHibernateTemplate().saveOrUpdate(localidad);
 			this.getHibernateTemplate().flush();
 			this.getHibernateTemplate().clear();
 			
 		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_LOCALIDAD);
+			throw new NegocioException(Constantes.ERROR_ALTA_LOCALIDAD);
 		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_LOCALIDAD);
+			throw new NegocioException(Constantes.ERROR_ALTA_LOCALIDAD);
 		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_LOCALIDAD);
+			throw new NegocioException(Constantes.ERROR_ALTA_LOCALIDAD);
 		}			
 	}
 

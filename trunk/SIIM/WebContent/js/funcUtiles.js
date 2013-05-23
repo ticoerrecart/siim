@@ -225,3 +225,9 @@ function evitarAutoSubmit(e) {
 	  tecla = (document.all) ? e.keyCode :e.which; 
 	  return (tecla!=13); 
 } 
+
+function roundNumber(id){
+	
+	var nro = $('#'+id).val();
+	$('#'+id).val(new Number(nro).toFixed(2));
+}

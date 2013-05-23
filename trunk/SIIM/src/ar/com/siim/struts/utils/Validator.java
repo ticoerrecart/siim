@@ -2,7 +2,7 @@
  * Creado el 05/12/2006
  *
  * Para cambiar la plantilla para este archivo generado vaya a
- * Ventana&gt;Preferencias&gt;Java&gt;Generación de código&gt;Código y comentarios
+ * Ventana&gt;Preferencias&gt;Java&gt;Generaciï¿½n de cï¿½digo&gt;Cï¿½digo y comentarios
  */
 package ar.com.siim.struts.utils;
 
@@ -127,11 +127,11 @@ public abstract class Validator {
 			int entradaInt = Integer.parseInt(entrada);
 			if (entradaInt <= numeroMinimo) {
 				addErrorXML(pError,
-						label + " debe ser un número mayor a " + Integer.toString(numeroMinimo));
+						label + " debe ser un nÃºmero mayor a " + Integer.toString(numeroMinimo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
-			addErrorXML(pError, label + " debe ser un número entero");
+			addErrorXML(pError, label + " debe ser un nÃºmero entero");
 			return false;
 		}
 		return true;
@@ -149,11 +149,11 @@ public abstract class Validator {
 			int entradaInt = Integer.parseInt(entrada);
 			if (entradaInt >= numeroMaximo) {
 				addErrorXML(pError,
-						label + " debe ser un número menor a " + Integer.toString(numeroMaximo));
+						label + " debe ser un nÃºmero menor a " + Integer.toString(numeroMaximo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
-			addErrorXML(pError, label + " debe ser un número entero");
+			addErrorXML(pError, label + " debe ser un nÃºmero entero");
 			return false;
 		}
 		return true;
@@ -168,11 +168,11 @@ public abstract class Validator {
 			long entradaLong = Long.parseLong(entrada);
 			if (entradaLong <= numeroMinimo) {
 				addErrorXML(pError,
-						label + " debe ser un número mayor a " + Integer.toString(numeroMinimo));
+						label + " debe ser un nÃºmero mayor a " + Integer.toString(numeroMinimo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
-			addErrorXML(pError, " debe ser un número entero");
+			addErrorXML(pError, " debe ser un nÃºmero entero");
 			return false;
 		}
 
@@ -186,13 +186,13 @@ public abstract class Validator {
 		}
 		try {
 			double entradaDouble = Double.parseDouble(entrada);
-			if (entradaDouble <= numeroMinimo) {
+			if (isNaN(entradaDouble) || entradaDouble <= numeroMinimo) {
 				addErrorXML(pError,
-						label + " debe ser un número mayor a " + Integer.toString(numeroMinimo));
+						label + " debe ser un nÃºmero mayor a " + Integer.toString(numeroMinimo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
-			addErrorXML(pError, " debe ser un número entero con decimales válido");
+			addErrorXML(pError, " debe ser un nÃºmero entero con decimales vÃ¡lido");
 			return false;
 		}
 
@@ -200,7 +200,7 @@ public abstract class Validator {
 	}
 
 	/*
-	 * Si la entrada es nula entonces se considera valido chequea que el año se
+	 * Si la entrada es nula entonces se considera valido chequea que el aï¿½o se
 	 * mayor que 1900 y menor que 2100
 	 */
 	public static boolean validarFechaValida(String pEntrada, String label, StringBuffer pError) {
@@ -229,7 +229,7 @@ public abstract class Validator {
 				return false;
 			} else if (anioInt > 2100 || anioInt < 1900) {
 				addErrorXML(pError, label
-						+ " invalida, el año debe ser menor igual que 2100 y mayor que 1900");
+						+ " invalida, el aÃ±o debe ser menor igual que 2100 y mayor que 1900");
 				return false;
 			}
 
@@ -244,7 +244,7 @@ public abstract class Validator {
 	}
 
 	/**
-	 * Verifica que la fecha sea vàlida y anterior a fecha actual. si es nula o
+	 * Verifica que la fecha sea vï¿½lida y anterior a fecha actual. si es nula o
 	 * blanco devuelve true
 	 * 
 	 * @param pEntrada
@@ -273,7 +273,7 @@ public abstract class Validator {
 	}
 
 	/**
-	 * Verifica que la fecha sea vàlida y anterior a fecha actual. si es nula o
+	 * Verifica que la fecha sea vï¿½lida y anterior a fecha actual. si es nula o
 	 * blanco devuelve true
 	 * 
 	 * @param pEntrada
@@ -347,7 +347,7 @@ public abstract class Validator {
 			return true;
 		}
 
-		addErrorXML(pError, label + " no es un e-mail válido");
+		addErrorXML(pError, label + " no es un e-mail vÃ¡lido");
 		return false;
 
 	}
@@ -361,7 +361,7 @@ public abstract class Validator {
 		if (m.matches()) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es un AlfaNumérico válido");
+		addErrorXML(pError, label + " no es un AlfaNumÃ©rico vÃ¡lido");
 		return false;
 	}
 
@@ -374,7 +374,7 @@ public abstract class Validator {
 		if (m.matches()) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es un Numérico válido");
+		addErrorXML(pError, label + " no es un NumÃ©rico vÃ¡lido");
 		return false;
 	}
 
@@ -387,7 +387,7 @@ public abstract class Validator {
 		if (m.matches()) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es un Caracter válido");
+		addErrorXML(pError, label + " no es un Caracter vÃ¡lido");
 		return false;
 	}
 
@@ -396,12 +396,12 @@ public abstract class Validator {
 		if ((valor == null) || valor.length() <= longitud) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es válido, se permite hasta " + longitud + " posiciones");
+		addErrorXML(pError, label + " no es vÃ¡lido, se permite hasta " + longitud + " posiciones");
 		return false;
 	}
 
 	/**
-	 * true si es null , string vacío o letras, si el valor longitudMaxima es 0,
+	 * true si es null , string vacï¿½o o letras, si el valor longitudMaxima es 0,
 	 * no toma cuenta el largo del string.
 	 */
 	public static boolean validarLetras(String valor, int longitudMaxima, String label,
@@ -413,7 +413,7 @@ public abstract class Validator {
 				&& (longitudMaxima == 0 || valor.length() <= longitudMaxima)) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es válido, solo letras"
+		addErrorXML(pError, label + " no es vÃ¡lido, solo letras"
 				+ (longitudMaxima != 0 ? " hasta " + longitudMaxima + " posiciones" : ""));
 		return false;
 	}
@@ -428,7 +428,7 @@ public abstract class Validator {
 			int n = Integer.parseInt(strArray[0]);
 			int n2 = Integer.parseInt(strArray[1]);
 			if (n+1 != n2) {
-				addErrorXML(pError, "Los Años del periodo deben ser consecutivos");
+				addErrorXML(pError, "Los AÃ±os del periodo deben ser consecutivos");
 				return false;
 			} 
 			return true;
@@ -437,6 +437,11 @@ public abstract class Validator {
 			return false;
 		}
 	}	
+	
+	public static boolean isNaN(double d){
+		
+		return (d!=d);
+	}
 	
 	/*
 	public static boolean validarMuestras(List<MuestraDTO> muestras, Long idTipoProducto,
@@ -631,7 +636,7 @@ public abstract class Validator {
 			int n = Integer.parseInt(strArray[0]);
 			int n2 = Integer.parseInt(strArray[1]);
 			if (n+1 != n2) {
-				addErrorXML(pError, "Los Años del periodo deben ser consecutivos");
+				addErrorXML(pError, "Los Aï¿½os del periodo deben ser consecutivos");
 				return false;
 			} 
 			return true;
