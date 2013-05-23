@@ -87,6 +87,7 @@ function submitir(metodoValidacion){
 			width="70%" cellpadding="2">
 			<tr>
 				<td class="azulAjustado"><bean:message key='SIIM.label.TipoDeProducto'/></td>
+				<td class="azulAjustado"><bean:message key='SIIM.label.RegaliaMinera'/></td>
 				<td class="azulAjustado"></td>
 			</tr>
 
@@ -94,6 +95,7 @@ function submitir(metodoValidacion){
 
 				<tr id="tr<c:out value='${i.count}'></c:out>">
 					<td class="botonerab"><c:out value="${tipoProducto.nombre}"></c:out></td>
+					<td class="botonerab"><c:out value="${tipoProducto.regaliaMinera}"></c:out></td>
 					<td>
 						<a href="javascript:mostrarDatos(<c:out value='${tipoProducto.id}'></c:out>,<c:out value='${i.count}'></c:out>);">
 							<bean:message key='SIIM.label.Editar'/>

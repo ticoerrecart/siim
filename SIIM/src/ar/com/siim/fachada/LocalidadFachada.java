@@ -38,12 +38,8 @@ public class LocalidadFachada implements ILocalidadFachada {
 	}
 
 	public void altaLocalidad(LocalidadDTO localidadDTO) throws NegocioException {
-		try{
-			localidadDAO.alta_modficacion_Localidad(ProviderDominio.getLocalidad(localidadDTO));
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+
+		localidadDAO.alta_modficacion_Localidad(ProviderDominio.getLocalidad(localidadDTO));	
 	}
 	
 	public List<LocalidadDTO> getLocalidadesDTO(){
@@ -66,12 +62,7 @@ public class LocalidadFachada implements ILocalidadFachada {
 	
 	public void modificacionLocalidad(LocalidadDTO localidadDTO) throws NegocioException{
 		
-		try{
-			Localidad localidad = localidadDAO.getLocalidadPorId(localidadDTO.getId());	
-			localidadDAO.alta_modficacion_Localidad(ProviderDominio.getLocalidad(localidad,localidadDTO));
-
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		Localidad localidad = localidadDAO.getLocalidadPorId(localidadDTO.getId());	
+		localidadDAO.alta_modficacion_Localidad(ProviderDominio.getLocalidad(localidad,localidadDTO));
 	}
 }

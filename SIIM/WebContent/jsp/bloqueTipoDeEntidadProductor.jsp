@@ -51,6 +51,7 @@ function mostrarDetalle(){
 	$('#divDetalle').html("");
 	
 	if(idProductor != "" && idProductor != "-1"){
+
 		$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor + '&forward=' + forward);
 		$('#divDetalle').hide();
 		$('#divDetalle').fadeIn(600);

@@ -6,6 +6,9 @@
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
+<script type="text/javascript"
+	src="<html:rewrite page='/js/validarNum.js'/>"></script>	
+	
 <script type="text/javascript">
 	function submitir(){
 		validarForm("localizacionFormId","../localizacion","validarLocalizacionForm","LocalizacionForm");
@@ -17,6 +20,7 @@
 <div id="errores" class="rojoAdvertencia">${error}</div>
 
 <html:form action="localizacion" styleId="localizacionFormId">
+
 	<c:choose>
 		<c:when test="${empty metodo}">
 			<html:hidden property="metodo" value="${param.metodo}" />
@@ -25,7 +29,15 @@
 			<html:hidden property="metodo" value="${metodo}" />
 		</c:otherwise>
 	</c:choose>
-	
+	<c:choose>
+		<c:when test="${empty idProductor}">
+			<html:hidden property="localizacionDTO.productor.id" value="${param.idProductor}" />
+		</c:when>
+		<c:otherwise>
+			<html:hidden property="localizacionDTO.productor.id" value="${idProductor}" />
+		</c:otherwise>
+	</c:choose>
+	<html:hidden property="localizacionDTO.id" value="${localizacion.id}" />
 
 	<table border="0" class="cuadrado" align="center" width="60%"
 		cellpadding="2">
@@ -38,12 +50,37 @@
 		</tr>
 		<tr>
 			<td width="40%" class="botoneralNegritaRight">
-				Razón Social
+				<bean:message key='SIIM.label.RazonSocial'/>
 			</td>
 			<td align="left">
 				<html:text styleClass="botonerab" property="localizacionDTO.razonSocial" value="${localizacion.razonSocial}" />
 			</td>
 		</tr>
+		<tr>
+			<td width="40%" class="botoneralNegritaRight">
+				<bean:message key='SIIM.label.Expediente'/>
+			</td>
+			<td align="left">
+				<html:text styleClass="botonerab" property="localizacionDTO.expediente" value="${localizacion.expediente}" />
+			</td>
+		</tr>
+		<tr>
+			<td width="40%" class="botoneralNegritaRight">
+				<bean:message key='SIIM.label.Resolucion'/>
+			</td>
+			<td align="left">
+				<html:text styleClass="botonerab" property="localizacionDTO.resolucion" value="${localizacion.resolucion}" />
+			</td>
+		</tr>		
+		<tr>
+			<td width="40%" class="botoneralNegritaRight">
+				<bean:message key='SIIM.label.Superficie'/>
+			</td>
+			<td align="left">
+				<html:text styleId="idSuperficie" styleClass="botonerab" property="localizacionDTO.superficie" value="${localizacion.superficie}" 
+						onkeypress="javascript:esNumericoConDecimal(event);" onblur="roundNumber('idSuperficie');"/>
+			</td>
+		</tr>				
 		<tr>
 			<td height="20" colspan="2"></td>
 		</tr>
