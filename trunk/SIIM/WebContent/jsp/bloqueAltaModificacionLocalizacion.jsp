@@ -71,7 +71,15 @@
 			<td align="left">
 				<html:text styleClass="botonerab" property="localizacionDTO.resolucion" value="${localizacion.resolucion}" />
 			</td>
-		</tr>		
+		</tr>
+		<tr>
+			<td width="40%" class="botoneralNegritaRight">
+				<bean:message key='SIIM.label.Domicilio'/>
+			</td>
+			<td align="left">
+				<html:text styleClass="botonerab" property="localizacionDTO.domicilio" value="${localizacion.domicilio}" />
+			</td>
+		</tr>				
 		<tr>
 			<td width="40%" class="botoneralNegritaRight">
 				<bean:message key='SIIM.label.Superficie'/>

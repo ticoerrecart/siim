@@ -54,11 +54,12 @@ function mostrarDetalle(){
 
 		$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor + '&forward=' + forward);
 		$('#divDetalle').hide();
-		$('#divDetalle').fadeIn(600);
+		//$('#divDetalle').fadeIn(600);
 
 		Concurrent.Thread.create(function(){
 		    while ($('#divDetalle').html() == "") {}
 		    $('#divCargando').hide();
+		    $('#divDetalle').show(600);
 		});		
 		
 	}else{

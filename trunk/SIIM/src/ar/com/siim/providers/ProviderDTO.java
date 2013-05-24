@@ -140,6 +140,7 @@ public abstract class ProviderDTO {
 			localizacionDTO.setProductor(ProviderDTO.getEntidadDTO(localizacion.getProductor()));
 			localizacionDTO.setRazonSocial(localizacion.getRazonSocial());
 			localizacionDTO.setResolucion(localizacion.getResolucion());
+			localizacionDTO.setDomicilio(localizacion.getDomicilio());
 			localizacionDTO.setSuperficie(localizacion.getSuperficie());
 			
 			return localizacionDTO;
