@@ -123,6 +123,7 @@ public abstract class ProviderDominio {
 		localizacion.setProductor(productor);
 		localizacion.setRazonSocial(localizacionDTO.getRazonSocial());
 		localizacion.setResolucion(localizacionDTO.getResolucion());
+		localizacion.setDomicilio(localizacionDTO.getDomicilio());
 		localizacion.setSuperficie(localizacionDTO.getSuperficie());
 		
 		return localizacion;

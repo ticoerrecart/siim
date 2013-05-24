@@ -30,6 +30,8 @@ public class Localizacion {
 	
 	private String resolucion;
 	
+	private String domicilio;
+	
 	private double superficie;
 	
 	public Long getId() {
@@ -78,6 +80,14 @@ public class Localizacion {
 
 	public void setSuperficie(double superficie) {
 		this.superficie = superficie;
+	}
+
+	public String getDomicilio() {
+		return domicilio;
+	}
+
+	public void setDomicilio(String domicilio) {
+		this.domicilio = domicilio;
 	}
 
 }

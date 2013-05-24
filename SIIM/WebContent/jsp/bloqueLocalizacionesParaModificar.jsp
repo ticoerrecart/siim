@@ -29,11 +29,12 @@
 		
 		$('#divModificacion').load('../../localizacion.do?metodo=cargarLocalizacionParaModificar&idLocalizacion='+idLocalizacion);
 		$('#divModificacion').hide();
-		$('#divModificacion').fadeIn(600);
+		//$('#divModificacion').fadeIn(600);
 
 		Concurrent.Thread.create(function(){
 		    while ($('#divModificacion').html() == "") {}
 		    $('#divCargando').hide();
+		    $('#divModificacion').show(600);
 		});		
 	}
 </script>
@@ -44,6 +45,7 @@
 		<td class="azulAjustado"><bean:message key='SIIM.label.RazonSocial'/></td>
 		<td class="azulAjustado"><bean:message key='SIIM.label.Expediente'/></td>
 		<td class="azulAjustado"><bean:message key='SIIM.label.Resolucion'/></td>
+		<td class="azulAjustado"><bean:message key='SIIM.label.Domicilio'/></td>
 		<td class="azulAjustado"><bean:message key='SIIM.label.Superficie'/></td>
 		<td class="azulAjustado"></td>
 	</tr>
@@ -54,6 +56,7 @@
 			<td><c:out value="${localizacion.razonSocial}" /></td>
 			<td><c:out value="${localizacion.expediente}" /></td>
 			<td><c:out value="${localizacion.resolucion}" /></td>
+			<td><c:out value="${localizacion.domicilio}" /></td>
 			<td><c:out value="${localizacion.superficie}" /></td>
 			<td>
 				<a href="javascript:mostrarDatos(${localizacion.id},${i.count});">

@@ -66,6 +66,7 @@ public class LocalizacionFachada implements ILocalizacionFachada {
 		localizacion.setExpediente(localizacionDTO.getExpediente());
 		localizacion.setRazonSocial(localizacionDTO.getRazonSocial());
 		localizacion.setResolucion(localizacionDTO.getResolucion());
+		localizacion.setDomicilio(localizacionDTO.getDomicilio());
 		localizacion.setSuperficie(localizacionDTO.getSuperficie());
 		
 		localizacionDAO.altaModificacionLocalizacion(localizacion);

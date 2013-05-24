@@ -28,11 +28,12 @@
 		
 		$('#divModificacion').load('../../usuario.do?metodo=cargarUsuarioAModificar&id=' + idUsuario);
 		$('#divModificacion').hide();
-		$('#divModificacion').fadeIn(600);
+		//$('#divModificacion').fadeIn(600);
 
 		Concurrent.Thread.create(function(){
 		    while ($('#divModificacion').html() == "") {}
 		    $('#divCargando').hide();
+		    $('#divModificacion').show(600);		    
 		});		
 		
 	}

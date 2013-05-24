@@ -50,11 +50,12 @@ function mostrarDatos(idTipoProducto,idTr){
 	$('#divModificacion').load('../../recuperarTipoProducto.do?metodo=recuperarTipoProducto&id='+idTipoProducto);
 	//$('#divModificacion').load('../../recuperarTipoProducto.do?metodo='+metodo+'&id='+idTipoProducto);
 	$('#divModificacion').hide();
-	$('#divModificacion').fadeIn(600);
+	//$('#divModificacion').fadeIn(600);
 
 	Concurrent.Thread.create(function(){
 	    while ($('#divModificacion').html() == "") {}
 	    $('#divCargando').hide();
+	    $('#divModificacion').show(600);	    
 	});	
 }
 
