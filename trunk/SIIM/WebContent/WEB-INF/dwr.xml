@@ -17,7 +17,7 @@
 			<param name="include" value="id,nombre" />
 		</convert>
 		<convert converter="bean" match="ar.com.siim.dto.LocalizacionDTO">
-			<param name="include" value="id,razonSocial" />
+			<param name="include" value="id,razonSocial, domicilio, superficie" />
 		</convert>		
 				
 		
