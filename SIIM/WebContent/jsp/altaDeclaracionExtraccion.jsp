@@ -461,6 +461,26 @@ function calcularVolumenTotalTrimestre(nroTrimestre){
 	calcularImporteTotal();
 }
 
+function cambiarZonaExtraccion(){
+
+	var idZonaExtraccion = $('#idZonaExtraccion').val();
+
+	if(idZonaExtraccion != "-1"){
+		
+		LocalizacionFachada.getLocalizacionDTOPorId(idZonaExtraccion,cambiarZonaExtraccionCallback );
+	}
+	else{
+		$('#domZona').val("");
+		$('#supZona').val("");	
+	}	
+}
+
+function cambiarZonaExtraccionCallback(localizacion) {
+	
+	dwr.util.setValue("domZona", localizacion.domicilio);
+	dwr.util.setValue("supZona", localizacion.superficie);				
+}
+
 </script>
 
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
@@ -591,11 +611,29 @@ function calcularVolumenTotalTrimestre(nroTrimestre){
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
-							<select id="idZonaExtraccion" class="botonerab" disabled="disabled">
+							<select id="idZonaExtraccion" class="botonerab" disabled="disabled" onchange="cambiarZonaExtraccion();">
 								<option value="-1">--Seleccione una Zona--</option>
 							</select>					
 						</td>						
-					</tr>												
+					</tr>	
+					<tr>
+						<td width="47%" class="botoneralNegritaRight">
+							<bean:message key='SIIM.label.Domicilio'/>
+						</td>
+						<td width="4%"></td>						
+						<td align="left">
+							<input id="domZona" class="botonerab" type="text" size="25" readonly="readonly">
+						</td>						
+					</tr>
+					<tr>
+						<td width="47%" class="botoneralNegritaRight">
+							<bean:message key='SIIM.label.Superficie'/>
+						</td>
+						<td width="4%"></td>						
+						<td align="left">
+							<input id="supZona" class="botonerab" type="text" size="25" readonly="readonly">
+						</td>						
+					</tr>																					
 					<tr>
 						<td colspan="3" height="10"></td>
 					</tr>				
