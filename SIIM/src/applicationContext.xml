@@ -10,7 +10,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/siim" />
+		<property name="url" value="jdbc:mysql://localhost:3306/x071vm20_siim" />
 		<property name="username" value="x071vm20" />
 		<property name="password" value="jUTRDpsv42mnu" />
 	</bean>
