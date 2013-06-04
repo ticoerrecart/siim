@@ -17,7 +17,7 @@ import ar.com.siim.utils.MyLogger;
 public class DeclaracionExtraccionAction extends ValidadorAction {
 
 	@SuppressWarnings("unchecked")
-	public ActionForward cargarAltaGuiaForestalBasica(ActionMapping mapping,
+	public ActionForward cargarAltaDeclaracionExtraccion(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 

@@ -8,23 +8,15 @@ package ar.com.siim.struts.utils;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jdt.internal.compiler.ast.ThisReference;
+import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
+import org.apache.commons.collections.CollectionUtils;
 
-/*import ar.com.siif.dto.BoletaDepositoDTO;
-import ar.com.siif.dto.FiscalizacionDTO;
-import ar.com.siif.dto.MuestraDTO;
-import ar.com.siif.dto.RangoDTO;
-import ar.com.siif.dto.SubImporteDTO;
-import ar.com.siif.dto.ValeTransporteDTO;
-import ar.com.siif.negocio.Fiscalizacion;*/
+import ar.com.siim.dto.BoletaDepositoDTO;
 import ar.com.siim.utils.DateUtils;
 import ar.com.siim.utils.MathUtils;
 
@@ -443,40 +435,16 @@ public abstract class Validator {
 		return (d!=d);
 	}
 	
-	/*
-	public static boolean validarMuestras(List<MuestraDTO> muestras, Long idTipoProducto,
-			StringBuffer pError) {
+	public static boolean validarLocalizacionRequerido(String idLocalizacion, StringBuffer pError) {
 
-		//int cantNulos = 0;
-
-		if (muestras.size() == 0) {
-			addErrorXML(pError, "Cantidad de Muestras debe ser un numero mayor a 0");
+		if (idLocalizacion == null || idLocalizacion.equals("")
+				|| (idLocalizacion != null && Long.parseLong(idLocalizacion) <= 0)) {
+			addErrorXML(pError, "Localización es un dato obligatorio");
 			return false;
 		}
-
-		for (MuestraDTO muestra : muestras) {
-			if (muestra != null) {
-				if (idTipoProducto == 2 || idTipoProducto == 5) {
-					if (muestra.getLargo() == 0.0 || muestra.getDiametro1() == 0.0
-							|| muestra.getDiametro2() == 0.0) {
-						addErrorXML(pError, "Faltan datos de Largo y/o Diametro en las Muestras");
-						return false;
-					}
-				} else {
-					if (idTipoProducto == 1 || idTipoProducto == 4) {
-						if (muestra.getLargo() == 0.0 || muestra.getDiametro1() == 0.0) {
-							addErrorXML(pError,
-									"Faltan datos de Largo y/o Diametro en las Muestras");
-							return false;
-						}
-					}
-				}
-			}
-		}
-
 		return true;
-	}
-
+	}	
+	
 	public static boolean validarBoletasDeposito(List<BoletaDepositoDTO> boletas,
 			double montoTotal, StringBuffer pError) {
 
@@ -485,183 +453,64 @@ public abstract class Validator {
 			return false;
 		}
 		double montoSumaBoletas = 0;
+		List<BoletaDepositoDTO> listaBoletas = new ArrayList<BoletaDepositoDTO>();
 		for (BoletaDepositoDTO boleta : boletas) {
+			if (listaBoletas.size() == 0) {
+				//tengo q crear una nueva porq sino no anda, se borra de la coleccion
+				BoletaDepositoDTO b = new BoletaDepositoDTO();
+				b.setNumero(boleta.getNumero());
+				listaBoletas.add(b);
+			} else {
+				BoletaDepositoDTO boletaEncontrada = (BoletaDepositoDTO) CollectionUtils.find(
+						listaBoletas,
+						new BeanPropertyValueEqualsPredicate("numero", boleta.getNumero()));
+				if (boletaEncontrada == null) {
+					//tengo q crear una nueva porq sino no anda, se borra de la coleccion
+					BoletaDepositoDTO b = new BoletaDepositoDTO();
+					b.setNumero(boleta.getNumero());
+					listaBoletas.add(b);
+				} else {
+					addErrorXML(pError, "Los Números de las Boletas de Deposito no se pueden repetir");
+					return false;
+				}
+			}
+
 			montoSumaBoletas = montoSumaBoletas + boleta.getMonto();
-			if (boleta.getNumero() <= 0 || boleta.getConcepto() == null
-					|| boleta.getConcepto().equals("") || boleta.getArea() == null
-					|| boleta.getArea().equals("") || boleta.getMonto() <= 0.0) {
-				addErrorXML(pError, "Faltan datos en las Boletas de Deposito");
+			if (boleta.getNumero() <= 0) {
+				addErrorXML(pError, "Faltan datos en el Nro de Boleta de Deposito");
 				return false;
 			}
+
+			if (boleta.getConcepto() == null || boleta.getConcepto().equals("")) {
+				addErrorXML(pError, "Faltan datos en el Concepto de la Boleta de Deposito");
+				return false;
+			}
+
+			if (boleta.getArea() == null || boleta.getArea().equals("")) {
+				addErrorXML(pError, "Faltan datos en el Area de la Boleta de Deposito");
+				return false;
+			}
+
+			if (boleta.getFechaVencimiento() == null || boleta.getFechaVencimiento().equals("")) {
+				addErrorXML(pError, "Faltan datos en la Fecha de Vencimiento de la Boleta de Deposito");
+				return false;
+			}			
+			
+			if (boleta.getMonto() <= 0.0) {
+				addErrorXML(pError, "Faltan datos en el monto de la Boleta de Deposito");
+				return false;
+			}
+
 		}
-		
+
 		montoSumaBoletas = MathUtils.round(montoSumaBoletas, 2);
-		
+
 		if (montoSumaBoletas != montoTotal) {
 			addErrorXML(pError,
 					"La suma de los montos de las Boletas de Deposito debe ser igual al Importe Total");
 			return false;
 		}
 		return true;
-	}
-
-	public static boolean validarValesTransporte(List<ValeTransporteDTO> vales, StringBuffer pError) {
-
-		if (vales.size() == 0) {
-			addErrorXML(pError, "La Cantidad de Vales de Transporte debe ser un numero mayor a 0");
-			return false;
-		}
-		for (ValeTransporteDTO vale : vales) {
-
-			if (vale.getNumero() <= 0 || vale.getOrigen() == null || vale.getOrigen().equals("")
-					|| vale.getDestino() == null || vale.getDestino().equals("")
-					|| vale.getVehiculo() == null || vale.getVehiculo().equals("")
-					|| vale.getMarca() == null || vale.getMarca().equals("")
-					|| vale.getDominio() == null || vale.getDominio().equals("")
-					|| vale.getProducto() == null || vale.getProducto().equals("")
-					|| (vale.getNroPiezas() <= 0 && vale.getCantidadMts() <= 0.0)
-					|| vale.getEspecie() == null || vale.getEspecie().equals("")) {
-				addErrorXML(pError, "Faltan datos en los Vales de Transporte");
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public static boolean validarTipoProductoAltaGFB(Long idTipoProductoGuia,
-			Long idTipoProductoFiscalizacion, StringBuffer pError) {
-
-		if (idTipoProductoGuia.longValue() != idTipoProductoFiscalizacion.longValue()) {
-			addErrorXML(pError, "El Tipo de Producto debe ser igual al de las Fiscalizaciones");
-			return false;
-		}
-		return true;
-	}
-
-	public static boolean validarRangos(List<RangoDTO> rangos, StringBuffer pError) {
-		if (rangos.size() == 0) {
-			addErrorXML(pError, "La Cantidad de Rangos debe ser un numero mayor a 0");
-			return false;
-		}
-		for (RangoDTO rango : rangos) {
-			if (rango.getDesde() <= 0 || rango.getHasta() <= 0) {
-				addErrorXML(pError, "Los valores Desde y Hasta deben ser enteros positivos");
-				return false;
-			}
-			if (rango.getDesde() > rango.getHasta()) {
-				addErrorXML(pError, "El valor Desde no puede ser mayor que el valor Hasta");
-				return false;
-			}
-		}
-		List<Integer> lista = new ArrayList<Integer>();
-		for (RangoDTO rango : rangos) {
-			lista.add(rango.getDesde());
-			lista.add(rango.getHasta() + 1);
-		}
-		Integer i = new Integer(-1);
-		for (Integer integer : lista) {
-			if (i > integer) {
-				addErrorXML(pError, "Los valores de los rangos estan superpuestos");
-				return false;
-			} else {
-				i = integer;
-			}
-		}
-		return true;
-	}		
-	
-	public static boolean validarSubImportes(List<SubImporteDTO> listaSubImportes, List<FiscalizacionDTO> listaFiscalizaciones,
-													String tipoTerreno,StringBuffer pError)
-	{
-
-		HashMap<Long,SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
-		Set<SubImporteDTO> listaIdTipoProducto = new TreeSet<SubImporteDTO>();
-		
-		for (SubImporteDTO subImporteDTO : listaSubImportes) {
-			
-			hashProductosFiscalizados.put(subImporteDTO.getTipoProducto().getId(), subImporteDTO);
-			
-			if(listaIdTipoProducto.contains(subImporteDTO)){
-				addErrorXML(pError, "Debe especificar un solo subImporte por cada Tipo de Producto");
-				return false;
-			}
-			if(subImporteDTO.getEstado()== null || subImporteDTO.getEstado().equals("")){
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
-				return false;
-			}
-			if(subImporteDTO.getEspecie()== null || subImporteDTO.getEspecie().trim().equals("")){
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
-				return false;
-			}	
-			if(subImporteDTO.getCantidadMts() <= 0.0){
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
-				return false;
-			}
-			if(subImporteDTO.getValorAforos() <= 0.0){
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
-				return false;
-			}
-			if(!tipoTerreno.equals("Privado") && subImporteDTO.getImporte() <= 0.0){
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
-				return false;
-			}			
-			listaIdTipoProducto.add(subImporteDTO);
-		}
-		
-		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
-			if(fiscalizacionDTO.getId() != null){
-				SubImporteDTO subImporte = hashProductosFiscalizados.get(fiscalizacionDTO.getTipoProducto().getId());
-				if(subImporte == null){
-					addErrorXML(pError, "Debe agregar todas las fiscalizaciones al calculo del importe");
-					return false;				
-				}				
-			}	
-		}		
-		
-		return true;
-	}
-	
-	public static boolean validarRodalRequerido(Long idRodal , StringBuffer pError){
-		
-		if(idRodal == null || idRodal.longValue() <= 0){
-			addErrorXML(pError, "Rodal es un dato obligatorio");
-			return false;
-		}
-		return true;
-	}
-	
-	public static boolean validarFormatoPeriodo(String periodo, StringBuffer pError){
-		try {
-			String[] strArray = periodo.split("-");
-			int n = Integer.parseInt(strArray[0]);
-			int n2 = Integer.parseInt(strArray[1]);
-			if (n+1 != n2) {
-				addErrorXML(pError, "Los A�os del periodo deben ser consecutivos");
-				return false;
-			} 
-			return true;
-		} catch (Exception e) {
-			addErrorXML(pError, "El formato del periodo deben ser AAAA-AAAA. Ej 2011-2012");
-			return false;
-		}
-	}
-	
-	public static boolean validarM3ValesMenorQueM3Fiscalizaciones(double m3Vales, double m3Fiscalizaciones, StringBuffer pError){
-		if (m3Vales > m3Fiscalizaciones + 1){
-			addErrorXML(pError, "La suma de los M3 de los vales de transporte deben ser menores que los M3 declarados en las fiscalizaciones");
-			return false;
-		}
-		return true;
-	}
-	
-	public static boolean validarFiscalizacionExistenteParaVale(List<Fiscalizacion> fiscalizaciones, String tipoProducto, StringBuffer pError){
-		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
-			if (fiscalizacion.getTipoProducto().getNombre().equalsIgnoreCase(tipoProducto)){
-				return true;
-			}
-		}
-		addErrorXML(pError, "Debe existir al menos una Fiscalizacion para el tipo de Proucto del Vale de Transporte");
-		return false;
-	}*/
+	}	
 	
 }

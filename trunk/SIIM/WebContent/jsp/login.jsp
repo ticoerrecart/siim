@@ -39,7 +39,7 @@
 			</td>
 			<td width="25%"><b><bean:message key='SIIM.label.Usuario'/></b></td>
 			<td align="left">
-				<html:text styleId="idUsuario" property="usuario" styleClass="botonerab" size="15" value="c"/>
+				<html:text styleId="idUsuario" property="usuario" styleClass="botonerab" size="15" value=""/>
 			</td>
 			<td>&nbsp;</td>
 		</tr>
@@ -51,7 +51,7 @@
 			</td>
 			<td><b><bean:message key='SIIM.label.Contrasenia'/></b></td>
 			<td align="left">
-				<html:password property="password"	styleClass="botonerab" size="15" value="c"></html:password>
+				<html:password property="password"	styleClass="botonerab" size="15" value=""></html:password>
 			</td>
 			<td>&nbsp;</td>
 		</tr>
