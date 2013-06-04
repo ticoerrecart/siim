@@ -25,7 +25,10 @@
 		</form-bean>
 		<form-bean name="localizacionForm"
 			type="ar.com.siim.struts.actions.forms.LocalizacionForm">
-		</form-bean>		
+		</form-bean>
+		<form-bean name="canonMineroForm"
+			type="ar.com.siim.struts.actions.forms.CanonMineroForm">
+		</form-bean>				
 	</form-beans>
 
 	<global-exceptions></global-exceptions>
@@ -43,6 +46,7 @@
 
 		<!-- JSP -->
 		<action path="/jsp" type="ar.com.siim.struts.actions.TilesForwardAction">
+			<forward name=".index" path=".index" />
 			<forward name=".altaLocalidad" path=".altaLocalidad" />
 			<forward name=".altaPeriodo" path=".altaPeriodo" />			
 		</action>
@@ -147,6 +151,13 @@
 			<forward name="exitoModificacionLocalizacion" path="/localizacion.do?metodo=cargarModificacionLocalizacion" />				
 		</action>		
 		<!-- FIN LOCALIZACION -->
+		
+		<!-- CANON MINERO -->
+		<action path="/canonMinero" type="ar.com.siim.struts.actions.CanonMineroAction"
+			parameter="metodo" name="canonMineroForm" scope="request">
+			<forward name="exitoCargarAltaCanonMinero" path=".altaCanonMinero" />					
+		</action>
+		<!-- FIN CANON MINERO -->		
 		
 		<!-- DECLARACION EXTRACCION -->
 		<action path="/declaracionExtraccion" type="ar.com.siim.struts.actions.DeclaracionExtraccionAction"

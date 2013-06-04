@@ -13,8 +13,6 @@
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
 <script type="text/javascript"
-	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>
-<script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/LocalizacionFachada.js'/>"></script>
@@ -28,12 +26,7 @@
 <script>
 	$(function() {
 
-		$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#datepickerFecha" ).datepicker({ dateFormat: 'dd/mm/yy'});	
-		$( "#datepickerFechaTrim1" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#datepickerFechaTrim2" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#datepickerFechaTrim3" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#datepickerFechaTrim4" ).datepicker({ dateFormat: 'dd/mm/yy'});	
+		$( "#datepickerFecha" ).datepicker({ dateFormat: 'dd/mm/yy'});
 	});
 
 var type;
@@ -41,19 +34,8 @@ if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="O
 if (document.all) type="IE"; 
 if (!document.all && document.getElementById) type="MO";
 
-function volverAltaGuia(){	
-	var entidad = $('#paramIdTipoDeEntidad').val();
-	var productor = $('#paramProductor').val();
-	parent.location = contextRoot() +
-	'/guiaForestal.do?metodo=recuperarTiposDeEntidadParaAltaGFB&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor;		
-}
-
-function setValorLocalizacion(valor){
-	$("#idLocalizacion").val(valor);
-}
-
 function submitir(){
-	validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
+	validarForm("canonMineroFormId","../canonMinero","validarAltaCanonMineroForm","CanonMineroForm");
 }
 
 function exp(sec) {
@@ -114,21 +96,13 @@ function despintarFila(idTr){
 	}		
 }
 
-function volverAltaGFB(){
-
-	$("#idGuia").show();
-	$("#idDivFiscalizacion").hide();
-	$("#idDivFiscalizacion").empty();
-	$("#errores").show();
-}
-
 
 //-----------------------------------------------------//
-//FUNCIONES DE DECLARACION DE EXTRACCION//
+//FUNCIONES DE PAGO DE CANON MINERO//
 
 var indice = 2;										 
 function agregarCuota(){
-	var nom = $("#nomProductor").val();
+	var nom = $("#nombreProductor").val();
 	
 	var nombre = "";
 	nombre = reemplazarCaracter(" ","%20",nom,nombre);
@@ -136,7 +110,7 @@ function agregarCuota(){
 	$('#dummy').load('/SIIM/jsp/bloqueBoletaDeposito.jsp?nombreProductor='+ nombre +'&indice=' + indice , 
 			function(){
 
-		var i = "divPlanDePagos"+indice;																
+				var i = "divPlanDePagos"+indice;																
 				document.getElementById(i).innerHTML = document.getElementById("dummy").innerHTML;
 				document.getElementById("dummy").innerHTML = "";
 
@@ -167,6 +141,8 @@ function cambiarProductor(){
 
 	var idProductor = $('#idProductor').val();
 
+	limpiarCamposLocalizacion();
+	
 	if(idProductor != "-1"){
 		$('#idZonaExtraccion').attr('disabled',false);
 		EntidadFachada.getEntidadDTO(idProductor,cambiarProductorCallback );
@@ -188,10 +164,7 @@ function cambiarProductor(){
 
 function cambiarProductorCallback(productor) {
 	
-	dwr.util.setValue("nomProductor", productor.nombre);
-	dwr.util.setValue("domProductor", productor.direccion);
-	dwr.util.setValue("locProductor", productor.localidad.nombre);
-	dwr.util.setValue("telProductor", productor.telefono);
+	dwr.util.setValue("nombreProductor", productor.nombre);
 
 	var ind = indice-2;
 	for(var i=0;i<=ind;i++){
@@ -245,15 +218,47 @@ function cambiarZonaExtraccion(){
 		LocalizacionFachada.getLocalizacionDTOPorId(idZonaExtraccion,cambiarZonaExtraccionCallback );
 	}
 	else{
-		$('#domZona').val("");
-		$('#supZona').val("");	
+		/*$('#domZona').val("");
+		$('#supZona').val("");
+		$('#cantHectareas').val("");*/
+
+		limpiarCamposLocalizacion();		
 	}	
 }
 
 function cambiarZonaExtraccionCallback(localizacion) {
 	
 	dwr.util.setValue("domZona", localizacion.domicilio);
-	dwr.util.setValue("supZona", localizacion.superficie);				
+	dwr.util.setValue("supZona", localizacion.superficie);
+	//dwr.util.setValue("cantHectareas", localizacion.superficie);	
+
+	$('#cantHectareas').html(localizacion.superficie);
+	
+	var cantHa = $('#cantHectareas').html(); 
+	var haXPert = $('#haXPertenencia').html();
+	
+	var num = Math.floor(cantHa/haXPert);
+	var decimal = cantHa%haXPert;	
+ 
+	var entero = (decimal<= 0)?num: new Number(num)+new Number(1); 
+	
+	$('#cantPertenencias').html(entero);
+	
+	var canonMinero = $('#canonXPertenencia').html();
+	
+	$('#montoTotal').html("$ "+new Number(entero)*new Number(canonMinero));
+
+	$('#idCanonXPertenencia').val(canonMinero);
+	$('#idMontoTotal').val(new Number(entero)*new Number(canonMinero));
+}
+
+function limpiarCamposLocalizacion(){
+
+	$('#domZona').val("");
+	$('#supZona').val("");
+	$('#cantHectareas').html("");
+	$('#cantPertenencias').html("");
+	$('#montoTotal').html("");
 }
 
 </script>
@@ -263,100 +268,40 @@ function cambiarZonaExtraccionCallback(localizacion) {
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${warning}</div>
 
-<div id="idDeclaracion">
-<html:form action="declaracionExtraccion" styleId="DeclaracionExtraccionForm">
-	<html:hidden property="metodo" value="altaDeclaracionExtraccion" />
+<html:form action="canonMinero" styleId="canonMineroFormId">
+	<html:hidden property="metodo" value="altaCanonMinero" />
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">
-				<bean:message key='SIIM.titulo.AltaDeclaracionExtraccion'/>
+				<bean:message key='SIIM.titulo.AltaCanonMinero'/>
 			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
-
 		<tr>
-			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Numero'/></td>
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
 			<td width="30%" align="left">
-				<input name="declaracion.numero" class="botonerab" type="text" size="20" 
-						onkeypress="javascript:esNumerico(event);">
-			</td>
-			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
-			<td align="left">
-				<select id="idProductor" name="declaracion.productor.id" class="botonerab" onchange="cambiarProductor();">
+				<input type="hidden" id="nombreProductor" value="" />
+				<select id="idProductor" name="canonMinero.productor.id" class="botonerab" onchange="cambiarProductor();">
 					<option value="-1">- Seleccione un Productor -</option>
 					<c:forEach items="${productores}" var="prod">						
 						<option value="${prod.id}">
 							<c:out value="${prod.nombre}"></c:out>
 						</option>
 					</c:forEach>
-				</select>				
-			</td>
-		</tr>
-
-		<tr>
-			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.ValidoHasta'/></td>
-			<td width="30%" align="left">
-				<input id="datepicker" type="text" name="declaracion.fechaVencimiento" readonly="readonly" class="botonerab">
-				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
+				</select>	
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Periodo'/></td>
 			<td align="left">
-					<select name="declaracion.periodo" class="botonerab" >
+					<select name="canonMinero.periodo" class="botonerab" >
 						<c:forEach items="${periodos}" var="per">
 							<option value="${per.periodo}">
 								<c:out value="${per.periodo}"></c:out>
 							</option>
 						</c:forEach>
 					</select>
-			</td>
-		</tr>
-		<tr>
-			<td height="10" colspan="4"></td>
-		</tr>
-		<tr>
-			<td colspan="4">		
-				<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
-					<tr>
-						<td colspan="4" class="grisSubtitulo"><bean:message key='SIIM.subTitulo.DatosProductor'/></td>
-					</tr>
-					<tr>
-						<td colspan="4" height="10"></td>
-					</tr>			
-					<tr>
-						<td width="20%" class="botoneralNegritaRight">
-							Nombre y Apellido
-						</td>
-						<td width="30%" align="left">
-							<input id="nomProductor" class="botonerab" type="text" size="30" readonly="readonly">
-						</td>					
-						<td width="20%" class="botoneralNegritaRight">
-							Domicilio
-						</td>
-						<td align="left">
-							<input id="domProductor" class="botonerab" type="text" size="30" readonly="readonly">
-						</td>
-					</tr>
-					<tr>
-						<td width="20%" class="botoneralNegritaRight">
-							Localidad
-						</td>
-						<td width="30%" align="left">
-							<input id="locProductor" class="botonerab" type="text" size="30" readonly="readonly">
-						</td>					
-						<td width="20%" class="botoneralNegritaRight">
-							Telefono
-						</td>
-						<td align="left">
-							<input id="telProductor" class="botonerab" type="text" size="30" readonly="readonly">
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4" height="10"></td>
-					</tr>				
-				</table>		
 			</td>
 		</tr>
 		<tr>
@@ -386,7 +331,8 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
-							<select id="idZonaExtraccion" class="botonerab" disabled="disabled" onchange="cambiarZonaExtraccion();">
+							<select id="idZonaExtraccion" class="botonerab" name="canonMinero.zonaExtraccion.id" 
+								disabled="disabled" onchange="cambiarZonaExtraccion();">
 								<option value="-1">--Seleccione una Zona--</option>
 							</select>					
 						</td>						
@@ -402,7 +348,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 					</tr>
 					<tr>
 						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIM.label.Superficie'/>
+							<bean:message key='SIIM.label.Superficie'/>(ha)
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
@@ -420,8 +366,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		</tr>				
 	</table>									
 
-	<table border="0" class="cuadrado" align="center" width="80%"
-		cellpadding="2">
+	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 		<tr>
 			<td height="10" colspan="4"></td>
 		</tr>	
@@ -429,234 +374,41 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		<!-- SUBIMPORTES -->
 		<tr>
 			<td colspan="4" align="left">
-				<div id="e1" style="DISPLAY: ">
-					<label onclick="javascript:exp('1')"> 
-						<img src="../../imagenes/expand.gif" border="0" /> 
-						<U class="azulOpcion">
-							<bean:message key='SIIM.subTitulo.SubImportes'/>						
-						</U>
-						<BR>
-					</label>
-				</div>
-				<div id="c1" style="DISPLAY: none">
-					<label onclick="javascript:col('1')"> 
-						<img src="../../imagenes/collapse.gif" border="0" /> 
-						<U class="azulOpcion">
-							<bean:message key='SIIM.subTitulo.SubImportes'/>						
-						</U>
-						<BR>
-					</label>
-					<br>
-					<table border="0" class="cuadrado" align="center" width="90%"
-						cellpadding="2" cellspacing="0" id="tablaImportes">
-						
-						<!-- 1er TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Enero</td>
-							<td width="13%" class="grisSubtituloCenter">Febrero</td>
-							<td width="13%" class="grisSubtituloCenter">Marzo</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" type="text" value="1er Trimestre" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_1">																	
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-								size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_2">
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-								size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_3">		
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-								size="15" readonly="readonly" id="idTotal1">														
-							</td>
-							<td>
-								<input id="datepickerFechaTrim1" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
-							</td>
-						</tr>
-						
-						<!-- 2do TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Abril</td>
-							<td width="13%" class="grisSubtituloCenter">Mayo</td>
-							<td width="13%" class="grisSubtituloCenter">Junio</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" type="text" value="2do Trimestre" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_1">																	
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_2">
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_3">		
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" id="idTotal2" readonly="readonly">														
-							</td>
-							<td>
-								<input id="datepickerFechaTrim2" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
-							</td>
-						</tr>						
-						
-						<!-- 3er TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Julio</td>
-							<td width="13%" class="grisSubtituloCenter">Agosto</td>
-							<td width="13%" class="grisSubtituloCenter">Septiembre</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" type="text" value="3er Trimestre" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_1">																	
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_2">
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_3">		
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" id="idTotal3" readonly="readonly">														
-							</td>
-							<td>
-								<input id="datepickerFechaTrim3" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
-							</td>
-						</tr>						
-												
-						<!-- 4to TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Octubre</td>
-							<td width="13%" class="grisSubtituloCenter">Noviembre</td>
-							<td width="13%" class="grisSubtituloCenter">Diciembre</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" type="text" value="4to Trimestre" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_1">																	
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_2">
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_3">		
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" id="idTotal4" readonly="readonly">														
-							</td>
-							<td>
-								<input id="datepickerFechaTrim4" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
-							</td>
-						</tr>						
-					</table>
-
-					<table border="0" class="cuadrado" align="center" width="90%"
-						cellpadding="2" cellspacing="0">
-						<tr>
-							<td colspan="4">&nbsp;</td>
-						</tr>										
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td width="13%" class="botoneralNegritaRight">Volúmen Total</td>
-							<td width="14%">
-								<input id="idVolumenTotal" readonly="readonly" class="botonerab" type="text" size="15">
-							</td>
-							<td width="18%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td width="13%" class="botoneralNegritaRight">Regalía Minera</td>
-							<td width="14%">
-								<input id="idRegalia" readonly="readonly" class="botonerab" type="text" 
-										value="${productoTurba.regaliaMinera}" size="15">
-							</td> 
-							<td width="18%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td colspan="2"><hr></td>
-							<td width="18%">&nbsp;</td>
-						</tr>						
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td width="13%" class="botoneralNegritaRight">IMPORTE TOTAL</td>
-							<td width="14%">
-								<input id="idImporteTotal" readonly="readonly" class="botonerab" type="text" size="15">
-							</td>
-							<td width="18%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td colspan="4">&nbsp;</td>
-						</tr>
-					</table>
-
-				</div>
-			</td>
-		</tr>
-
+				<table border="0" class="cuadrado" align="center" width="90%" cellpadding="2">
+					<tr>
+						<td width="20%" class="grisSubtituloCenter">Hectareas</td>						
+						<td width="20%" class="grisSubtituloCenter">Cant Ha x Pertenencia Minera</td>
+						<td width="20%" class="grisSubtituloCenter">Cant Pertenencias Mineras</td>
+						<td width="20%" class="grisSubtituloCenter">Canon Minero x Pertenencia</td>
+						<td width="20%" class="grisSubtituloCenter">Monto Total</td>
+					</tr>
+					<tr>
+						<td class="grisMuyClaroSubtituloCenter">
+							<p id="cantHectareas"></p>																						
+						</td>						
+						<td class="grisMuyClaroSubtituloCenter">
+							<p id="haXPertenencia">20</p>																						
+						</td>
+						<td class="grisMuyClaroSubtituloCenter">
+							<p id="cantPertenencias"></p>																	
+						</td>
+						<td class="grisMuyClaroSubtituloCenter">
+							<input id="idCanonXPertenencia" type="hidden" name="canonMinero.canonXPertenencia">
+							<p id="canonXPertenencia"><c:out value="${canonXPertenencia}"></c:out></p>
+						</td>
+						<td class="grisMuyClaroSubtituloCenter">
+							<p id="montoTotal"></p>	
+							<input id="idMontoTotal" type="hidden" name="canonMinero.montoTotal">	
+						</td>
+					</tr>
+				</table>
+			</td>		
+		</tr>	
+		<tr>
+			<td height="10" colspan="4"></td>
+		</tr>	
+							
 		<!-- PLAN DE PAGO -->
-
 		<tr>
 			<td colspan="4" align="left">
 			<div id="e2" style="DISPLAY: ">
@@ -798,8 +550,8 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Localidad'/></td>
 			<td width="30%" align="left">				
-				<select id="idLocalidad" class="botonerab" name="declaracion.localidad.id">
-					<option value="">- Seleccione una Localidad -</option>
+				<select id="idLocalidad" class="botonerab" name="canonMinero.localidad.id">
+					<option value="-1">- Seleccione una Localidad -</option>
 					<c:forEach items="${localidades}" var="localidad">
 						<option value="${localidad.id}">
 							<c:out value="${localidad.nombre}"></c:out>
@@ -810,7 +562,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Fecha'/></td>
 			<td align="left">		
-				<input id="datepickerFecha" type="text" name="declaracion.fecha" readonly="readonly" class="botonerab">
+				<input id="datepickerFecha" type="text" name="canonMinero.fecha" readonly="readonly" class="botonerab">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				
 			</td>
 		</tr>
@@ -825,14 +577,14 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		</tr>
 		<tr>
 			<td height="20" colspan="4">
-				<input type="button" value="Aceptar" id="enviar" 
+				<input type="button" value="Aceptar" id="enviar" disabled="disabled"
 					class="botonerab" onclick="javascript:submitir();" > 
-				<input type="button" class="botonerab" value="Volver" onclick="javascript:volverAltaGuia();">
+				<input type="button" class="botonerab" value="Volver"
+						onclick="javascript:parent.location= contextRoot() + '/jsp.do?page=.index'">
 			</td>
 		</tr>
 		<tr>
 			<td height="10" colspan="4"></td> 
 		</tr>
 	</table>
-</html:form>
-</div>	 				  
+</html:form> 				  
