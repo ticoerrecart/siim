@@ -57,6 +57,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="usuarioDAO" class="ar.com.siim.dao.UsuarioDAO" parent="abstractRepository" />
 	<bean id="tipoProductoDAO" class="ar.com.siim.dao.TipoProductoDAO" parent="abstractRepository" />
 	<bean id="localizacionDAO" class="ar.com.siim.dao.LocalizacionDAO" parent="abstractRepository" />
+	<bean id="canonMineroDAO" class="ar.com.siim.dao.CanonMineroDAO" parent="abstractRepository" />
 	
 	<!--  *******************-->
 	<!--     Fachadas   -->
@@ -259,6 +260,28 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="localizacionFachadaImpl" />
 		</property>
 		<property name="proxyInterfaces" value="ar.com.siim.fachada.ILocalizacionFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- CANON MINERO --> 
+	<bean id="canonMineroFachadaImpl" class="ar.com.siim.fachada.CanonMineroFachada">
+		<constructor-arg ref="canonMineroDAO" />
+	</bean>	
+
+	<bean id="canonMineroFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="canonMineroFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siim.fachada.ICanonMineroFachada" />
 		<property name="transactionAttributes">
 			<props>
 				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
