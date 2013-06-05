@@ -81,18 +81,38 @@ public class EntidadAction extends ValidadorAction {
 		
 		try{
 			EntidadForm entidadForm = (EntidadForm) form;
-			boolean ok = entidadForm.validar(error);
+			//boolean ok = entidadForm.validar(error);
+			
+			boolean ok1;
+			boolean ok2;
+			boolean ok3;
+			boolean ok4;
+			boolean ok5 = true;
+			boolean ok6;
 			boolean existe = false;
-			if (ok) {
-				WebApplicationContext ctx = getWebApplicationContext();
-				IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-				existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
-						entidadForm.getEntidadDTO().getId());
-				if (existe) {
-					Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
-				}
+			
+			ok1 = Validator.validarComboRequerido("-1", entidadForm.getEntidadDTO().getTipoEntidad(),
+												  "Tipo de Entidad", error);
+			ok2 = Validator.requerido(entidadForm.getEntidadDTO().getNombre(), "Nombre", error);
+			ok3 = Validator.validarEmail(entidadForm.getEntidadDTO().getEmail(), "E-Mail", error);
+			ok4 = Validator.validarEmail(entidadForm.getConfirmacionEmail(), "Confirmación de E-Mail",error);
+			
+			if (!entidadForm.getEntidadDTO().getEmail().equalsIgnoreCase(entidadForm.getConfirmacionEmail())) {
+				Validator.addErrorXML(error, "Los e-mails no coinciden.  Verifique.");
+				ok5 = false;
 			}
-			return ok && !existe;
+
+			ok6 = Validator.requerido(entidadForm.getEntidadDTO().getCuit(), "Cuit", error);
+					
+			WebApplicationContext ctx = getWebApplicationContext();
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
+					entidadForm.getEntidadDTO().getId());
+			if (existe) {
+				Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
+			}
+			
+			return ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && !existe;
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);

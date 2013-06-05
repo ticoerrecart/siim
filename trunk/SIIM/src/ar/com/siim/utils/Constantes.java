@@ -56,15 +56,23 @@ public class Constantes {
 	// LOCALIDAD
 		public static final String EXISTE_LOCALIDAD = "Ya existe una Localidad con este nombre";
 	
+		public static final String EXISTE_PROVINCIA = "Ya existe una Provincia con éste nombre";		
+		
 		public static final String EXITO_ALTA_LOCALIDAD = "La Localidad se ha dado de alta con exito";
+		
+		public static final String EXITO_ALTA_PROVINCIA = "La Provincia se ha dado de alta con exito";
 	
 		public static final String EXITO_MODIFICACION_LOCALIDAD = "La Localidad se ha modificado con exito";
+		
+		public static final String EXITO_MODIFICACION_PROVINCIA = "La Provincia se ha modificado con exito";		
 		
 		public static final String ERROR_ALTA_LOCALIDAD = "Ha ocurrido un error en el alta de la localidad";
 		
 		public static final String ERROR_RECUPERACION_LOCALIDAD = "Ha ocurrido un error en la recuperación de la localidad";
 		
 		public static final String ERROR_RECUPERACION_LOCALIDADES = "Ha ocurrido un error en la recuperación de las localidades";
+		
+		public static final String EXISTE_LOCALIDAD_DESTINO = "Ya existe una Localidad con éste nombre para esta Provincia";		
 	// FIN LOCALIDAD
 		
 	// PERIODO

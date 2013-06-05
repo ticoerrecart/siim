@@ -2,6 +2,10 @@ package ar.com.siim.providers;
 
 import java.util.ArrayList;
 
+import ar.com.siim.dto.LocalidadDestinoDTO;
+import ar.com.siim.dto.ProvinciaDestinoDTO;
+import ar.com.siim.negocio.LocalidadDestino;
+import ar.com.siim.negocio.ProvinciaDestino;
 import ar.com.siim.dto.LocalizacionDTO;
 import ar.com.siim.dto.RolDTO;
 import ar.com.siim.negocio.ItemMenu;
@@ -128,4 +132,38 @@ public abstract class ProviderDominio {
 		
 		return localizacion;
 	}
+	
+	public static ProvinciaDestino getProvincia(ProvinciaDestinoDTO provinciaDTO) {
+
+		ProvinciaDestino provincia = new ProvinciaDestino();
+		provincia.setNombre(provinciaDTO.getNombre());
+		return provincia;
+	}
+
+	public static ProvinciaDestino getProvincia(ProvinciaDestino provincia,
+			ProvinciaDestinoDTO provinciaDTO) {
+
+		provincia.setNombre(provinciaDTO.getNombre());
+		return provincia;
+	}
+
+	public static LocalidadDestino getLocalidadDestino(
+			LocalidadDestinoDTO localidadDTO, ProvinciaDestino provincia) {
+
+		LocalidadDestino localidad = new LocalidadDestino();
+		localidad.setNombre(localidadDTO.getNombre());
+		localidad.setProvinciaDestino(provincia);
+
+		return localidad;
+	}
+
+	public static LocalidadDestino getLocalidadDestino(
+			LocalidadDestinoDTO localidadDTO, LocalidadDestino localidad,
+			ProvinciaDestino provincia) {
+
+		localidad.setNombre(localidadDTO.getNombre());
+		localidad.setProvinciaDestino(provincia);
+
+		return localidad;
+	}	
 }

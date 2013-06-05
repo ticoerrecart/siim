@@ -10,7 +10,7 @@
 <script>
 	var tr = null;
 	var clase = null;
-	function mostrarDatos(idPeriodo,idTr){
+	function mostrarDatos(idProvincia,idTr){
 		$('#exitoGrabado').empty();
 		if(tr!=null){
 			$('#tr'+tr).attr("class", clase);	
@@ -22,14 +22,14 @@
 		$('#divCargando').show();	
 		$('#divModificacion').html("");
 		
-		$('#divModificacion').load('../../periodo.do?metodo=cargarPeriodoAModificar&id=' + idPeriodo);
+		$('#divModificacion').load('../../provinciaDestino.do?metodo=cargarProvinciaDestinoAModificar&id=' + idProvincia);
 		$('#divModificacion').hide();
 		//$('#divModificacion').fadeIn(600);
 
 		Concurrent.Thread.create(function(){
 		    while ($('#divModificacion').html() == "") {}
 		    $('#divCargando').hide();
-		    $('#divModificacion').show(600);		    
+		    $('#divModificacion').show(600);
 		});
 	}
 </script>
@@ -40,7 +40,7 @@
 	cellpadding="2">
 	<tr>
 		<td class="azulAjustado">
-			Modificación de Año de Declaración
+			<bean:message key='SIIM.titulo.ModificacionProvincia'/>
 		</td>
 	</tr>
 	<tr>
@@ -51,16 +51,16 @@
 		<table border="0" class="cuadrado" align="center" width="60%"
 			cellpadding="2">
 			<tr>
-				<td class="azulAjustado"><bean:message key='SIIM.label.AnioDeclaracion'/></td>
+				<td class="azulAjustado"><bean:message key='SIIM.label.Nombre'/></td>
 				<td class="azulAjustado"></td>
 			</tr>
 			<%String clase=""; %>
-			<c:forEach items="${periodos}" var="periodo" varStatus="i">
+			<c:forEach items="${provincias}" var="provincia" varStatus="i">
 				<%clase=(clase.equals("")?"par":""); %>
 				<tr id="tr${i.count}" class="botonerab <%=clase%>">
-					<td><c:out value="${periodo.periodo}" /></td>
+					<td><c:out value="${provincia.nombre}" /></td>
 					<td><a
-						href="javascript:mostrarDatos(${periodo.id},${i.count});"><bean:message key='SIIM.label.Editar'/></a>
+						href="javascript:mostrarDatos(${provincia.id},${i.count});"><bean:message key='SIIM.label.Editar'/></a>
 					</td>
 				</tr>
 			</c:forEach>

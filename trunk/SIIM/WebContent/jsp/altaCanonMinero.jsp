@@ -327,7 +327,7 @@ function limpiarCamposLocalizacion(){
 					
 					<tr>
 						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIM.label.ZonaExtraccion'/>
+							<bean:message key='SIIM.label.RazonSocial'/>
 						</td>
 						<td width="4%"></td>						
 						<td align="left">

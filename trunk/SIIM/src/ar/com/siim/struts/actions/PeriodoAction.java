@@ -141,14 +141,18 @@ public class PeriodoAction extends ValidadorAction {
 		try{
 			PeriodoForm periodoForm = (PeriodoForm) form;
 			WebApplicationContext ctx = getWebApplicationContext();
-			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
-					.getBean("periodoFachada");
-			boolean existe = periodoFachada.existePeriodo(periodoForm
-					.getPeriodoDTO());
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
+			
+			boolean existe = periodoFachada.existePeriodo(periodoForm.getPeriodoDTO());
+			
 			if (existe) {
 				Validator.addErrorXML(error, Constantes.EXISTE_PERIODO);
 			}
-			return !existe && periodoForm.validar(error);
+			
+			boolean ok = Validator.requerido(periodoForm.getPeriodoDTO().getPeriodo(),
+					 						"Periodo", error);			
+			
+			return !existe && ok;
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);

@@ -6,11 +6,10 @@
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
-<script type="text/javascript"
-	src="<html:rewrite page='/js/validarNum.js'/>"></script>		
 <script type="text/javascript">
 	function submitir(){
-		validarForm("periodoFormId","../periodo","validarPeriodoForm","PeriodoForm");
+		$("#exitoGrabado").html("");
+		validarForm("provinciaFormId","../localidad","validarProvinciaForm","ProvinciaDestinoForm");
 	}
 </script>
 
@@ -18,7 +17,7 @@
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${error}</div>
 
-<html:form action="periodo" styleId="periodoFormId">
+<html:form action="provinciaDestino" styleId="provinciaFormId">
 	<c:choose>
 		<c:when test="${empty metodo}">
 			<html:hidden property="metodo" value="${param.metodo}" />
@@ -27,15 +26,15 @@
 			<html:hidden property="metodo" value="${metodo}" />
 		</c:otherwise>
 	</c:choose>
-	<html:hidden property="periodoDTO.id" value="${periodo.id}" />
+	<html:hidden property="provinciaDTO.id" value="${provincia.id}" />
 
 	<table border="0" class="cuadrado" align="center" width="60%"
 		cellpadding="2">
 		<tr>
 			<td colspan="2" class="azulAjustado">
 				<c:choose>
-					<c:when test="${metodo == 'altaPeriodo'}">
-						<bean:message key='SIIM.titulo.AltaAnioDeclaracion'/>
+					<c:when test="${metodo == 'altaProvinciaDestino'}">
+						<bean:message key='SIIM.titulo.AltaProvincia'/>
 					</c:when>
 				</c:choose>
 			</td>
@@ -44,12 +43,12 @@
 			<td height="20" colspan="2"></td>
 		</tr>
 		<tr>
-			<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIM.label.AnioDeclaracion'/></td>
+			<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Nombre'/></td>
 			<td align="left">
-				<html:text styleClass="botonerab" property="periodoDTO.periodo" value="${periodo.periodo}" 
-						onkeypress="esNumerico(event); return evitarAutoSubmit(event)"/>
+				<html:text styleClass="botonerab" property="provinciaDTO.nombre" value="${provincia.nombre}" 
+							onkeypress="return evitarAutoSubmit(event)"/>
 			</td>
-		</tr>		
+		</tr>
 		<tr>
 			<td height="20" colspan="2"></td>
 		</tr>

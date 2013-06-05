@@ -29,6 +29,12 @@
 		<form-bean name="canonMineroForm"
 			type="ar.com.siim.struts.actions.forms.CanonMineroForm">
 		</form-bean>				
+		<form-bean name="provinciaForm" 
+			type="ar.com.siim.struts.actions.forms.ProvinciaDestinoForm">			
+		</form-bean>		
+		<form-bean name="localidadDestinoForm" 
+			type="ar.com.siim.struts.actions.forms.LocalidadDestinoForm">			
+		</form-bean>		
 	</form-beans>
 
 	<global-exceptions></global-exceptions>
@@ -48,7 +54,8 @@
 		<action path="/jsp" type="ar.com.siim.struts.actions.TilesForwardAction">
 			<forward name=".index" path=".index" />
 			<forward name=".altaLocalidad" path=".altaLocalidad" />
-			<forward name=".altaPeriodo" path=".altaPeriodo" />			
+			<forward name=".altaPeriodo" path=".altaPeriodo" />
+			<forward name=".altaProvincia" path=".altaProvincia" />			
 		</action>
 
 		<!-- LOGIN -->
@@ -68,13 +75,32 @@
 			<forward name="exitoCargarLocalidadAModificar" path="/jsp/bloqueAltaLocalidad.jsp" />
 			<forward name="errorAltaEntidad" path="/entidad.do?metodo=cargarAltaEntidad" />
 			<forward name="exitoModificacionLocalidad"
-				path="/cargarLocalidadesAModificar.do?metodo=cargarLocalidadesAModificar" />
+				path="/cargarLocalidadesAModificar.do?metodo=cargarLocalidadesAModificar" />										
 		</action>
 
 		<action path="/cargarLocalidadesAModificar" type="ar.com.siim.struts.actions.LocalidadAction"
 			parameter="metodo">
 			<forward name="exitoRecuperarLocalidades" path=".recuperarLocalidades" />
 		</action>
+		
+		<action path="/provinciaDestino" type="ar.com.siim.struts.actions.LocalidadAction"
+				parameter="metodo" name="provinciaForm" scope="request">
+			<forward name="exitoAltaProvinciaDestino" path="/jsp.do?page=.altaProvincia&amp;metodo=altaProvinciaDestino" />
+			<forward name="exitoRecuperarProvinciasDestino" path=".recuperarProvinciasDestino" />
+			<forward name="exitoCargarProvinciaDestinoAModificar" path="/jsp/bloqueAltaProvincia.jsp" />
+			<forward name="exitoModificacionProvinciaDestino" 
+					 path="/provinciaDestino.do?metodo=cargarProvinciasDestinoAModificar" />			
+		</action>	
+		
+		<action path="/localidadDestino" type="ar.com.siim.struts.actions.LocalidadAction"
+				parameter="metodo" name="localidadDestinoForm" scope="request">		
+			<forward name="exitoCargarAltaLocalidadDestino" path=".altaLocalidadDestino" />
+			<forward name="exitoAltaLocalidadDestino" path="/localidadDestino.do?metodo=cargarAltaLocalidadDestino" />
+			<forward name="exitoCargarModificacionLocalidadDestino" path=".modificacionLocalidadDestino" />
+			<forward name="exitoCargarLocalidadDestinoAModificar" path="/jsp/bloqueModificacionLocalidadDestino.jsp" />
+			<forward name="exitoModificacionLocalidadDestino" 
+					 path="/localidadDestino.do?metodo=cargarModificacionLocalidadDestino" />						
+		</action>							
 		<!-- FIN LOCALIDAD -->	
 		
 		<!-- PERIODO -->

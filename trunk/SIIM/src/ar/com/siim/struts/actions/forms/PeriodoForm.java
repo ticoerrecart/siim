@@ -16,14 +16,14 @@ public class PeriodoForm extends ActionForm {
 		periodoDTO = new PeriodoDTO();
 	}
 
-	public boolean validar(StringBuffer error) {
+	/*public boolean validar(StringBuffer error) {
 		boolean b1 = Validator.requerido(this.getPeriodoDTO().getPeriodo(),
 				"Periodo", error);
 		boolean b2 = Validator.validarFormatoPeriodo(this.getPeriodoDTO()
 				.getPeriodo(), error);
 		return b1 && b2;
 
-	}
+	}*/
 
 	public Periodo getPeriodo() {
 		return periodo;
