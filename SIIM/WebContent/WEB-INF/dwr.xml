@@ -19,6 +19,9 @@
 		<convert converter="bean" match="ar.com.siim.dto.LocalizacionDTO">
 			<param name="include" value="id,razonSocial, domicilio, superficie" />
 		</convert>		
+		<convert converter="bean" match="ar.com.siim.dto.LocalidadDestinoDTO">
+			<param name="include" value="id,nombre" />
+		</convert>
 				
 		
 		<create creator="spring" javascript="RolFachada">
@@ -30,6 +33,9 @@
 		<create creator="spring" javascript="LocalizacionFachada">
 			<param name="beanName" value="localizacionFachada" />
 		</create>
+		<create creator="spring" javascript="LocalidadFachada">
+			<param name="beanName" value="localidadFachada" />
+		</create>		
 		
 	</allow>
 

@@ -297,12 +297,12 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		</tr>
 
 		<tr>
-			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.ValidoHasta'/></td>
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaDeclaracion'/></td>
 			<td width="30%" align="left">
 				<input id="datepicker" type="text" name="declaracion.fechaVencimiento" readonly="readonly" class="botonerab">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
 			</td>
-			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Periodo'/></td>
+			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.AnioDeclaracion'/></td>
 			<td align="left">
 					<select name="declaracion.periodo" class="botonerab" >
 						<c:forEach items="${periodos}" var="per">
@@ -382,7 +382,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 					
 					<tr>
 						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIM.label.ZonaExtraccion'/>
+							<bean:message key='SIIM.label.RazonSocial'/>
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
@@ -426,14 +426,14 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			<td height="10" colspan="4"></td>
 		</tr>	
 
-		<!-- SUBIMPORTES -->
+		<!-- Volumenes -->
 		<tr>
 			<td colspan="4" align="left">
 				<div id="e1" style="DISPLAY: ">
 					<label onclick="javascript:exp('1')"> 
 						<img src="../../imagenes/expand.gif" border="0" /> 
 						<U class="azulOpcion">
-							<bean:message key='SIIM.subTitulo.SubImportes'/>						
+							<bean:message key='SIIM.label.Volumenes'/>						
 						</U>
 						<BR>
 					</label>
@@ -442,7 +442,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 					<label onclick="javascript:col('1')"> 
 						<img src="../../imagenes/collapse.gif" border="0" /> 
 						<U class="azulOpcion">
-							<bean:message key='SIIM.subTitulo.SubImportes'/>						
+							<bean:message key='SIIM.label.Volumenes'/>						
 						</U>
 						<BR>
 					</label>

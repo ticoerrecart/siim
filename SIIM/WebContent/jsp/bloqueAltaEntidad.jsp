@@ -50,7 +50,8 @@
 			<td width="45%" class="botoneralNegritaRight"><bean:message key='SIIM.label.TipoDeProductor'/></td>
 			<td align="left"><c:choose>
 				<c:when test="${metodo=='altaEntidad'}">
-					<select id="selectTiposDeEntidad" class="botonerab" name="entidadDTO.tipoEntidad" onchange="cambioTipoEntidad();">
+					<!--<select id="selectTiposDeEntidad" class="botonerab" name="entidadDTO.tipoEntidad" onchange="cambioTipoEntidad();">-->
+					<select id="selectTiposDeEntidad" class="botonerab" name="entidadDTO.tipoEntidad">
 						<option value="-1">-Seleccione un Tipo de Entidad-</option>
 						<c:forEach items="${tiposDeEntidad}" var="tipoDeEntidad" varStatus="i">
 							<option value="<c:out value='${tipoDeEntidad.name}'></c:out>">
@@ -64,9 +65,9 @@
 					<input type="text" readonly="readonly" class="botonerab" name="entidadDTO.tipoEntidadDesc" 
 							value="${entidad.tipoEntidadDesc}" size="30">
 					<input type="hidden" id="selectTiposDeEntidad" name="entidadDTO.tipoEntidad" value="${entidad.tipoEntidad}">
-					<script>
+					<!--<script>
 						cambioTipoEntidad();
-					</script>
+					</script>-->
 				</c:otherwise>
 			</c:choose></td>
 		</tr>

@@ -30,7 +30,9 @@
 		<mapping class='ar.com.siim.negocio.RecursosNaturales' />
 		<mapping class='ar.com.siim.negocio.Productor' />
 		<mapping class='ar.com.siim.negocio.Localizacion' />
-		<mapping class='ar.com.siim.negocio.TipoProducto' />		
+		<mapping class='ar.com.siim.negocio.TipoProducto' />
+		<mapping class='ar.com.siim.negocio.ProvinciaDestino' />
+		<mapping class='ar.com.siim.negocio.LocalidadDestino' />				
 
 	</session-factory>
 </hibernate-configuration>

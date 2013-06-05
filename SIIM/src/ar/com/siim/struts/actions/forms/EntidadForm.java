@@ -29,7 +29,8 @@ public class EntidadForm extends ActionForm {
 	 * request.getSession().getAttribute( "entidad"); if (laEntidad != null) {
 	 * this.entidad = laEntidad; } }
 	 */
-	public boolean validar(StringBuffer error) {
+	
+	/*public boolean validar(StringBuffer error) {
 		boolean mailsOk = true;
 		boolean ok1 = Validator.validarComboRequerido("-1", this.getEntidadDTO().getTipoEntidad(),
 				"Tipo de Entidad", error)
@@ -49,16 +50,13 @@ public class EntidadForm extends ActionForm {
 								"Nro Matrícula", error);
 				if (ok1) {
 					ok1 = ok1 && Validator.requerido(this.getEntidadDTO().getCuit(), "Cuit", error);
-					/*if (ok1) {
-						ok1 = ok1 && Validator.validarCuit(this.getEntidadDTO().getCuit(), error);
-					}*/
 				}
 
 			}
 		}
 
 		return ok1 && mailsOk;
-	}
+	}*/
 
 	public Entidad getEntidad() {
 		return entidad;
