@@ -116,6 +116,11 @@
 		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/altaCanonMinero.jsp" />
 	</definition>
+
+	<definition name=".modificacionCanonMineroXPertenencia" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/modificacionCanonMineroXPertenencia.jsp" />
+	</definition>	
 	<!-- FIN CANON MINERO -->
 
 	<!-- DECLARACION EXTRACCION -->

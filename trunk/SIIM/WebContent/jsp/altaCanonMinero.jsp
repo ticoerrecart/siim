@@ -374,6 +374,8 @@ function limpiarCamposLocalizacion(){
 		<!-- SUBIMPORTES -->
 		<tr>
 			<td colspan="4" align="left">
+				<input id="idCanonXPertenencia" type="hidden" name="canonMinero.canonXPertenencia">			
+				<input id="idMontoTotal" type="hidden" name="canonMinero.montoTotal">
 				<table border="0" class="cuadrado" align="center" width="90%" cellpadding="2">
 					<tr>
 						<td width="20%" class="grisSubtituloCenter">Hectareas</td>						
@@ -392,13 +394,11 @@ function limpiarCamposLocalizacion(){
 						<td class="grisMuyClaroSubtituloCenter">
 							<p id="cantPertenencias"></p>																	
 						</td>
-						<td class="grisMuyClaroSubtituloCenter">
-							<input id="idCanonXPertenencia" type="hidden" name="canonMinero.canonXPertenencia">
+						<td class="grisMuyClaroSubtituloCenter">							
 							<p id="canonXPertenencia"><c:out value="${canonXPertenencia}"></c:out></p>
 						</td>
 						<td class="grisMuyClaroSubtituloCenter">
-							<p id="montoTotal"></p>	
-							<input id="idMontoTotal" type="hidden" name="canonMinero.montoTotal">	
+							<p id="montoTotal"></p>								
 						</td>
 					</tr>
 				</table>

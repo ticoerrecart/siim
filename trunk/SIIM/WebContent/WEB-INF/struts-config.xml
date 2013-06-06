@@ -181,7 +181,10 @@
 		<!-- CANON MINERO -->
 		<action path="/canonMinero" type="ar.com.siim.struts.actions.CanonMineroAction"
 			parameter="metodo" name="canonMineroForm" scope="request">
-			<forward name="exitoCargarAltaCanonMinero" path=".altaCanonMinero" />					
+			<forward name="exitoCargarAltaCanonMinero" path=".altaCanonMinero" />		
+			<forward name="exitoCargarModificacionValorCanonMinero" path=".modificacionCanonMineroXPertenencia" />
+			<forward name="exitoModificacionValorCanonMinero" path=".modificacionCanonMineroXPertenencia" />
+											
 		</action>
 		<!-- FIN CANON MINERO -->		
 		

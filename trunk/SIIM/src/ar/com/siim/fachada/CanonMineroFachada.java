@@ -16,5 +16,10 @@ public class CanonMineroFachada implements ICanonMineroFachada {
 	public int recuperarCanonMineroXPertenencia(){
 		
 		return canonMineroDAO.recuperarCanonMineroXPertenencia();
-	}	
+	}
+	
+	public void modificacionValorCanonMinero(double valor){
+	
+		canonMineroDAO.modificacionValorCanonMinero(valor);
+	}
 }

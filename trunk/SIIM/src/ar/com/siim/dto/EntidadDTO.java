@@ -1,5 +1,7 @@
 package ar.com.siim.dto;
 
+import ar.com.siim.enums.TipoDocumento;
+
 public class EntidadDTO {
 
 	private Long id;
@@ -22,6 +24,12 @@ public class EntidadDTO {
 
 	private String cuit;
 
+	private String cuil;
+	
+	private int dni;	
+	
+	private TipoDocumento tipoDocumento;		
+	
 	private Integer codigoPostal;
 	
 	private LocalidadDTO localidad;
@@ -121,5 +129,36 @@ public class EntidadDTO {
 	public void setCodigoPostal(Integer codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
+
+	public String getCuil() {
+		return cuil;
+	}
+
+	public void setCuil(String cuil) {
+		this.cuil = cuil;
+	}
+
+	public int getDni() {
+		return dni;
+	}
+
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
+
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
 	
+	public String getTipoDocumentoStr(){
+		return (this.tipoDocumento == null)?"":this.tipoDocumento.getDescripcion();
+	}
+	
+	public void setTipoDocumentoStr(String tipoDocumento){
+		this.tipoDocumento = TipoDocumento.valueOf(tipoDocumento);
+	}
 }
