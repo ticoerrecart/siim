@@ -16,4 +16,10 @@ public class CanonMineroDAO extends HibernateDaoSupport {
 		Object[] a = l.get(0);
 		return (Integer)a[1];
 	}	
+	
+	public void modificacionValorCanonMinero(double valor){
+		
+		SQLQuery q = getSession().createSQLQuery("UPDATE CanonMineroXPertenencia SET valor="+valor +" WHERE id=1;");
+		q.executeUpdate();
+	}	
 }

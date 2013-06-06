@@ -121,6 +121,9 @@ public abstract class ProviderDTO {
 			entidadDTO.setTipoEntidad(entidad.getIdTipoEntidad());
 			entidadDTO.setNroMatricula(entidad.getNroMatricula());
 			entidadDTO.setCuit(entidad.getCuit());
+			entidadDTO.setCuil(entidad.getCuil());
+			entidadDTO.setDni(entidad.getDni());
+			entidadDTO.setTipoDocumento(entidad.getTipoDocumento());
 			entidadDTO.setCodigoPostal(entidad.getCodigoPostal());
 
 			return entidadDTO;

@@ -43,6 +43,7 @@ public class EntidadAction extends ValidadorAction {
 			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
 			request.setAttribute("titulo", Constantes.TITULO_ALTA_ENTIDAD);
 			request.setAttribute("metodo", "altaEntidad");
+			request.setAttribute("tiposDocumento", entidadFachada.recuperarTiposDocumento());
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -75,50 +76,6 @@ public class EntidadAction extends ValidadorAction {
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
-	}
-
-	public boolean validarEntidadForm(StringBuffer error, ActionForm form) {
-		
-		try{
-			EntidadForm entidadForm = (EntidadForm) form;
-			//boolean ok = entidadForm.validar(error);
-			
-			boolean ok1;
-			boolean ok2;
-			boolean ok3;
-			boolean ok4;
-			boolean ok5 = true;
-			boolean ok6;
-			boolean existe = false;
-			
-			ok1 = Validator.validarComboRequerido("-1", entidadForm.getEntidadDTO().getTipoEntidad(),
-												  "Tipo de Entidad", error);
-			ok2 = Validator.requerido(entidadForm.getEntidadDTO().getNombre(), "Nombre", error);
-			ok3 = Validator.validarEmail(entidadForm.getEntidadDTO().getEmail(), "E-Mail", error);
-			ok4 = Validator.validarEmail(entidadForm.getConfirmacionEmail(), "Confirmación de E-Mail",error);
-			
-			if (!entidadForm.getEntidadDTO().getEmail().equalsIgnoreCase(entidadForm.getConfirmacionEmail())) {
-				Validator.addErrorXML(error, "Los e-mails no coinciden.  Verifique.");
-				ok5 = false;
-			}
-
-			ok6 = Validator.requerido(entidadForm.getEntidadDTO().getCuit(), "Cuit", error);
-					
-			WebApplicationContext ctx = getWebApplicationContext();
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-			existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
-					entidadForm.getEntidadDTO().getId());
-			if (existe) {
-				Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
-			}
-			
-			return ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && !existe;
-			
-		} catch (Throwable t) {
-			MyLogger.logError(t);
-			Validator.addErrorXML(error, "Error Inesperado");
-			return false;
-		}			
 	}
 
 	@SuppressWarnings("unchecked")
@@ -170,16 +127,26 @@ public class EntidadAction extends ValidadorAction {
 					.getBean("localidadFachada");
 			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
 			request.setAttribute("metodo", "modificacionEntidad");
+			request.setAttribute("tiposDocumento", entidadFachada.recuperarTiposDocumento());
+			
+			if (entidad.getCuit() != null && entidad.getCuit().length() == 11) {
 
-			if (entidad.getCuit() != null) {
-				if (entidad.getCuit().length() == 11) {
-					String prefijoCuit = entidad.getCuit().substring(0, 2).trim();
-					String nroCuit = entidad.getCuit().substring(2, 10).trim();
-					String sufijoCuit = entidad.getCuit().substring(10).trim();
-					request.setAttribute("prefijoCuit", prefijoCuit);
-					request.setAttribute("nroCuit", nroCuit);
-					request.setAttribute("sufijoCuit", sufijoCuit);
-				}
+				String prefijoCuit = entidad.getCuit().substring(0, 2).trim();
+				String nroCuit = entidad.getCuit().substring(2, 10).trim();
+				String sufijoCuit = entidad.getCuit().substring(10).trim();
+				request.setAttribute("prefijoCuit", prefijoCuit);
+				request.setAttribute("nroCuit", nroCuit);
+				request.setAttribute("sufijoCuit", sufijoCuit);
+			}
+			else{
+				if (entidad.getCuil() != null && entidad.getCuil().length() == 11) {
+					String prefijoCuil = entidad.getCuil().substring(0, 2).trim();
+					String nroCuil = entidad.getCuil().substring(2, 10).trim();
+					String sufijoCuil = entidad.getCuil().substring(10).trim();
+					request.setAttribute("prefijoCuil", prefijoCuil);
+					request.setAttribute("nroCuil", nroCuil);
+					request.setAttribute("sufijoCuil", sufijoCuil);				
+				}	
 			}
 
 		} catch (Throwable t) {
@@ -214,4 +181,60 @@ public class EntidadAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
+	public boolean validarEntidadForm(StringBuffer error, ActionForm form) {
+		
+		try{
+			EntidadForm entidadForm = (EntidadForm) form;
+			//boolean ok = entidadForm.validar(error);
+			
+			boolean ok1;
+			boolean ok2;
+			boolean ok3;
+			boolean ok4;
+			boolean ok5 = true;
+			boolean ok6;
+			boolean existe = false;
+			
+			ok1 = Validator.validarComboRequerido("-1", entidadForm.getEntidadDTO().getTipoEntidad(),
+												  "Tipo de Entidad", error);
+			ok2 = Validator.requerido(entidadForm.getEntidadDTO().getNombre(), "Nombre", error);
+			ok3 = Validator.validarEmail(entidadForm.getEntidadDTO().getEmail(), "E-Mail", error);
+			ok4 = Validator.validarEmail(entidadForm.getConfirmacionEmail(), "Confirmación de E-Mail",error);
+			
+			if (!entidadForm.getEntidadDTO().getEmail().equalsIgnoreCase(entidadForm.getConfirmacionEmail())) {
+				Validator.addErrorXML(error, "Los e-mails no coinciden.  Verifique.");
+				ok5 = false;
+			}
+
+			String tipoDoc = entidadForm.getEntidadDTO().getTipoDocumento().getDescripcion();
+			if(tipoDoc.equals("CUIT")){
+				ok6 = Validator.requerido(entidadForm.getEntidadDTO().getCuit(), "Cuit", error);	
+			}
+			else{
+				if(tipoDoc.equals("CUIL")){
+					ok6 = Validator.requerido(entidadForm.getEntidadDTO().getCuil(), "Cuil", error);	
+				}
+				else{
+					ok6 = Validator.validarEnteroMayorQue(0,String.valueOf(entidadForm.getEntidadDTO().getDni()),
+															"Dni", error);
+				}
+			}
+								
+			WebApplicationContext ctx = getWebApplicationContext();
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
+					entidadForm.getEntidadDTO().getId());
+			if (existe) {
+				Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
+			}
+			
+			return ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && !existe;
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			Validator.addErrorXML(error, "Error Inesperado");
+			return false;
+		}			
+	}	
+	
 }

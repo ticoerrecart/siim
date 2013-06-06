@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.com.siim.dto.EntidadDTO;
 import ar.com.siim.enums.TipoDeEntidad;
+import ar.com.siim.enums.TipoDocumento;
 import ar.com.siim.negocio.Entidad;
 import ar.com.siim.negocio.exception.NegocioException;
 
@@ -38,5 +39,6 @@ public interface IEntidadFachada {
 	public void modificacionEntidad(EntidadDTO entidad);
 
 	public List<EntidadDTO> getProductoresDTO();
-
+	
+	public List<TipoDocumento> recuperarTiposDocumento();
 }

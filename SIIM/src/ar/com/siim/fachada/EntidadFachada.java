@@ -6,6 +6,7 @@ import java.util.List;
 import ar.com.siim.dao.EntidadDAO;
 import ar.com.siim.dto.EntidadDTO;
 import ar.com.siim.enums.TipoDeEntidad;
+import ar.com.siim.enums.TipoDocumento;
 import ar.com.siim.negocio.Entidad;
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.negocio.exception.DataBaseException;
@@ -154,5 +155,16 @@ public class EntidadFachada implements IEntidadFachada {
 			listaEntidadesDTO.add(ProviderDTO.getEntidadDTO(entidad));
 		}
 		return listaEntidadesDTO;
+	}
+	
+	public List<TipoDocumento> recuperarTiposDocumento(){
+		
+		List<TipoDocumento> lista = new ArrayList<TipoDocumento>();
+		
+		for(int i=0;i<TipoDocumento.values().length;i++){
+			lista.add(TipoDocumento.values()[i]);
+		}
+		
+		return lista;
 	}
 }

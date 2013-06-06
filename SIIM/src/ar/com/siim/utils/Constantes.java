@@ -131,4 +131,9 @@ public class Constantes {
 		public static final String ERROR_EXISTE_LOCALIZACION = "Ya existe una Zona de Extracción Minera con la misma Razón Social para este productor";
 		
 	// FIN LOCALIZACION	
+		
+	//CANON MINERO
+		public static final String EXITO_MODIFICACION_VALOR_CANON_MINERO = "El Valor del Canon Minero se ha modificado con exito";
+		
+	//FIN CANON MINERO
 }

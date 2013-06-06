@@ -67,6 +67,9 @@ public abstract class ProviderDominio {
 		entidad.setLocalidad(localidad);
 		entidad.setNroMatricula(entidadDTO.getNroMatricula());
 		entidad.setCuit(entidadDTO.getCuit());
+		entidad.setCuil(entidadDTO.getCuil());
+		entidad.setDni(entidadDTO.getDni());
+		entidad.setTipoDocumento(entidadDTO.getTipoDocumento());
 		entidad.setCodigoPostal(entidadDTO.getCodigoPostal());
 		
 		return entidad;
@@ -82,6 +85,9 @@ public abstract class ProviderDominio {
 		entidad.setTelefono(entidadDTO.getTelefono());
 		entidad.setNroMatricula(entidadDTO.getNroMatricula());
 		entidad.setCuit(entidadDTO.getCuit());
+		entidad.setCuil(entidadDTO.getCuil());
+		entidad.setDni(entidadDTO.getDni());
+		entidad.setTipoDocumento(entidadDTO.getTipoDocumento());
 		entidad.setCodigoPostal(entidadDTO.getCodigoPostal());
 		return entidad;
 	}

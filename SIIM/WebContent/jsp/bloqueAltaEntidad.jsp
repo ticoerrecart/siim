@@ -14,7 +14,11 @@
 	}
 
 	function cambioCuit(){
-		$("#cuit").val($("#prefijoCuit").val() + $("#nroCuit").val() + $("#sufijoCuit").val());
+		$("#Cuit").val($("#prefijoCuit").val() + $("#nroCuit").val() + $("#sufijoCuit").val());
+	}
+
+	function cambioCuil(){
+		$("#Cuil").val($("#prefijoCuil").val() + $("#nroCuil").val() + $("#sufijoCuil").val());
 	}
 	
 	function cambioTipoEntidad(){
@@ -28,8 +32,65 @@
 		}else{
 			$(".matriculaCuitCP").show();
 		}
-
 	}
+
+	function cambiarTipoDocumento(){
+
+		var tipoDoc = $("#idTipoDocumento").val();
+		if(tipoDoc == "DNI"){
+
+			$("#dni").show();
+			ocultarCuitl("Cuit");
+			ocultarCuitl("Cuil");
+			
+			/*$("#prefijoCuit").hide();
+			$("#nroCuit").hide();
+			$("#sufijoCuit").hide();
+			$("#prefijoCuil").hide();
+			$("#nroCuil").hide();
+			$("#sufijoCuil").hide();*/			
+		}
+		else{
+			if(tipoDoc == "CUIT"){
+
+				$("#dni").hide();
+				$("#dni").val(0);
+				$("#prefijoCuit").show();
+				$("#nroCuit").show();
+				$("#sufijoCuit").show();
+				ocultarCuitl("Cuil");
+				
+				/*$("#prefijoCuil").hide();
+				$("#nroCuil").hide();
+				$("#sufijoCuil").hide();*/				
+			}
+			else{
+				$("#dni").hide();
+				$("#dni").val(0);
+				ocultarCuitl("Cuit");
+				/*$("#prefijoCuit").hide();
+				$("#nroCuit").hide();
+				$("#sufijoCuit").hide();*/				
+				$("#prefijoCuil").show();
+				$("#nroCuil").show();
+				$("#sufijoCuil").show();				
+			}			
+		}
+	}
+
+	function ocultarCuitl(cuitl){
+
+		$("#prefijo"+cuitl).hide();
+		$("#nro"+cuitl).hide();
+		$("#sufijo"+cuitl).hide();
+
+		$("#prefijo"+cuitl).val("");
+		$("#nro"+cuitl).val("");
+		$("#sufijo"+cuitl).val("");
+
+		$("#"+cuitl).val("");		
+	}
+	
 </script>
 
 <%-- errores de validaciones AJAX --%>
@@ -116,12 +177,39 @@
 				styleClass="botonerab" value="${entidad.nroMatricula}" onkeypress="javascript:esNumerico(event);"/></td>
 		</tr>
 		<tr class="matriculaCuitCP">
-			<td class="botoneralNegritaRight"><bean:message key='SIIM.label.Cuit'/></td>
+			<td class="botoneralNegritaRight">
+				<html:select styleId="idTipoDocumento" styleClass="botonerab" onchange="cambiarTipoDocumento();" 
+					property="entidadDTO.tipoDocumentoStr">
+					<c:forEach items="${tiposDocumento}" var="tipo">
+						<option value="<c:out value='${tipo.name}'></c:out>">
+							<c:out value="${tipo.descripcion}"></c:out>
+						</option>
+					</c:forEach>
+				</html:select>								
+			</td>
 			<td align="left">
-				<html:hidden property="entidadDTO.cuit" value="${entidad.cuit}" styleId="cuit"/>
-				<input type="text" class="botonerab" size="2" id="prefijoCuit" value="${prefijoCuit}" onkeypress="javascript:esNumerico(event);" onblur="cambioCuit();">
-				<input type="text" class="botonerab" size="9" maxlength="8" id="nroCuit" value="${nroCuit}" onkeypress="javascript:esNumerico(event);" onblur="cambioCuit();">
-				<input type="text" class="botonerab" size="2" id="sufijoCuit" value="${sufijoCuit}" onkeypress="javascript:esNumerico(event);" onblur="cambioCuit();">
+				<html:hidden property="entidadDTO.cuit" value="${entidad.cuit}" styleId="Cuit"/>
+				<html:hidden property="entidadDTO.cuil" value="${entidad.cuil}" styleId="Cuil"/>
+				
+				<!-- CUIT -->
+				<input type="text" class="botonerab" size="2" id="prefijoCuit" value="${prefijoCuit}" 
+						onkeypress="javascript:esNumerico(event);" onblur="cambioCuit();">
+				<input type="text" class="botonerab" size="9" maxlength="8" id="nroCuit" value="${nroCuit}" 
+						onkeypress="javascript:esNumerico(event);" onblur="cambioCuit();">
+				<input type="text" class="botonerab" size="2" id="sufijoCuit" value="${sufijoCuit}" 
+						onkeypress="javascript:esNumerico(event);" onblur="cambioCuit();">
+						
+				<!-- CUIL -->
+				<input style="display: none" type="text" class="botonerab" size="2" id="prefijoCuil" value="${prefijoCuil}" 
+						onkeypress="javascript:esNumerico(event);" onblur="cambioCuil();">
+				<input style="display: none" type="text" class="botonerab" size="9" maxlength="8" id="nroCuil" value="${nroCuil}" 
+						onkeypress="javascript:esNumerico(event);" onblur="cambioCuil();">
+				<input style="display: none" type="text" class="botonerab" size="2" id="sufijoCuil" value="${sufijoCuil}" 
+						onkeypress="javascript:esNumerico(event);" onblur="cambioCuil();">
+						
+				<!-- DNI -->		
+				<input style="display: none" name="entidadDTO.dni" type="text" class="botonerab" size="15" 
+						maxlength="8" id="dni" value="${entidad.dni}" onkeypress="javascript:esNumerico(event);">				
 			</td>
 		</tr>
 		<tr class="matriculaCuitCP">
@@ -154,3 +242,7 @@
 	</table>
 
 </html:form>
+<script>
+$('#idTipoDocumento').val("${entidad.tipoDocumento}");
+cambiarTipoDocumento();
+</script>

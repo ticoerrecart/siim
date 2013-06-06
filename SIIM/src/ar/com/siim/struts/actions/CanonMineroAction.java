@@ -16,6 +16,7 @@ import ar.com.siim.fachada.ILocalidadFachada;
 import ar.com.siim.fachada.IPeriodoFachada;
 import ar.com.siim.fachada.ITipoProductoFachada;
 import ar.com.siim.struts.actions.forms.CanonMineroForm;
+import ar.com.siim.utils.Constantes;
 import ar.com.siim.utils.MyLogger;
 
 public class CanonMineroAction extends ValidadorAction {
@@ -76,6 +77,60 @@ public class CanonMineroAction extends ValidadorAction {
 		}
 		return mapping.findForward(strForward);
 	}	
+
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarModificacionValorCanonMinero(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoCargarModificacionValorCanonMinero";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			ICanonMineroFachada canonMineroFachada = (ICanonMineroFachada) ctx
+														.getBean("canonMineroFachada");			
+			
+			int valor = canonMineroFachada.recuperarCanonMineroXPertenencia();
+			CanonMineroDTO canon = new CanonMineroDTO();
+			canon.setCanonXPertenencia(valor);
+			
+			request.setAttribute("canonMinero", canon);
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}		
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward modificacionValorCanonMinero(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoModificacionValorCanonMinero";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();			
+			ICanonMineroFachada canonMineroFachada = (ICanonMineroFachada) ctx
+													.getBean("canonMineroFachada");				
+			
+			CanonMineroForm canonMineroForm = (CanonMineroForm)form;
+			CanonMineroDTO canonDTO = canonMineroForm.getCanonMinero();  
+			
+			canonMineroFachada.modificacionValorCanonMinero(canonDTO.getCanonXPertenencia());
+			
+			request.setAttribute("canonMinero", canonDTO);
+			request.setAttribute("exito", Constantes.EXITO_MODIFICACION_VALOR_CANON_MINERO);
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}	
 	
 	public boolean validarAltaCanonMineroForm(StringBuffer error, ActionForm form) {
 
@@ -111,5 +166,21 @@ public class CanonMineroAction extends ValidadorAction {
 			Validator.addErrorXML(error, "Error Inesperado");
 			return false;
 		}
-	}	
+	}
+	
+	public boolean validarValorCanonMineroForm(StringBuffer error, ActionForm form) {
+
+		try {	
+			CanonMineroForm canonMineroForm = (CanonMineroForm) form;
+			CanonMineroDTO canon = canonMineroForm.getCanonMinero();			
+			
+			return Validator.validarDoubleMayorQue(0,String.valueOf(canon.getCanonXPertenencia()),
+									   "Valor Canon Minero Por Pertenencia", error);
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			Validator.addErrorXML(error, "Error Inesperado");
+			return false;
+		}
+	}		
 }
