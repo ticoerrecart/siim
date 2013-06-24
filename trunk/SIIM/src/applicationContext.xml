@@ -270,6 +270,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<!-- CANON MINERO --> 
 	<bean id="canonMineroFachadaImpl" class="ar.com.siim.fachada.CanonMineroFachada">
 		<constructor-arg ref="canonMineroDAO" />
+		<constructor-arg ref="localidadDAO" />
+		<constructor-arg ref="localizacionDAO" />
+		<constructor-arg ref="entidadDAO" />
 	</bean>	
 
 	<bean id="canonMineroFachada"

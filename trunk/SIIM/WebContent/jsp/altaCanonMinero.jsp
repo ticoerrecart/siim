@@ -235,7 +235,11 @@ function cambiarZonaExtraccionCallback(localizacion) {
 	$('#cantHectareas').html(localizacion.superficie);
 	
 	var cantHa = $('#cantHectareas').html(); 
+	$("#idHectareas").val(cantHa);
+
 	var haXPert = $('#haXPertenencia').html();
+	$("#idCantHaXPertenenciaMinera").val(haXPert);
+	
 	
 	var num = Math.floor(cantHa/haXPert);
 	var decimal = cantHa%haXPert;	
@@ -243,12 +247,14 @@ function cambiarZonaExtraccionCallback(localizacion) {
 	var entero = (decimal<= 0)?num: new Number(num)+new Number(1); 
 	
 	$('#cantPertenencias').html(entero);
-	
+	$("#idCantPertenenciasMineras").val(entero);
+
 	var canonMinero = $('#canonXPertenencia').html();
 	
 	$('#montoTotal').html("$ "+new Number(entero)*new Number(canonMinero));
 
 	$('#idCanonXPertenencia').val(canonMinero);
+	
 	$('#idMontoTotal').val(new Number(entero)*new Number(canonMinero));
 }
 
@@ -284,7 +290,7 @@ function limpiarCamposLocalizacion(){
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
 			<td width="30%" align="left">
 				<input type="hidden" id="nombreProductor" value="" />
-				<select id="idProductor" name="canonMinero.productor.id" class="botonerab" onchange="cambiarProductor();">
+				<select id="idProductor" name="canonMinero.entidad.id" class="botonerab" onchange="cambiarProductor();">
 					<option value="-1">- Seleccione un Productor -</option>
 					<c:forEach items="${productores}" var="prod">						
 						<option value="${prod.id}">
@@ -374,8 +380,12 @@ function limpiarCamposLocalizacion(){
 		<!-- SUBIMPORTES -->
 		<tr>
 			<td colspan="4" align="left">
-				<input id="idCanonXPertenencia" type="hidden" name="canonMinero.canonXPertenencia">			
+				<input id="idCanonXPertenencia" type="hidden" name="canonMinero.canonXPertenencia">
+				<input id="idHectareas" type="hidden" name="canonMinero.hectareas">
+				<input id="idCantHaXPertenenciaMinera" type="hidden" name="canonMinero.cantHaXPertenenciaMinera">
+				<input id="idCantPertenenciasMineras" type="hidden" name="canonMinero.cantPertenenciasMineras">			
 				<input id="idMontoTotal" type="hidden" name="canonMinero.montoTotal">
+				
 				<table border="0" class="cuadrado" align="center" width="90%" cellpadding="2">
 					<tr>
 						<td width="20%" class="grisSubtituloCenter">Hectareas</td>						
@@ -577,7 +587,7 @@ function limpiarCamposLocalizacion(){
 		</tr>
 		<tr>
 			<td height="20" colspan="4">
-				<input type="button" value="Aceptar" id="enviar" disabled="disabled"
+				<input type="button" value="Aceptar" id="enviar"
 					class="botonerab" onclick="javascript:submitir();" > 
 				<input type="button" class="botonerab" value="Volver"
 						onclick="javascript:parent.location= contextRoot() + '/jsp.do?page=.index'">
