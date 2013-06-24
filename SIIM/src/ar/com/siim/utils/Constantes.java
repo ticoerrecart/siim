@@ -133,7 +133,10 @@ public class Constantes {
 	// FIN LOCALIZACION	
 		
 	//CANON MINERO
+		public static final String EXITO_ALTA_CANON_MINERO = "El Canon Minero se ha dado de alta con exito";
+		
 		public static final String EXITO_MODIFICACION_VALOR_CANON_MINERO = "El Valor del Canon Minero se ha modificado con exito";
+		
 		
 	//FIN CANON MINERO
 }

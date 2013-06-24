@@ -3,24 +3,30 @@ package ar.com.siim.dto;
 public class CanonMineroDTO {
 
 	private long id;
-	
-	private EntidadDTO productor;
-	
-	private LocalizacionDTO zonaExtraccion;
-	
-	private String periodo;
-		
-	private double canonXPertenencia;
-	
-	private double montoTotal;
-	
-	private LocalidadDTO localidad;
-	
-	private String fecha;
-	
-	public CanonMineroDTO(){
 
-		productor = new EntidadDTO();
+	private EntidadDTO entidad;//
+
+	private LocalizacionDTO zonaExtraccion;//
+
+	private String periodo;//
+
+	private double hectareas;
+
+	private double cantHaXPertenenciaMinera;
+
+	private double cantPertenenciasMineras;
+
+	private double canonXPertenencia;//
+
+	private double montoTotal;//
+
+	private LocalidadDTO localidad;//
+
+	private String fecha;//
+
+	public CanonMineroDTO() {
+
+		entidad = new EntidadDTO();
 		zonaExtraccion = new LocalizacionDTO();
 		localidad = new LocalidadDTO();
 	}
@@ -65,12 +71,12 @@ public class CanonMineroDTO {
 		this.montoTotal = montoTotal;
 	}
 
-	public EntidadDTO getProductor() {
-		return productor;
+	public EntidadDTO getEntidad() {
+		return entidad;
 	}
 
-	public void setProductor(EntidadDTO productor) {
-		this.productor = productor;
+	public void setEntidad(EntidadDTO entidad) {
+		this.entidad = entidad;
 	}
 
 	public LocalidadDTO getLocalidad() {
@@ -88,5 +94,29 @@ public class CanonMineroDTO {
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-	
+
+	public double getHectareas() {
+		return hectareas;
+	}
+
+	public void setHectareas(double hectareas) {
+		this.hectareas = hectareas;
+	}
+
+	public double getCantHaXPertenenciaMinera() {
+		return cantHaXPertenenciaMinera;
+	}
+
+	public void setCantHaXPertenenciaMinera(double cantHaXPertenenciaMinera) {
+		this.cantHaXPertenenciaMinera = cantHaXPertenenciaMinera;
+	}
+
+	public double getCantPertenenciasMineras() {
+		return cantPertenenciasMineras;
+	}
+
+	public void setCantPertenenciasMineras(double cantPertenenciasMineras) {
+		this.cantPertenenciasMineras = cantPertenenciasMineras;
+	}
+
 }

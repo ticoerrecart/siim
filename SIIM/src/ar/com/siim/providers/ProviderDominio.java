@@ -1,55 +1,62 @@
 package ar.com.siim.providers;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import ar.com.siim.dto.BoletaDepositoDTO;
+import ar.com.siim.dto.CanonMineroDTO;
+import ar.com.siim.dto.EntidadDTO;
+import ar.com.siim.dto.LocalidadDTO;
 import ar.com.siim.dto.LocalidadDestinoDTO;
-import ar.com.siim.dto.ProvinciaDestinoDTO;
-import ar.com.siim.negocio.LocalidadDestino;
-import ar.com.siim.negocio.ProvinciaDestino;
 import ar.com.siim.dto.LocalizacionDTO;
+import ar.com.siim.dto.PeriodoDTO;
+import ar.com.siim.dto.ProvinciaDestinoDTO;
 import ar.com.siim.dto.RolDTO;
-import ar.com.siim.negocio.ItemMenu;
 import ar.com.siim.dto.UsuarioDTO;
+import ar.com.siim.enums.TipoDeEntidad;
+import ar.com.siim.negocio.BoletaDeposito;
+import ar.com.siim.negocio.CanonMinero;
+import ar.com.siim.negocio.Entidad;
+import ar.com.siim.negocio.ItemMenu;
+import ar.com.siim.negocio.Localidad;
+import ar.com.siim.negocio.LocalidadDestino;
+import ar.com.siim.negocio.Localizacion;
+import ar.com.siim.negocio.Periodo;
+import ar.com.siim.negocio.Productor;
+import ar.com.siim.negocio.ProvinciaDestino;
+import ar.com.siim.negocio.RecursosNaturales;
 import ar.com.siim.negocio.Rol;
 import ar.com.siim.negocio.Usuario;
-import ar.com.siim.dto.EntidadDTO;
-import ar.com.siim.enums.TipoDeEntidad;
-import ar.com.siim.negocio.Entidad;
-import ar.com.siim.negocio.Localizacion;
-import ar.com.siim.negocio.Productor;
-import ar.com.siim.negocio.RecursosNaturales;
-import ar.com.siim.dto.PeriodoDTO;
-import ar.com.siim.negocio.Periodo;
-import ar.com.siim.dto.LocalidadDTO;
-import ar.com.siim.negocio.Localidad;
+import ar.com.siim.utils.Fecha;
 
 public abstract class ProviderDominio {
 
-	public static Localidad getLocalidad(LocalidadDTO localidadDTO){
-		
-		Localidad localidad = new Localidad();		
+	public static Localidad getLocalidad(LocalidadDTO localidadDTO) {
+
+		Localidad localidad = new Localidad();
 		localidad.setNombre(localidadDTO.getNombre());
 		return localidad;
 	}
 
-	public static Localidad getLocalidad(Localidad localidad, LocalidadDTO localidadDTO){
-		
+	public static Localidad getLocalidad(Localidad localidad,
+			LocalidadDTO localidadDTO) {
+
 		localidad.setNombre(localidadDTO.getNombre());
 		return localidad;
-	}	
-	
-	public static Periodo getPeriodo(PeriodoDTO periodoDTO){
-		
-		Periodo periodo = new Periodo();		
+	}
+
+	public static Periodo getPeriodo(PeriodoDTO periodoDTO) {
+
+		Periodo periodo = new Periodo();
 		periodo.setPeriodo(periodoDTO.getPeriodo());
 		return periodo;
 	}
 
-	public static Periodo getPeriodo(Periodo periodo, PeriodoDTO periodoDTO){
+	public static Periodo getPeriodo(Periodo periodo, PeriodoDTO periodoDTO) {
 		periodo.setPeriodo(periodoDTO.getPeriodo());
 		return periodo;
-	}	
-	
+	}
+
 	public static Entidad getEntidad(EntidadDTO entidadDTO, Localidad localidad) {
 
 		Entidad entidad = null;
@@ -71,7 +78,7 @@ public abstract class ProviderDominio {
 		entidad.setDni(entidadDTO.getDni());
 		entidad.setTipoDocumento(entidadDTO.getTipoDocumento());
 		entidad.setCodigoPostal(entidadDTO.getCodigoPostal());
-		
+
 		return entidad;
 	}
 
@@ -91,7 +98,7 @@ public abstract class ProviderDominio {
 		entidad.setCodigoPostal(entidadDTO.getCodigoPostal());
 		return entidad;
 	}
-	
+
 	public static Usuario getUsuario(UsuarioDTO usuarioDTO, Entidad entidad,
 			Rol rol) {
 
@@ -115,8 +122,8 @@ public abstract class ProviderDominio {
 		usuario.setRol(rol);
 
 		return usuario;
-	}	
-	
+	}
+
 	public static Rol getRol(RolDTO rolDTO) {
 
 		Rol rol = new Rol();
@@ -124,10 +131,11 @@ public abstract class ProviderDominio {
 		rol.setMenues(new ArrayList<ItemMenu>());
 
 		return rol;
-	}	
-	
-	public static Localizacion getLocalizacion(LocalizacionDTO localizacionDTO, Entidad productor){
-		
+	}
+
+	public static Localizacion getLocalizacion(LocalizacionDTO localizacionDTO,
+			Entidad productor) {
+
 		Localizacion localizacion = new Localizacion();
 		localizacion.setExpediente(localizacionDTO.getExpediente());
 		localizacion.setProductor(productor);
@@ -135,10 +143,10 @@ public abstract class ProviderDominio {
 		localizacion.setResolucion(localizacionDTO.getResolucion());
 		localizacion.setDomicilio(localizacionDTO.getDomicilio());
 		localizacion.setSuperficie(localizacionDTO.getSuperficie());
-		
+
 		return localizacion;
 	}
-	
+
 	public static ProvinciaDestino getProvincia(ProvinciaDestinoDTO provinciaDTO) {
 
 		ProvinciaDestino provincia = new ProvinciaDestino();
@@ -171,5 +179,54 @@ public abstract class ProviderDominio {
 		localidad.setProvinciaDestino(provincia);
 
 		return localidad;
-	}	
+	}
+
+	public static CanonMinero getCanonMinero(CanonMineroDTO canonMineroDTO,
+			List<BoletaDepositoDTO> boletasDepositoDTO, Localidad localidad,
+			Localizacion localizacion, Entidad entidad) {
+		CanonMinero canonMinero = new CanonMinero();
+		canonMinero.setCanonMineroXPertenencia(canonMineroDTO
+				.getCanonXPertenencia());
+		canonMinero.setCantHaXPertenenciaMinera(canonMineroDTO
+				.getCantHaXPertenenciaMinera());
+		canonMinero.setCantPertenenciasMineras(canonMineroDTO
+				.getCantPertenenciasMineras());
+		canonMinero.setHectareas(canonMineroDTO.getHectareas());
+		canonMinero.setFecha(Fecha.stringDDMMAAAAToUtilDate(canonMineroDTO
+				.getFecha()));
+		canonMinero.setMontoTotal(canonMineroDTO.getMontoTotal());
+		canonMinero.setPeriodo(canonMineroDTO.getPeriodo());
+
+		canonMinero.setLocalidad(localidad);
+		canonMinero.setLocalizacion(localizacion);
+		canonMinero.setEntidad(entidad);
+
+		List<BoletaDeposito> boletas = new ArrayList<BoletaDeposito>();
+		for (BoletaDepositoDTO boletaDepositoDTO : boletasDepositoDTO) {
+			BoletaDeposito boletaDeposito = new BoletaDeposito();
+			// boletaDeposito.setAnulado(boletaDepositoDTO.get);
+			boletaDeposito.setCanonMinero(canonMinero);
+			boletaDeposito.setArea(boletaDepositoDTO.getArea());
+			boletaDeposito.setConcepto(boletaDepositoDTO.getConcepto());
+			boletaDeposito.setEfectivoCheque(boletaDepositoDTO
+					.getEfectivoCheque());
+
+			if (boletaDepositoDTO.getFechaPago() != null) {
+				boletaDeposito.setFechaPago(Fecha
+						.stringDDMMAAAAToUtilDate(boletaDepositoDTO
+								.getFechaPago()));// boletaDeposito.setFechaPago();
+			}
+
+			boletaDeposito.setFechaVencimiento(Fecha
+					.stringDDMMAAAAToUtilDate(boletaDepositoDTO
+							.getFechaVencimiento()));// boletaDeposito.setFechaVencimiento();
+			boletaDeposito.setMonto(boletaDepositoDTO.getMonto());
+			boletaDeposito.setNumero(boletaDepositoDTO.getNumero());
+
+			boletas.add(boletaDeposito);
+		}
+		canonMinero.setBoletasDeposito(boletas);
+
+		return canonMinero;
+	}
 }
