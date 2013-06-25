@@ -6,6 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.DateConverter;
+import org.apache.commons.beanutils.converters.DateTimeConverter;
+
+import ar.com.siim.negocio.Localidad;
+
 /**
  * Utility methods for dates.
  *
@@ -479,5 +485,15 @@ public abstract class DateUtils {
 	public static String formatAAAAMMDDHHMMSS(String pFecha) {
 		return pFecha.substring(8, 10) + "/" + pFecha.substring(5, 7) + "/"
 				+ pFecha.substring(0, 4);
+	}
+	
+	public static void registrarConverter(){
+		DateTimeConverter dtConverter = new DateConverter();
+		dtConverter.setPattern("dd/MM/yyyy");
+		ConvertUtils.register(dtConverter, Date.class);
+		ConvertUtils.register(new LocalidadConverter(),Localidad.class);
+		
+		 
+		
 	}
 }

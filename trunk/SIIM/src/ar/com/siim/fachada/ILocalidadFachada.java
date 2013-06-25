@@ -6,6 +6,7 @@ import ar.com.siim.dto.LocalidadDestinoDTO;
 import ar.com.siim.dto.ProvinciaDestinoDTO;
 import ar.com.siim.dto.LocalidadDTO;
 import ar.com.siim.negocio.Localidad;
+import ar.com.siim.negocio.LocalidadDestino;
 import ar.com.siim.negocio.exception.NegocioException;
 
 public interface ILocalidadFachada {
@@ -13,6 +14,8 @@ public interface ILocalidadFachada {
 	public List<Localidad> getLocalidades();
 
 	public Localidad getLocalidadPorId(Long id);
+	
+	public LocalidadDestino getLocalidadDestinoPorId(Long id);
 
 	public boolean existeLocalidad(LocalidadDTO localidad);
 	

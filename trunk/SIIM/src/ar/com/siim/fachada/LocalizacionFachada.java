@@ -34,6 +34,10 @@ public class LocalizacionFachada implements ILocalizacionFachada {
 		this.localizacionDAO = localizacionDAO;
 	}
 
+	public Localizacion getLocalizacion (Long idLocalizacion){
+		return localizacionDAO.getLocalizacionPorId(idLocalizacion);
+	}
+	
 	public IEntidadFachada getEntidadFachada() {
 		return entidadFachada;
 	}

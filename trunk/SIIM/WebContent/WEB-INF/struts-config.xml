@@ -20,6 +20,9 @@
 		<form-bean name="declaracionExtraccionForm"
 			type="ar.com.siim.struts.actions.forms.DeclaracionExtraccionForm">
 		</form-bean>
+		<form-bean name="actaDeVerificacionForm"
+			type="ar.com.siim.struts.actions.forms.ActaDeVerificacionForm">
+		</form-bean>		
 		<form-bean name="tipoProductoForm"
 			type="ar.com.siim.struts.actions.forms.TipoProductoForm">
 		</form-bean>
@@ -195,6 +198,14 @@
 			<forward name="exitoCargaAltaDeclaracionExtraccion" path=".altaDeclaracionExtraccion" />					
 		</action>
 		<!-- FIN DECLARACION EXTRACCION -->
+
+		<!-- ACTA DE VERIFICACION -->
+		<action path="/actaDeVerificacion" type="ar.com.siim.struts.actions.ActaDeVerificacionAction"
+			parameter="metodo" name="actaDeVerificacionForm" scope="request">
+			<forward name="exitoCargaActaDeVerificacion" path=".altaActaDeVerificacion" />
+			<forward name="exitoAltaDeVerificacion" path="/actaDeVerificacion.do?metodo=cargarActaDeVerificacion" />							
+		</action>
+		<!-- FIN ACTA DE VERIFICACION -->
 		
 	</action-mappings>
 

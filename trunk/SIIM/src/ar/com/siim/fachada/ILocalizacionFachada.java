@@ -2,6 +2,7 @@ package ar.com.siim.fachada;
 
 import java.util.List;
 
+import ar.com.siim.negocio.Localizacion;
 import ar.com.siim.negocio.exception.NegocioException;
 import ar.com.siim.dto.LocalizacionDTO;
 
@@ -14,4 +15,6 @@ public interface ILocalizacionFachada {
 	public List<LocalizacionDTO> getLocalizacionesPorProductorDTO(Long idProductor) throws NegocioException;
 	
 	public LocalizacionDTO getLocalizacionDTOPorId(long idLocalizacion);
+	
+	public Localizacion getLocalizacion (Long idLocalizacion);
 }
