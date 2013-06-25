@@ -2,30 +2,30 @@ package ar.com.siim.dto;
 
 public class LocalizacionDTO {
 
-	private long id;
-	
+	private Long id;
+
 	private EntidadDTO productor;
-	
+
 	private String expediente;
-	
+
 	private String razonSocial;
-	
+
 	private String resolucion;
-	
+
 	private String domicilio;
-	
-	private double superficie;	
-	
-	public LocalizacionDTO(){
-		
+
+	private Double superficie;
+
+	public LocalizacionDTO() {
+
 		productor = new EntidadDTO();
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -61,20 +61,20 @@ public class LocalizacionDTO {
 		this.resolucion = resolucion;
 	}
 
-	public double getSuperficie() {
-		return superficie;
-	}
-
-	public void setSuperficie(double superficie) {
-		this.superficie = superficie;
-	}
-
 	public String getDomicilio() {
 		return domicilio;
 	}
 
 	public void setDomicilio(String domicilio) {
 		this.domicilio = domicilio;
+	}
+
+	public Double getSuperficie() {
+		return superficie;
+	}
+
+	public void setSuperficie(Double superficie) {
+		this.superficie = superficie;
 	}
 
 }

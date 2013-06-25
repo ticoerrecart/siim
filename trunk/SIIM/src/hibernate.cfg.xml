@@ -35,6 +35,8 @@
 		<mapping class='ar.com.siim.negocio.ProvinciaDestino' />
 		<mapping class='ar.com.siim.negocio.LocalidadDestino' />
 		<mapping class='ar.com.siim.negocio.CanonMinero' />
+		<mapping class='ar.com.siim.negocio.Transporte' />
+		<mapping class='ar.com.siim.negocio.ActaDeVerificacion' />
 
 	</session-factory>
 </hibernate-configuration>
