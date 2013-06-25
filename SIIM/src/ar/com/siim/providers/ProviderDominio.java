@@ -3,6 +3,9 @@ package ar.com.siim.providers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
+
+import ar.com.siim.dto.ActaDeVerificacionDTO;
 import ar.com.siim.dto.BoletaDepositoDTO;
 import ar.com.siim.dto.CanonMineroDTO;
 import ar.com.siim.dto.EntidadDTO;
@@ -12,8 +15,10 @@ import ar.com.siim.dto.LocalizacionDTO;
 import ar.com.siim.dto.PeriodoDTO;
 import ar.com.siim.dto.ProvinciaDestinoDTO;
 import ar.com.siim.dto.RolDTO;
+import ar.com.siim.dto.TransporteDTO;
 import ar.com.siim.dto.UsuarioDTO;
 import ar.com.siim.enums.TipoDeEntidad;
+import ar.com.siim.negocio.ActaDeVerificacion;
 import ar.com.siim.negocio.BoletaDeposito;
 import ar.com.siim.negocio.CanonMinero;
 import ar.com.siim.negocio.Entidad;
@@ -26,6 +31,7 @@ import ar.com.siim.negocio.Productor;
 import ar.com.siim.negocio.ProvinciaDestino;
 import ar.com.siim.negocio.RecursosNaturales;
 import ar.com.siim.negocio.Rol;
+import ar.com.siim.negocio.Transporte;
 import ar.com.siim.negocio.Usuario;
 import ar.com.siim.utils.Fecha;
 
@@ -179,6 +185,52 @@ public abstract class ProviderDominio {
 		localidad.setProvinciaDestino(provincia);
 
 		return localidad;
+	}
+
+	public static ActaDeVerificacion getActa(ActaDeVerificacionDTO actaDTO,LocalidadDestino destino,Localidad oficinaMinera,Entidad productor,Localizacion yacimiento) {
+		ActaDeVerificacion acta = new ActaDeVerificacion();
+		
+		acta.setAgenteVerificacion(actaDTO.getAgenteVerificacion());
+		acta.setAreaDeVerificacion(actaDTO.getAreaDeVerificacion());
+		acta.setAreaFiscalizadora(actaDTO.getAreaFiscalizadora());
+		acta.setBolsaCantidad(actaDTO.getBolsaCantidad());
+		acta.setBolsaObservaciones(actaDTO.getBolsaObservaciones());
+		acta.setBolsaTitularMembrete(actaDTO.getBolsaTitularMembrete());
+		acta.setBolsaVolumenD3(actaDTO.getBolsaVolumenD3());
+		
+		acta.setDomicilioDestinatario(actaDTO.getDomicilioDestinatario());
+		if (actaDTO.getFecha()!=""){
+			acta.setFecha(Fecha.stringDDMMAAAAToUtilDate(actaDTO.getFecha()));	
+		}
+		if (actaDTO.getFechaVerificacion()!=""){
+			acta.setFechaVerificacion(Fecha.stringDDMMAAAAToUtilDate(actaDTO.getFechaVerificacion()));	
+		}
+		acta.setFuncionarioActuante(actaDTO.getFuncionarioActuante());
+		acta.setGranelObservaciones(actaDTO.getGranelObservaciones());
+		acta.setGranelVolumenM3Declarado(actaDTO.getGranelVolumenM3Declarado());
+		acta.setGranelVolumenM3Medido(actaDTO.getGranelVolumenM3Medido());
+		acta.setNumero(actaDTO.getNumero());
+		acta.setNumeroDeFactura(actaDTO.getNumeroDeFactura());
+		acta.setNumeroDeRemito(actaDTO.getNumeroDeRemito());
+		acta.setObservaciones(actaDTO.getObservaciones());
+				
+		acta.setTransporte(ProviderDominio.getTransporte(actaDTO.getTransporte()));
+		
+		acta.setYacimiento(yacimiento);
+		acta.setDestino(destino);
+		acta.setOficinaMinera(oficinaMinera);
+		acta.setProductor(productor);
+		return acta;
+	}
+
+	private static Transporte getTransporte(TransporteDTO transporteDTO) {
+		Transporte transporte = new Transporte();
+		try {
+			BeanUtils.populate(transporte, BeanUtils.describe(transporteDTO));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return transporte;
 	}
 
 	public static CanonMinero getCanonMinero(CanonMineroDTO canonMineroDTO,

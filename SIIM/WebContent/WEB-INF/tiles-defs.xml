@@ -29,44 +29,44 @@
 
 	<!-- LOCALIDAD -->
 	<definition name=".altaLocalidad" extends=".base">
-		<put name="title" value="SIIFs" />
+		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/altaLocalidad.jsp" />
 	</definition>
 
 	<definition name=".recuperarLocalidades" extends=".base">
-		<put name="title" value="SIIFs" />
+		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/recuperarLocalidades.jsp" />
 	</definition>
 	
 	<definition name=".altaProvincia" extends=".base">
-		<put name="title" value="SIIFs" />
+		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/altaProvincia.jsp" />
 	</definition>	
 	
 	<definition name=".recuperarProvinciasDestino" extends=".base">
-		<put name="title" value="SIIFs" />
+		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/recuperarProvinciasDestino.jsp" />
 	</definition>	
 	
 	<definition name=".altaLocalidadDestino" extends=".base">
-		<put name="title" value="SIIFs" />
+		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/altaLocalidadDestino.jsp" />
 	</definition>
 	
 	<definition name=".modificacionLocalidadDestino" extends=".base">
-		<put name="title" value="SIIFs" />
+		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/modificacionLocalidadDestino.jsp" />
 	</definition>		
 	<!-- FIN LOCALIDAD -->
 
 	<!-- PERIODO -->
 	<definition name=".altaPeriodo" extends=".base">
-		<put name="title" value="SIIFs" />
+		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/altaPeriodo.jsp" />
 	</definition>
 
 	<definition name=".recuperarPeriodos" extends=".base">
-		<put name="title" value="SIIFs" />
+		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/recuperarPeriodos.jsp" />
 	</definition>
 	<!-- FIN PERIODO -->
@@ -129,6 +129,13 @@
 		<put name="body" value="/jsp/altaDeclaracionExtraccion.jsp" />
 	</definition>
 	<!-- FIN DECLARACION EXTRACCION -->
+
+	<!-- ACTA VERIFICACION-->
+	<definition name=".altaActaDeVerificacion" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/altaActaDeVerificacion.jsp" />
+	</definition>
+	<!-- FIN ACTA VERIFICACION-->
 
 	<definition name=".error" extends=".base">
 		<put name="title" value="Error en SIIMs" />

@@ -3,7 +3,7 @@
  */
 
 // directory of where all the images are
-var cmThemeGrayBase = '/SIIF/js/JSCookMenu/ThemeGray/';
+var cmThemeGrayBase = '/SIIM/js/JSCookMenu/ThemeGray/';
 
 var cmThemeGray =
 {

@@ -32,11 +32,14 @@ public class LocalidadFachada implements ILocalidadFachada {
 	}
 
 	public Localidad getLocalidadPorId(Long id){
-
 		return localidadDAO.getLocalidadPorId(id);
-			
 	}
 
+	public LocalidadDestino getLocalidadDestinoPorId(Long id){
+		return localidadDAO.getLocalidadDestinoPorId(id);
+	}
+
+	
 	public boolean existeLocalidad(LocalidadDTO localidad) {
 		return localidadDAO.existeLocalidad(localidad.getNombre(),localidad.getId());
 	}
