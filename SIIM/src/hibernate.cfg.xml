@@ -18,7 +18,7 @@
 		<property name="hibernate.format_sql">true</property>
 
 		<!-- Drop and re-create the database schema on startup -->
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">validate</property>
 
 		<!-- Enable Hibernate's automatic session context management -->
 		<mapping class='ar.com.siim.negocio.BoletaDeposito' />
