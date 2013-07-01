@@ -201,14 +201,23 @@ function calcularVolBolsa(){
 	var cant = $('input[name="acta.bolsaCantidad"]').val();
 	var vol = $('input[name="acta.bolsaVolumenD3"]').val();
 	if (cant!=null && vol!=null && cant >= 0 && vol >= 0 ){
-		$('#bolsaVolumenTotal').val(cant*vol);	
+		$('#bolsaVolumenTotal').val(cant*vol/1000);	
 	} else {
 		$('#bolsaVolumenTotal').val(0);
 	}
+	calcularVolTotal();
 }
 
 function volverAltaActa(){
 		parent.location = contextRoot() + '/jsp.do?page=.index';		
+}
+
+function calcularVolTotal(){
+	n = $('#granelVolumenTotal').val();
+	n2 = $('#bolsaVolumenTotal').val();
+    n = isNaN(parseInt(n)) ? 0 : parseInt(n);
+	n2 = isNaN(parseInt(n2)) ? 0 : parseInt(n2);
+	$('#totalVol').text(n + n2);
 }
 
 </script>
@@ -266,7 +275,14 @@ function volverAltaActa(){
 		<tr>
 			<td width="15%" class="botoneralNegritaRight">Agente Verificación</td>
 			<td width="35%" align="left">
-				<input type="text" name="acta.agenteVerificacion" class="botonerab" size="30" >
+				<select id="idAgenteVerificacion" name="acta.agenteVerificacion" class="botonerab" >
+					<option value="-1">- Seleccione un Usuario -</option>
+					<c:forEach items="${usuarios}" var="user">						
+						<option value="${user.nombreUsuario}">
+							<c:out value="${user.nombreUsuario}"></c:out>
+						</option>
+					</c:forEach>
+				</select>			
 			</td>
 
 			<td width="15%" class="botoneralNegritaRight">Area Fiscalizadora</td>
@@ -611,14 +627,14 @@ function volverAltaActa(){
 					
 					<tr>
 						<td width="15%" colspan="1" class="botoneralNegritaRight">
-							Volumen Declarado(Mt3)
+							Volumen Declarado(m3)
 						</td>
 						<td width="15%" colspan="2" align="left">
-							<input name="acta.granelVolumenM3Declarado" class="botonerab" type="text" size="15">
+							<input id="granelVolumenTotal" name="acta.granelVolumenM3Declarado" class="botonerab" type="text" size="15" onchange="calcularVolTotal();">
 						</td>
 						
 						<td width="15%" colspan="1" class="botoneralNegritaRight">
-							Volumen Medido (Mt3)
+							Volumen Medido(m3)
 						</td>
 						<td width="15%" colspan="2" align="left">
 							<input name="acta.granelVolumenM3Medido" class="botonerab" type="text" size="15">			
@@ -643,17 +659,17 @@ function volverAltaActa(){
 							<input name="acta.bolsaCantidad" class="botonerab" type="text" size="15" onchange="calcularVolBolsa();">
 						</td>
 						<td width="15%" class="botoneralNegritaRight">
-							Volumen De Bolsa(Dm3)
+							Volumen De Bolsa(dm3)
 						</td>
 						<td width="15%" align="left">
 							<input name="acta.bolsaVolumenD3" class="botonerab" type="text" size="15" onchange="calcularVolBolsa();">
 						</td>
 						
 						<td width="15%"  class="botoneralNegritaRight">
-							Volumen Total Embolsado
+							Volumen Total Embolsado(m3)
 						</td>
 						<td width="15%" align="left">
-							<input id="bolsaVolumenTotal" class="botonerab" type="text" size="15" readonly="readonly">			
+							<input id="bolsaVolumenTotal" class="botonerab" type="text" size="15" readonly="readonly" onchange="calcularVolTotal();">			
 						</td>
 						
 						<td width="15%" class="botoneralNegritaRight">
@@ -671,7 +687,12 @@ function volverAltaActa(){
 							<textarea name="acta.bolsaObservaciones" class="botonerab" type="text" cols="120" rows="4"></textarea>
 						</td>
 					</tr>	
-																			
+						
+						 
+					<tr>
+						<td colspan="8" class="grisMuyClaroSubtituloCenter ">Volumen Total(m3): <div id="totalVol"></div></td>
+						
+					</tr>															
 					<tr>
 						<td colspan="8" height="10"></td>
 					</tr>				

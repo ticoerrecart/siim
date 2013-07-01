@@ -12,6 +12,7 @@ import ar.com.siim.fachada.IActaDeVerificacionFachada;
 import ar.com.siim.fachada.IEntidadFachada;
 import ar.com.siim.fachada.ILocalidadFachada;
 import ar.com.siim.fachada.IPeriodoFachada;
+import ar.com.siim.fachada.IUsuarioFachada;
 import ar.com.siim.struts.actions.forms.ActaDeVerificacionForm;
 import ar.com.siim.struts.utils.Validator;
 import ar.com.siim.utils.MyLogger;
@@ -31,6 +32,8 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
+			
+			IUsuarioFachada usuarioFachada = (IUsuarioFachada) ctx.getBean("usuarioFachada");
 
 			// ITipoProductoFachada tipoProductoFachada = (ITipoProductoFachada)
 			// ctx.getBean("tipoProductoFachada");
@@ -39,7 +42,9 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
 			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 			request.setAttribute("productores", entidadFachada.getProductoresDTO());
-
+			request.setAttribute("usuarios", usuarioFachada.getUsuariosDTO());
+			
+			
 			// request.setAttribute("productoTurba",
 			// tipoProductoFachada.recuperarTipoProductoDTO(1L));
 
