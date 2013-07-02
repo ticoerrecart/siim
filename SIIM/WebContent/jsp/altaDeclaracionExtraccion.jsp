@@ -183,7 +183,10 @@ function cambiarProductor(){
 		var data = [ { razonSocial:"-Seleccione una Zona-", id:-1 }];
 		dwr.util.addOptions("idZonaExtraccion", data, "id", "razonSocial");		
 		$('#idZonaExtraccion').attr('disabled','disabled');		
-	}	
+	}
+
+	$('#domZona').val("");
+	$('#supZona').val("");	
 }
 
 function cambiarProductorCallback(productor) {
