@@ -13,12 +13,18 @@ import ar.com.siim.fachada.ICanonMineroFachada;
 import ar.com.siim.fachada.IEntidadFachada;
 import ar.com.siim.fachada.ILocalidadFachada;
 import ar.com.siim.fachada.IPeriodoFachada;
+import ar.com.siim.negocio.CanonMinero;
 import ar.com.siim.struts.actions.forms.CanonMineroForm;
 import ar.com.siim.struts.utils.Validator;
 import ar.com.siim.utils.Constantes;
 import ar.com.siim.utils.MyLogger;
 
 public class CanonMineroAction extends ValidadorAction {
+
+	// secuencia de llamados
+	// 1-cargarProductoresParaPagoBoletasDeposito
+	// 2-recuperarBoletasParaPagar
+	// 3-cargarPagosCanonMinero
 
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarAltaCanonMinero(ActionMapping mapping,
@@ -50,7 +56,38 @@ public class CanonMineroAction extends ValidadorAction {
 			request.setAttribute("canonXPertenencia",
 					canonMineroFachada.recuperarCanonMineroXPertenencia());
 
-			String s = (String) request.getAttribute("exitoGrabado");
+			// String s = (String) request.getAttribute("exitoGrabado");
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarPagosCanonMinero(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoCargarPagosCanonMinero";
+
+		try {
+			String idCanonMinero = request.getParameter("id");
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			ICanonMineroFachada canonMineroFachada = (ICanonMineroFachada) ctx
+					.getBean("canonMineroFachada");
+
+			CanonMinero canonMinero = canonMineroFachada.getCanonMinero(Long
+					.parseLong(idCanonMinero));
+
+			request.setAttribute("canonMinero", canonMinero);
+			request.setAttribute("titulo", "Pago de Boletas de Depósito");
+			request.setAttribute("volver",
+					"/canonMinero.do?metodo=cargarProductoresParaPagoBoletasDeposito");
+			request.setAttribute("habilitarPagar", true);
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -217,4 +254,64 @@ public class CanonMineroAction extends ValidadorAction {
 			return false;
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarBoletasParaPagar(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoRecuperarBoletasParaPagar";
+		WebApplicationContext ctx = getWebApplicationContext();
+		ICanonMineroFachada canonMineroFachada = (ICanonMineroFachada) ctx
+				.getBean("canonMineroFachada");
+		String idLocalizacion = request.getParameter("idLocalizacion");
+		String idPeriodo = request.getParameter("idPeriodo");
+
+		CanonMinero canonMinero = canonMineroFachada.getCanonMinero(
+				Long.parseLong(idLocalizacion), idPeriodo);
+
+		request.setAttribute("canonMinero", canonMinero);
+		request.setAttribute("tituloLinkDetalle", "Pagar Boletas");
+		request.setAttribute("fwdDetalle",
+				"/canonMinero.do?metodo=cargarPagosCanonMinero");
+
+		return mapping.findForward(strForward);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarProductoresParaPagoBoletasDeposito(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoCargarProductoresParaPagoBoletasDeposito";
+
+		try {
+			String idProductor = request.getParameter("idProductor");
+			String idLocalizacion = request.getParameter("idLocalizacion");
+			String idPeriodo = request.getParameter("idPeriodo");
+			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("idLocalizacion", idLocalizacion);
+			request.setAttribute("idPeriodo", idPeriodo);
+
+			WebApplicationContext ctx = getWebApplicationContext();
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
+
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
+			request.setAttribute("productores",
+					entidadFachada.getProductoresDTO());
+			// request.setAttribute("paramForward",);
+			request.setAttribute("urlDetalle",
+					"../../canonMinero.do?metodo=recuperarBoletasParaPagar");
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}
+
 }

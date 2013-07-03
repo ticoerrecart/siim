@@ -8,7 +8,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siim.dto.LocalizacionDTO;
+import ar.com.siim.negocio.BoletaDeposito;
 import ar.com.siim.negocio.CanonMinero;
+import ar.com.siim.utils.DateUtils;
 
 public class CanonMineroDAO extends HibernateDaoSupport {
 
@@ -44,5 +46,37 @@ public class CanonMineroDAO extends HibernateDaoSupport {
 		List<CanonMinero> canonMinero = criteria.list();
 
 		return (canonMinero.size() > 0);
+	}
+
+	public CanonMinero getCanonMinero(Long idYacimiento, String periodo) {
+		Criteria criteria = getSession().createCriteria(CanonMinero.class);
+		criteria.add(Restrictions.eq("localizacion.id", idYacimiento));
+		criteria.add(Restrictions.eq("periodo", periodo));
+
+		List<CanonMinero> canonMinero = criteria.list();
+
+		if (canonMinero.size() > 0) {
+			return canonMinero.get(0);
+		}
+
+		return null;
+	}
+
+	public CanonMinero getCanonMinero(Long idCanonMinero) {
+		return (CanonMinero) this.getHibernateTemplate().get(CanonMinero.class,
+				idCanonMinero);
+	}
+
+	public String registrarPagoBoletaDeposito(Long idBoleta, String fechaPago) {
+		BoletaDeposito boletaDeposito = (BoletaDeposito) this
+				.getHibernateTemplate().get(BoletaDeposito.class, idBoleta);
+
+		boletaDeposito.setFechaPago(DateUtils.dateFromString(fechaPago,
+				"dd/MM/yyyy"));
+		this.getHibernateTemplate().saveOrUpdate(boletaDeposito);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+
+		return fechaPago;
 	}
 }
