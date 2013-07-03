@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siim.utils.DateUtils;
+
 @Entity
 public class CanonMinero {
 
@@ -137,6 +139,15 @@ public class CanonMinero {
 
 	public Date getFecha() {
 		return fecha;
+	}
+
+	public String getFechaStr() {
+		String fechaStr = "";
+		if (fecha != null) {
+			fechaStr = DateUtils.stringFromDate(fecha, "dd/MM/yyyy");
+		}
+
+		return fechaStr;
 	}
 
 	public void setFecha(Date fecha) {

@@ -9,10 +9,13 @@ import ar.com.siim.dao.LocalizacionDAO;
 import ar.com.siim.dto.BoletaDepositoDTO;
 import ar.com.siim.dto.CanonMineroDTO;
 import ar.com.siim.dto.LocalizacionDTO;
+import ar.com.siim.negocio.CanonMinero;
 import ar.com.siim.negocio.Entidad;
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.negocio.Localizacion;
+import ar.com.siim.negocio.exception.NegocioException;
 import ar.com.siim.providers.ProviderDominio;
+import ar.com.siim.utils.MyLogger;
 
 public class CanonMineroFachada implements ICanonMineroFachada {
 
@@ -65,5 +68,25 @@ public class CanonMineroFachada implements ICanonMineroFachada {
 
 	public boolean existeCanonMinero(LocalizacionDTO yacimiento, String periodo) {
 		return canonMineroDAO.existeCanonMinero(yacimiento, periodo);
+	}
+
+	public CanonMinero getCanonMinero(Long idYacimiento, String periodo) {
+		return canonMineroDAO.getCanonMinero(idYacimiento, periodo);
+	}
+
+	public CanonMinero getCanonMinero(Long idCanonMinero) {
+		return canonMineroDAO.getCanonMinero(idCanonMinero);
+	}
+
+	public String registrarPagoBoletaDeposito(Long idBoleta, String fechaPago)
+			throws NegocioException {
+		try {
+			return canonMineroDAO.registrarPagoBoletaDeposito(idBoleta,
+					fechaPago);
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}
 	}
 }

@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siim.utils.DateUtils;
 import ar.com.siim.utils.Fecha;
 
 @Entity
@@ -90,12 +91,30 @@ public class BoletaDeposito {
 		return fechaPago;
 	}
 
+	public String getFechaPagoStr() {
+		String fechaStr = "";
+		if (fechaPago != null) {
+			fechaStr = DateUtils.stringFromDate(fechaPago, "dd/MM/yyyy");
+		}
+
+		return fechaStr;
+	}
+
 	public void setFechaPago(Date fechaPago) {
 		this.fechaPago = fechaPago;
 	}
 
 	public Date getFechaVencimiento() {
 		return fechaVencimiento;
+	}
+
+	public String getFechaVencimientoStr() {
+		String fechaStr = "";
+		if (fechaVencimiento != null) {
+			fechaStr = DateUtils.stringFromDate(fechaVencimiento, "dd/MM/yyyy");
+		}
+
+		return fechaStr;
 	}
 
 	public void setFechaVencimiento(Date fechaVencimiento) {

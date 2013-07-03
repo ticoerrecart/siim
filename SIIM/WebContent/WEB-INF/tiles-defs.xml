@@ -120,7 +120,29 @@
 	<definition name=".modificacionCanonMineroXPertenencia" extends=".base">
 		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/modificacionCanonMineroXPertenencia.jsp" />
-	</definition>	
+	</definition>
+	
+	
+	<definition name=".cargarProductoresParaPagoBoletaDeposito" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/cargarProductoresParaPagoBoletaDeposito.jsp" />
+	</definition>
+	
+	
+	<definition name=".pagosCanonMinero" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/pagosCanonMinero.jsp" />
+	</definition>
+
+	<definition name=".cargarProductoresParaConsultaCanonMinero" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/cargarProductoresParaConsultaCanonMinero.jsp" />
+	</definition>
+
+	<definition name=".consultaCanonMinero" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/pagosCanonMinero.jsp" />
+	</definition>
 	<!-- FIN CANON MINERO -->
 
 	<!-- DECLARACION EXTRACCION -->

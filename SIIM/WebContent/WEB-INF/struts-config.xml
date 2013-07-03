@@ -188,8 +188,18 @@
 			<forward name="exitoAltaCanonMinero" path="/canonMinero.do?metodo=cargarAltaCanonMinero" />
 			<forward name="exitoCargarModificacionValorCanonMinero" path=".modificacionCanonMineroXPertenencia" />
 			<forward name="exitoModificacionValorCanonMinero" path=".modificacionCanonMineroXPertenencia" />
-											
+			<forward name="exitoCargarProductoresParaPagoBoletasDeposito" path=".cargarProductoresParaPagoBoletaDeposito" />
+			<forward name="exitoRecuperarBoletasParaPagar" path="/jsp/bloqueRecuperarBoletasParaPagar.jsp" />
+			<forward name="exitoCargarPagosCanonMinero" path=".pagosCanonMinero" />
 		</action>
+
+		<action path="/consultasCanonMinero" type="ar.com.siim.struts.actions.ConsultasCanonMineroAction"
+			parameter="metodo">
+			<forward name="exitoCargarProductoresLocalizacionPeriodo" path=".cargarProductoresParaConsultaCanonMinero" />
+			<forward name="exitoRecuperarCanonMinero" path="/jsp/bloqueRecuperarBoletasParaPagar.jsp" />
+			<forward name="exitoCargarConsultaCanonMinero" path=".consultaCanonMinero" />
+		</action>
+
 		<!-- FIN CANON MINERO -->		
 		
 		<!-- DECLARACION EXTRACCION -->
