@@ -55,11 +55,37 @@ public abstract class ProviderDominio {
 
 		Periodo periodo = new Periodo();
 		periodo.setPeriodo(periodoDTO.getPeriodo());
+
+		periodo.setFechaVencimientoPrimerTrimestre(Fecha
+				.stringDDMMAAAAToDate(periodoDTO
+						.getFechaVencimientoPrimerTrimestre()));
+		periodo.setFechaVencimientoSegundoTrimestre(Fecha
+				.stringDDMMAAAAToDate(periodoDTO
+						.getFechaVencimientoSegundoTrimestre()));
+		periodo.setFechaVencimientoTercerTrimestre(Fecha
+				.stringDDMMAAAAToDate(periodoDTO
+						.getFechaVencimientoTercerTrimestre()));
+		periodo.setFechaVencimientoCuartoTrimestre(Fecha
+				.stringDDMMAAAAToDate(periodoDTO
+						.getFechaVencimientoCuartoTrimestre()));
 		return periodo;
 	}
 
 	public static Periodo getPeriodo(Periodo periodo, PeriodoDTO periodoDTO) {
 		periodo.setPeriodo(periodoDTO.getPeriodo());
+		periodo.setFechaVencimientoPrimerTrimestre(Fecha
+				.stringDDMMAAAAToDate(periodoDTO
+						.getFechaVencimientoPrimerTrimestre()));
+		periodo.setFechaVencimientoSegundoTrimestre(Fecha
+				.stringDDMMAAAAToDate(periodoDTO
+						.getFechaVencimientoSegundoTrimestre()));
+		periodo.setFechaVencimientoTercerTrimestre(Fecha
+				.stringDDMMAAAAToDate(periodoDTO
+						.getFechaVencimientoTercerTrimestre()));
+		periodo.setFechaVencimientoCuartoTrimestre(Fecha
+				.stringDDMMAAAAToDate(periodoDTO
+						.getFechaVencimientoCuartoTrimestre()));
+
 		return periodo;
 	}
 
@@ -187,9 +213,11 @@ public abstract class ProviderDominio {
 		return localidad;
 	}
 
-	public static ActaDeVerificacion getActa(ActaDeVerificacionDTO actaDTO,LocalidadDestino destino,Localidad oficinaMinera,Entidad productor,Localizacion yacimiento) {
+	public static ActaDeVerificacion getActa(ActaDeVerificacionDTO actaDTO,
+			LocalidadDestino destino, Localidad oficinaMinera,
+			Entidad productor, Localizacion yacimiento) {
 		ActaDeVerificacion acta = new ActaDeVerificacion();
-		
+
 		acta.setAgenteVerificacion(actaDTO.getAgenteVerificacion());
 		acta.setAreaDeVerificacion(actaDTO.getAreaDeVerificacion());
 		acta.setAreaFiscalizadora(actaDTO.getAreaFiscalizadora());
@@ -197,13 +225,14 @@ public abstract class ProviderDominio {
 		acta.setBolsaObservaciones(actaDTO.getBolsaObservaciones());
 		acta.setBolsaTitularMembrete(actaDTO.getBolsaTitularMembrete());
 		acta.setBolsaVolumenD3(actaDTO.getBolsaVolumenD3());
-		
+
 		acta.setDomicilioDestinatario(actaDTO.getDomicilioDestinatario());
-		if (actaDTO.getFecha()!=""){
-			acta.setFecha(Fecha.stringDDMMAAAAToUtilDate(actaDTO.getFecha()));	
+		if (actaDTO.getFecha() != "") {
+			acta.setFecha(Fecha.stringDDMMAAAAToUtilDate(actaDTO.getFecha()));
 		}
-		if (actaDTO.getFechaVerificacion()!=""){
-			acta.setFechaVerificacion(Fecha.stringDDMMAAAAToUtilDate(actaDTO.getFechaVerificacion()));	
+		if (actaDTO.getFechaVerificacion() != "") {
+			acta.setFechaVerificacion(Fecha.stringDDMMAAAAToUtilDate(actaDTO
+					.getFechaVerificacion()));
 		}
 		acta.setFuncionarioActuante(actaDTO.getFuncionarioActuante());
 		acta.setGranelObservaciones(actaDTO.getGranelObservaciones());
@@ -213,9 +242,10 @@ public abstract class ProviderDominio {
 		acta.setNumeroDeFactura(actaDTO.getNumeroDeFactura());
 		acta.setNumeroDeRemito(actaDTO.getNumeroDeRemito());
 		acta.setObservaciones(actaDTO.getObservaciones());
-				
-		acta.setTransporte(ProviderDominio.getTransporte(actaDTO.getTransporte()));
-		
+
+		acta.setTransporte(ProviderDominio.getTransporte(actaDTO
+				.getTransporte()));
+
 		acta.setYacimiento(yacimiento);
 		acta.setDestino(destino);
 		acta.setOficinaMinera(oficinaMinera);

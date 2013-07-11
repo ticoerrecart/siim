@@ -76,7 +76,7 @@ public class Constantes {
 	// FIN LOCALIDAD
 		
 	// PERIODO
-		public static final String EXISTE_PERIODO = "Ya existe un período con este nombre";
+		public static final String EXISTE_PERIODO = "Ya existe un Año de Declaración con éste nombre";
 	
 		public static final String EXITO_ALTA_PERIODO = "El período se ha dado de alta con exito";
 	
