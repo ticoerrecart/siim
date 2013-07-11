@@ -37,6 +37,7 @@
 		<mapping class='ar.com.siim.negocio.CanonMinero' />
 		<mapping class='ar.com.siim.negocio.Transporte' />
 		<mapping class='ar.com.siim.negocio.ActaDeVerificacion' />
+		<mapping class='ar.com.siim.negocio.EstudioImpactoAmbiental' />
 
 	</session-factory>
 </hibernate-configuration>

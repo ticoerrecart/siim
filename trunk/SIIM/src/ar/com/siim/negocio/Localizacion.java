@@ -1,14 +1,18 @@
 package ar.com.siim.negocio;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+
 
 @Entity
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -33,6 +37,10 @@ public class Localizacion {
 	private String domicilio;
 	
 	private double superficie;
+	
+	@OneToMany(mappedBy = "localizacion")
+	@Cascade(value = {CascadeType.SAVE_UPDATE,CascadeType.DELETE_ORPHAN })	
+	private List<EstudioImpactoAmbiental> listaEIA;
 	
 	public Long getId() {
 		return id;
@@ -90,4 +98,22 @@ public class Localizacion {
 		this.domicilio = domicilio;
 	}
 
+	public List<EstudioImpactoAmbiental> getListaEIA() {
+		return listaEIA;
+	}
+
+	public void setListaEIA(List<EstudioImpactoAmbiental> listaEIA) {
+		this.listaEIA = listaEIA;
+	}
+	
+	public EstudioImpactoAmbiental getEstudioVigente(){
+		
+		for (EstudioImpactoAmbiental estudio : listaEIA) {
+			
+			if(estudio.isVigente()){
+				return estudio;
+			}
+		}
+		return new EstudioImpactoAmbiental();
+	}	
 }
