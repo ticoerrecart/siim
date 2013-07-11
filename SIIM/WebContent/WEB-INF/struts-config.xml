@@ -175,6 +175,7 @@
 			parameter="metodo" name="localizacionForm" scope="request">
 			<forward name="exitoCargarAltaLocalizacion" path=".altaLocalizacion" />							
 			<forward name="exitoAltaLocalizacion" path="/localizacion.do?metodo=cargarAltaLocalizacion" />
+			<forward name="exitoCargarAltaLocalizacion2" path="/jsp/bloqueAltaModificacionLocalizacion.jsp?metodo=altaLocalizacion" />
 			<forward name="exitoCargarLocalizacionesParaModificar" path="/jsp/bloqueLocalizacionesParaModificar.jsp" />
 			<forward name="exitoCargarLocalizacionParaModificar" path="/jsp/bloqueAltaModificacionLocalizacion.jsp" />
 			<forward name="exitoModificacionLocalizacion" path="/localizacion.do?metodo=cargarModificacionLocalizacion" />				
