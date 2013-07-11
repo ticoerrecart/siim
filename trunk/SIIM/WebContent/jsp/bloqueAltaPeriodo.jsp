@@ -7,7 +7,14 @@
 <script type="text/javascript"
 	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
 <script type="text/javascript"
-	src="<html:rewrite page='/js/validarNum.js'/>"></script>		
+	src="<html:rewrite page='/js/validarNum.js'/>"></script>
+	
+<script type="text/javascript"
+	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
+
+<link rel="stylesheet" href="<html:rewrite page='/css/ui-lightness/jquery-ui-1.8.10.custom.css'/>"
+	type="text/css">
+			
 <script type="text/javascript">
 	function submitir(){
 		validarForm("periodoFormId","../periodo","validarPeriodoForm","PeriodoForm");
@@ -46,10 +53,49 @@
 		<tr>
 			<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIM.label.AnioDeclaracion'/></td>
 			<td align="left">
-				<html:text styleClass="botonerab" property="periodoDTO.periodo" value="${periodo.periodo}" 
+				<html:text styleId="periodo" styleClass="botonerab" property="periodoDTO.periodo" value="${periodo.periodo}" maxlength="4" size="4"
 						onkeypress="esNumerico(event); return evitarAutoSubmit(event)"/>
 			</td>
-		</tr>		
+		</tr>
+		
+		<tr>
+			<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIM.label.fechaVencPrimerTrimestre'/></td>
+			<td align="left">
+				<html:text styleId="datepicker0" readonly="readonly" styleClass="botonerab" property="periodoDTO.fechaVencimientoPrimerTrimestre" value="${periodo.fechaVencimientoPrimerTrimestre}" 
+						onkeypress="esNumerico(event); return evitarAutoSubmit(event)"/>
+				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+					align="top" width='17' height='21'>
+			</td>
+		</tr>
+		<tr>
+			<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIM.label.fechaVencSegundoTrimestre'/></td>
+			<td align="left">
+				<html:text styleId="datepicker1" readonly="readonly" styleClass="botonerab" property="periodoDTO.fechaVencimientoSegundoTrimestre" value="${periodo.fechaVencimientoSegundoTrimestre}" 
+						onkeypress="esNumerico(event); return evitarAutoSubmit(event)"/>
+				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+					align="top" width='17' height='21'>						
+			</td>
+		</tr>
+		<tr>
+			<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIM.label.fechaVencTercerTrimestre'/></td>
+			<td align="left">
+				<html:text styleId="datepicker2" readonly="readonly" styleClass="botonerab" property="periodoDTO.fechaVencimientoTercerTrimestre" value="${periodo.fechaVencimientoTercerTrimestre}" 
+						onkeypress="esNumerico(event); return evitarAutoSubmit(event)"/>
+				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+					align="top" width='17' height='21'>						
+			</td>
+		</tr>
+		<tr>
+			<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIM.label.fechaVencCuartoTrimestre'/></td>
+			<td align="left">
+				<html:text styleId="datepicker3" readonly="readonly" styleClass="botonerab" property="periodoDTO.fechaVencimientoCuartoTrimestre" value="${periodo.fechaVencimientoCuartoTrimestre}" 
+						onkeypress="esNumerico(event); return evitarAutoSubmit(event)"/>
+				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+					align="top" width='17' height='21'>
+			</td>
+		</tr>
+
+
 		<tr>
 			<td height="20" colspan="2"></td>
 		</tr>
@@ -70,4 +116,11 @@
 		</tr>
 	</table>
 
+<script>
+	for(var i=0;i<4;i++){
+		$( "#datepicker"+i ).datepicker({ dateFormat: 'dd/mm/yy'});
+	}
+
+	$("#periodo").focus();
+</script>
 </html:form>
