@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siim.dto.EntidadDTO;
+import ar.com.siim.dto.EstudioImpactoAmbientalDTO;
 import ar.com.siim.dto.ItemMenuDTO;
 import ar.com.siim.dto.LocalidadDTO;
 import ar.com.siim.dto.LocalidadDestinoDTO;
@@ -14,6 +15,7 @@ import ar.com.siim.dto.RolDTO;
 import ar.com.siim.dto.TipoProductoDTO;
 import ar.com.siim.dto.UsuarioDTO;
 import ar.com.siim.negocio.Entidad;
+import ar.com.siim.negocio.EstudioImpactoAmbiental;
 import ar.com.siim.negocio.ItemMenu;
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.negocio.LocalidadDestino;
@@ -24,6 +26,7 @@ import ar.com.siim.negocio.Rol;
 import ar.com.siim.negocio.TipoProducto;
 import ar.com.siim.negocio.Usuario;
 import ar.com.siim.utils.DateUtils;
+import ar.com.siim.utils.Fecha;
 
 public abstract class ProviderDTO {
 
@@ -146,6 +149,27 @@ public abstract class ProviderDTO {
 		return tipoProdDTO;
 	}
 
+	public static EstudioImpactoAmbientalDTO getEstudioImpactoAmbientalDTO(
+			EstudioImpactoAmbiental estudio, LocalizacionDTO localizacionDTO) {
+
+		EstudioImpactoAmbientalDTO estudioDTO = new EstudioImpactoAmbientalDTO();
+
+		estudioDTO.setEstado(estudio.getEstado());
+		if (estudio.getFechaDesde() != null) {
+			estudioDTO.setFechaDesde(Fecha.getFechaDDMMAAAASlash(Fecha
+					.dateToStringDDMMAAAA(estudio.getFechaDesde())));
+			estudioDTO.setFechaHasta(Fecha.getFechaDDMMAAAASlash(Fecha
+					.dateToStringDDMMAAAA(estudio.getFechaHasta())));
+		}
+		estudioDTO.setId(estudio.getId());
+		estudioDTO.setLocalizacion(localizacionDTO);
+		estudioDTO.setNroResolucionEIA(estudio.getNroResolucionEIA());
+		estudioDTO.setObservaciones(estudio.getObservaciones());
+		estudioDTO.setVigente(estudio.isVigente());
+
+		return estudioDTO;
+	}
+
 	public static LocalizacionDTO getLocalizacionDTO(Localizacion localizacion) {
 
 		LocalizacionDTO localizacionDTO = new LocalizacionDTO();
@@ -157,6 +181,12 @@ public abstract class ProviderDTO {
 		localizacionDTO.setResolucion(localizacion.getResolucion());
 		localizacionDTO.setDomicilio(localizacion.getDomicilio());
 		localizacionDTO.setSuperficie(localizacion.getSuperficie());
+
+		for (EstudioImpactoAmbiental estudio : localizacion.getListaEIA()) {
+
+			localizacionDTO.getListaEIA().add(
+					getEstudioImpactoAmbientalDTO(estudio, localizacionDTO));
+		}
 
 		return localizacionDTO;
 	}

@@ -1,5 +1,8 @@
 package ar.com.siim.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LocalizacionDTO {
 
 	private Long id;
@@ -16,11 +19,25 @@ public class LocalizacionDTO {
 
 	private Double superficie;
 
+	private List<EstudioImpactoAmbientalDTO> listaEIA;
+	
 	public LocalizacionDTO() {
 
 		productor = new EntidadDTO();
+		listaEIA = new ArrayList<EstudioImpactoAmbientalDTO>();
 	}
 
+	public EstudioImpactoAmbientalDTO getEstudioVigente(){
+		
+		for (EstudioImpactoAmbientalDTO estudio : listaEIA) {
+			
+			if(estudio.isVigente()){
+				return estudio;
+			}
+		}
+		return new EstudioImpactoAmbientalDTO();
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -75,6 +92,14 @@ public class LocalizacionDTO {
 
 	public void setSuperficie(Double superficie) {
 		this.superficie = superficie;
+	}
+
+	public List<EstudioImpactoAmbientalDTO> getListaEIA() {
+		return listaEIA;
+	}
+
+	public void setListaEIA(List<EstudioImpactoAmbientalDTO> listaEIA) {
+		this.listaEIA = listaEIA;
 	}
 
 }

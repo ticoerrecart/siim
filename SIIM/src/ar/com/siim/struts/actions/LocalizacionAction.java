@@ -12,7 +12,9 @@ import ar.com.siim.negocio.exception.NegocioException;
 import ar.com.siim.struts.actions.forms.LocalizacionForm;
 import ar.com.siim.struts.utils.Validator;
 import ar.com.siim.utils.Constantes;
+import ar.com.siim.dto.EstudioImpactoAmbientalDTO;
 import ar.com.siim.dto.LocalizacionDTO;
+import ar.com.siim.enums.EstadoEIA;
 import ar.com.siim.fachada.IEntidadFachada;
 import ar.com.siim.fachada.ILocalizacionFachada;
 import ar.com.siim.utils.MyLogger;
@@ -30,7 +32,8 @@ public class LocalizacionAction extends ValidadorAction {
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());			
 			request.setAttribute("titulo",Constantes.TITULO_ALTA_LOCALIZACION);			
-			request.setAttribute("urlDetalle","../bloqueAltaModificacionLocalizacion.jsp?metodo=altaLocalizacion");			
+			//request.setAttribute("urlDetalle","../bloqueAltaModificacionLocalizacion.jsp?metodo=altaLocalizacion");
+			request.setAttribute("urlDetalle","../../localizacion.do?metodo=cargarAltaLocalizacion2");
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -40,6 +43,25 @@ public class LocalizacionAction extends ValidadorAction {
 		return mapping.findForward(strForward);	
 	}	
 
+	public ActionForward cargarAltaLocalizacion2(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String strForward = "exitoCargarAltaLocalizacion2";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			ILocalizacionFachada localizacionFachada = 
+				(ILocalizacionFachada) ctx.getBean("localizacionFachada");
+			
+			request.setAttribute("estadoEIA",localizacionFachada.recuperarEstadosEIA());
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);	
+	}	
+	
 	public ActionForward altaLocalizacion(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String strForward = "exitoAltaLocalizacion";
@@ -50,7 +72,11 @@ public class LocalizacionAction extends ValidadorAction {
 			ILocalizacionFachada localizacionFachada = 
 									(ILocalizacionFachada) ctx.getBean("localizacionFachada");
 			
-			localizacionFachada.altaLocalizacion(localizacionForm.getLocalizacionDTO());
+			LocalizacionDTO localizacionDTO = localizacionForm.getLocalizacionDTO();
+			localizacionForm.getEstudioVigente().setVigente(true);
+			localizacionDTO.getListaEIA().add(localizacionForm.getEstudioVigente());
+			
+			localizacionFachada.altaLocalizacion(localizacionDTO);
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_LOCALIZACION);			
 			
 		} catch (NegocioException ne) {
@@ -118,6 +144,7 @@ public class LocalizacionAction extends ValidadorAction {
 			
 			LocalizacionDTO localizacionDTO = localizacionFachada.getLocalizacionDTOPorId(Long.valueOf(idLocalizacion));
 			
+			request.setAttribute("estadoEIA",localizacionFachada.recuperarEstadosEIA());
 			request.setAttribute("localizacion", localizacionDTO);
 			request.setAttribute("idProductor", localizacionDTO.getProductor().getId());			
 			request.setAttribute("metodo","modificacionLocalizacion");			
@@ -140,7 +167,7 @@ public class LocalizacionAction extends ValidadorAction {
 			ILocalizacionFachada localizacionFachada = 
 									(ILocalizacionFachada) ctx.getBean("localizacionFachada");
 			
-			localizacionFachada.modificacionLocalizacion(localizacionForm.getLocalizacionDTO());
+			localizacionFachada.modificacionLocalizacion(localizacionForm.getLocalizacionDTO(),localizacionForm.getEstudioVigente());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_LOCALIZACION);			
 			
 		} catch (NegocioException ne) {
@@ -160,8 +187,9 @@ public class LocalizacionAction extends ValidadorAction {
 			
 			LocalizacionForm localizacionForm = (LocalizacionForm)form;
 			LocalizacionDTO localizacionDTO = localizacionForm.getLocalizacionDTO();
+			EstudioImpactoAmbientalDTO eiaDTO = localizacionForm.getEstudioVigente();
 			
-			boolean ok=true,ok1=true,ok2=true,ok3=true;
+			boolean ok=true,ok1=true,ok2=true,ok3=true,ok4=true,ok5=true,ok6=true;
 			
 			ok = Validator.requerido(localizacionDTO.getRazonSocial(), "Razón Social", error); 
 			ok1 = Validator.requerido(localizacionDTO.getExpediente(), "Expediente", error);
@@ -170,7 +198,14 @@ public class LocalizacionAction extends ValidadorAction {
 					Double.toString(localizacionDTO.getSuperficie()),
 					"Superficie", error);			
 			
-			return ok && ok1 && ok2 && ok3; 
+			if(eiaDTO.getEstado().equals(EstadoEIA.Aprobado.getName())){
+				
+				ok4 = Validator.requerido(eiaDTO.getFechaDesde(), "Fecha Desde", error);
+				ok5 = Validator.requerido(eiaDTO.getFechaHasta(), "Fecha Hasta", error);
+				ok6 = Validator.requerido(eiaDTO.getNroResolucionEIA(), "Nro de Resolución", error);
+			}
+			
+			return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6; 
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);

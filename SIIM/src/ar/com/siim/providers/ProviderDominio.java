@@ -9,6 +9,7 @@ import ar.com.siim.dto.ActaDeVerificacionDTO;
 import ar.com.siim.dto.BoletaDepositoDTO;
 import ar.com.siim.dto.CanonMineroDTO;
 import ar.com.siim.dto.EntidadDTO;
+import ar.com.siim.dto.EstudioImpactoAmbientalDTO;
 import ar.com.siim.dto.LocalidadDTO;
 import ar.com.siim.dto.LocalidadDestinoDTO;
 import ar.com.siim.dto.LocalizacionDTO;
@@ -22,6 +23,7 @@ import ar.com.siim.negocio.ActaDeVerificacion;
 import ar.com.siim.negocio.BoletaDeposito;
 import ar.com.siim.negocio.CanonMinero;
 import ar.com.siim.negocio.Entidad;
+import ar.com.siim.negocio.EstudioImpactoAmbiental;
 import ar.com.siim.negocio.ItemMenu;
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.negocio.LocalidadDestino;
@@ -165,8 +167,7 @@ public abstract class ProviderDominio {
 		return rol;
 	}
 
-	public static Localizacion getLocalizacion(LocalizacionDTO localizacionDTO,
-			Entidad productor) {
+	public static Localizacion getLocalizacion(LocalizacionDTO localizacionDTO,Entidad productor) {
 
 		Localizacion localizacion = new Localizacion();
 		localizacion.setExpediente(localizacionDTO.getExpediente());
@@ -176,9 +177,36 @@ public abstract class ProviderDominio {
 		localizacion.setDomicilio(localizacionDTO.getDomicilio());
 		localizacion.setSuperficie(localizacionDTO.getSuperficie());
 
+		List<EstudioImpactoAmbiental> lista = new ArrayList<EstudioImpactoAmbiental>();
+		
+		for (EstudioImpactoAmbientalDTO eiaDTO : localizacionDTO.getListaEIA()) {
+			
+			lista.add(ProviderDominio.getEstudioImpactoAmbiental(eiaDTO,localizacion));
+		}
+		localizacion.setListaEIA(lista);
+		
 		return localizacion;
 	}
 
+	public static EstudioImpactoAmbiental getEstudioImpactoAmbiental(EstudioImpactoAmbientalDTO eiaDTO, Localizacion localizacion){
+		
+		EstudioImpactoAmbiental eia = new EstudioImpactoAmbiental();
+		
+		eia.setEstado(eiaDTO.getEstado());
+		if (eiaDTO.getFechaDesde()!=""){
+			eia.setFechaDesde(Fecha.stringDDMMAAAAToUtilDate(eiaDTO.getFechaDesde()));
+		}
+		if (eiaDTO.getFechaHasta()!=""){
+			eia.setFechaHasta(Fecha.stringDDMMAAAAToUtilDate(eiaDTO.getFechaHasta()));
+		}		
+		eia.setLocalizacion(localizacion);
+		eia.setNroResolucionEIA(eiaDTO.getNroResolucionEIA());
+		eia.setObservaciones(eiaDTO.getObservaciones());
+		eia.setVigente(eiaDTO.isVigente());
+		
+		return eia;
+	}
+	
 	public static ProvinciaDestino getProvincia(ProvinciaDestinoDTO provinciaDTO) {
 
 		ProvinciaDestino provincia = new ProvinciaDestino();
