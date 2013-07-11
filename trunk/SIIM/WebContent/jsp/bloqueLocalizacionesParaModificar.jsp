@@ -7,8 +7,7 @@
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
-<script type="text/javascript"
-	src="<html:rewrite page='/js/JQuery/jquery-1.3.2.min.js'/>"></script>
+
 <script type="text/javascript"
 	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
 
@@ -24,7 +23,7 @@
 		clase = $('#tr'+tr).attr("class");
 		$('#tr'+tr).attr("class", "seleccionado");
 
-		$('#divCargando').show();	
+		$('#divCargando2').show();	
 		$('#divModificacion').html("");
 		
 		$('#divModificacion').load('../../localizacion.do?metodo=cargarLocalizacionParaModificar&idLocalizacion='+idLocalizacion);
@@ -33,7 +32,7 @@
 
 		Concurrent.Thread.create(function(){
 		    while ($('#divModificacion').html() == "") {}
-		    $('#divCargando').hide();
+		    $('#divCargando2').hide();
 		    $('#divModificacion').show(600);
 		});		
 	}
@@ -66,13 +65,13 @@
 		</tr>
 	</c:forEach>
 </table>
-<table>
+<table class="cuadradoSinBorde">
 	<tr>
 		<td height="20"></td>
 	</tr>
 	<tr>
-		<td id="divCargando" style="display: none">
-			<img src="<html:rewrite page='/imagenes/cargando.gif'/>">
+		<td id="divCargando2" style="display: none" align="center">
+			<center><img src="<html:rewrite page='/imagenes/cargando.gif'/>"></center>
 		</td>
 	</tr>	
 	<tr>
