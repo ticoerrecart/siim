@@ -181,6 +181,102 @@ public class LocalizacionAction extends ValidadorAction {
 		return mapping.findForward(strForward);	
 	}	
 	
+	public ActionForward cargarAltaEIA(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String strForward = "exitoCargarAltaLocalizacion";
+
+		try {
+			String paramForward = request.getParameter("forward");
+			WebApplicationContext ctx = getWebApplicationContext();
+		
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());			
+			request.setAttribute("titulo",Constantes.TITULO_ALTA_EIA);		
+			request.setAttribute("urlDetalle","../../localizacion.do?metodo=cargarLocalizacionesParaAltaEIA");			
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);	
+	}	
+	
+	public ActionForward cargarLocalizacionesParaAltaEIA(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String strForward = "exitoCargarLocalizacionesParaAltaEIA";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+		
+			String idProductor = request.getParameter("idProductor");
+			
+			ILocalizacionFachada localizacionFachada = (ILocalizacionFachada) ctx.getBean("localizacionFachada");
+			request.setAttribute("localizaciones", localizacionFachada.getLocalizacionesPorProductorDTO(Long.valueOf(idProductor)));			
+						
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);	
+	}	
+	
+	public ActionForward cargarLocalizacionParaAltaEIA(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String strForward = "exitoCargarLocalizacionParaAltaEIA";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+		
+			String idLocalizacion = request.getParameter("idLocalizacion");
+			
+			ILocalizacionFachada localizacionFachada = (ILocalizacionFachada) ctx.getBean("localizacionFachada");
+			
+			LocalizacionDTO localizacionDTO = localizacionFachada.getLocalizacionDTOPorId(Long.valueOf(idLocalizacion));
+			
+			request.setAttribute("estadoEIA",localizacionFachada.recuperarEstadosEIA());
+			request.setAttribute("localizacion", localizacionDTO);
+			request.setAttribute("idProductor", localizacionDTO.getProductor().getId());			
+			//request.setAttribute("metodo","altaEIA");			
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);	
+	}	
+	
+	public ActionForward altaEIA(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String strForward = "exitoAltaEIA";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			LocalizacionForm localizacionForm = (LocalizacionForm)form;
+			ILocalizacionFachada localizacionFachada = 
+									(ILocalizacionFachada) ctx.getBean("localizacionFachada");
+			
+			LocalizacionDTO localizacionDTO = localizacionForm.getLocalizacionDTO();
+			EstudioImpactoAmbientalDTO eiaDTO = localizacionForm.getEstudioVigente();
+			eiaDTO.setVigente(true);
+			eiaDTO.setLocalizacion(localizacionDTO);
+			
+			localizacionFachada.altaEIA(eiaDTO);
+			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_EIA);			
+			
+		} catch (NegocioException ne) {
+			request.setAttribute("error", ne.getMessage());
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);	
+	}	
+	
 	public boolean validarLocalizacionForm(StringBuffer error, ActionForm form) {
 
 		try{

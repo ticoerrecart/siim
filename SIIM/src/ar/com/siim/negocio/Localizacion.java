@@ -115,5 +115,5 @@ public class Localizacion {
 			}
 		}
 		return new EstudioImpactoAmbiental();
-	}	
+	}
 }

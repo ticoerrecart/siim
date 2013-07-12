@@ -178,7 +178,12 @@
 			<forward name="exitoCargarAltaLocalizacion2" path="/jsp/bloqueAltaModificacionLocalizacion.jsp?metodo=altaLocalizacion" />
 			<forward name="exitoCargarLocalizacionesParaModificar" path="/jsp/bloqueLocalizacionesParaModificar.jsp" />
 			<forward name="exitoCargarLocalizacionParaModificar" path="/jsp/bloqueAltaModificacionLocalizacion.jsp" />
-			<forward name="exitoModificacionLocalizacion" path="/localizacion.do?metodo=cargarModificacionLocalizacion" />				
+			<forward name="exitoModificacionLocalizacion" path="/localizacion.do?metodo=cargarModificacionLocalizacion" />
+			
+			<!-- ESTUDIO DE IMPACTO AMBIENTAL -->
+			<forward name="exitoCargarLocalizacionesParaAltaEIA" path="/jsp/bloqueLocalizacionesParaAltaEIA.jsp" />
+			<forward name="exitoCargarLocalizacionParaAltaEIA" path="/jsp/bloqueAltaEIA.jsp" />					
+							
 		</action>		
 		<!-- FIN LOCALIZACION -->
 		
