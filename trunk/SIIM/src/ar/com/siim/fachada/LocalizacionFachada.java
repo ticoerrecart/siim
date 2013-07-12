@@ -126,4 +126,17 @@ public class LocalizacionFachada implements ILocalizacionFachada {
 		
 		return listaEstado;		
 	}
+	
+	public void altaEIA(EstudioImpactoAmbientalDTO eiaDTO)throws NegocioException
+	{			
+		Localizacion localizacion = localizacionDAO.getLocalizacionPorId(eiaDTO.getLocalizacion().getId());
+		
+		localizacion.getEstudioVigente().setVigente(false);
+		
+		EstudioImpactoAmbiental eia = ProviderDominio.getEstudioImpactoAmbiental(eiaDTO, localizacion);
+		
+		localizacion.getListaEIA().add(eia);
+		
+		localizacionDAO.altaModificacionLocalizacion(localizacion);
+	}	
 }

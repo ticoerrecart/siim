@@ -124,9 +124,13 @@ public class Constantes {
 		
 		public static final String TITULO_MODIFICACION_LOCALIZACION = "Modificación de Zona de Extracción Minera";
 		
+		public static final String TITULO_ALTA_EIA = "Alta de Estudio de Impacto Ambiental";
+		
 		public static final String EXITO_ALTA_LOCALIZACION = "La Zona de Extracción Minera se ha dado de alta con exito";
 		
 		public static final String EXITO_MODIFICACION_LOCALIZACION = "La Zona de Extracción Minera se ha modificado con exito";
+		
+		public static final String EXITO_ALTA_EIA = "El Estudio de Impacto Ambiental se ha dado de alta con exito";		
 		
 		public static final String ERROR_EXISTE_LOCALIZACION = "Ya existe una Zona de Extracción Minera con la misma Razón Social para este productor";
 		

@@ -21,4 +21,6 @@ public interface ILocalizacionFachada {
 	public Localizacion getLocalizacion (Long idLocalizacion);
 	
 	public List<EstadoEIA> recuperarEstadosEIA();
+	
+	public void altaEIA(EstudioImpactoAmbientalDTO eiaDTO)throws NegocioException;
 }
