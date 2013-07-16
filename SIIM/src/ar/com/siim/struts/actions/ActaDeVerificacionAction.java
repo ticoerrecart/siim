@@ -1,5 +1,7 @@
 package ar.com.siim.struts.actions;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +15,7 @@ import ar.com.siim.fachada.IEntidadFachada;
 import ar.com.siim.fachada.ILocalidadFachada;
 import ar.com.siim.fachada.IPeriodoFachada;
 import ar.com.siim.fachada.IUsuarioFachada;
+import ar.com.siim.negocio.ActaDeVerificacion;
 import ar.com.siim.struts.actions.forms.ActaDeVerificacionForm;
 import ar.com.siim.struts.utils.Validator;
 import ar.com.siim.utils.MyLogger;
@@ -120,4 +123,96 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 		}
 	}
 
+	
+	//CONSULTAS
+	
+	// secuencia de llamados
+	// 1-cargarProductoresLocalizacionPeriodo
+	// 2-recuperarActaDeVerificacion
+	// 3-cargarActaDeVerificacion
+
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarProductoresLocalizacionPeriodo(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String strForward = "exitoCargarProductoresLocalizacionPeriodo";
+		try {
+			String idProductor = request.getParameter("idProductor");
+			String idLocalizacion = request.getParameter("idLocalizacion");
+			String idPeriodo = request.getParameter("idPeriodo");
+			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("idLocalizacion", idLocalizacion);
+			request.setAttribute("idPeriodo", idPeriodo);
+
+			WebApplicationContext ctx = getWebApplicationContext();
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
+
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
+			request.setAttribute("productores",
+					entidadFachada.getProductoresDTO());
+			// request.setAttribute("paramForward",);
+			request.setAttribute("urlDetalle",
+					"../../consultaActas.do?metodo=recuperarActaDeVerificacion");
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+
+		return mapping.findForward(strForward);
+	}
+
+	public ActionForward recuperarActaDeVerificacion(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoRecuperarActas";
+		WebApplicationContext ctx = getWebApplicationContext();
+		IActaDeVerificacionFachada actaDeVerificacionFachada = (IActaDeVerificacionFachada) ctx
+				.getBean("actaDeVerificacionFachada");
+		String idLocalizacion = request.getParameter("idLocalizacion");
+		String periodo = request.getParameter("idPeriodo");
+
+		List<ActaDeVerificacion> actas = actaDeVerificacionFachada.getActas(Long.parseLong(idLocalizacion), periodo);
+
+		request.setAttribute("actas", actas);
+		request.setAttribute("tituloLinkDetalle", "Ver Acta de Verificación");
+		request.setAttribute("fwdDetalle",
+				"/consultaActas.do?metodo=cargarConsultaActa");
+		return mapping.findForward(strForward);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarConsultaActa(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoCargarConsultaActas";
+		try {
+			String idActa = request.getParameter("id");
+			WebApplicationContext ctx = getWebApplicationContext();
+			
+			IActaDeVerificacionFachada actaDeVerificacionFachada = (IActaDeVerificacionFachada) ctx
+					.getBean("actaDeVerificacionFachada");
+
+			ActaDeVerificacion acta = actaDeVerificacionFachada.getActa(Long.parseLong(idActa));
+
+			request.setAttribute("acta", acta);
+			request.setAttribute("titulo", "Consulta de Actas de Verificación");
+			request.setAttribute("volver",
+					"/consultaActas.do?metodo=cargarProductoresLocalizacionPeriodo");
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+
+		return mapping.findForward(strForward);
+	}
+	
 }
