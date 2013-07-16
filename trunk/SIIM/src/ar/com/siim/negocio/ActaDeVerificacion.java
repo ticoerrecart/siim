@@ -263,6 +263,14 @@ public class ActaDeVerificacion {
 		return bolsaVolumenD3;
 	}
 
+	public int getBolsaVolumenTotal() {
+		return bolsaVolumenD3 * bolsaCantidad / 1000;
+	}
+
+	public int getVolumenTotal() {
+		return getBolsaVolumenTotal() + getGranelVolumenM3Declarado();
+	}
+	
 	public void setBolsaVolumenD3(int bolsaVolumenD3) {
 		this.bolsaVolumenD3 = bolsaVolumenD3;
 	}

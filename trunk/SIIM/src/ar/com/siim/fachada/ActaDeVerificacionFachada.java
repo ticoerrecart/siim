@@ -1,7 +1,10 @@
 package ar.com.siim.fachada;
 
+import java.util.List;
+
 import ar.com.siim.dao.ActaDeVerificacionDAO;
 import ar.com.siim.dto.ActaDeVerificacionDTO;
+import ar.com.siim.negocio.ActaDeVerificacion;
 import ar.com.siim.negocio.Entidad;
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.negocio.LocalidadDestino;
@@ -42,6 +45,16 @@ public class ActaDeVerificacionFachada implements IActaDeVerificacionFachada {
 	public boolean existeActaDeVerificacion(long numero) {
 		return this.actaDAO.existeActaDeVerificacion(numero);
 		
+	}
+
+	@Override
+	public List<ActaDeVerificacion> getActas(long idLocalizacion, String periodo) {
+		return this.actaDAO.getActas(idLocalizacion, periodo);
+	}
+
+	@Override
+	public ActaDeVerificacion getActa(long idActa) {
+		return (ActaDeVerificacion) this.actaDAO.getHibernateTemplate().get(ActaDeVerificacion.class, idActa);
 	}
 
 }

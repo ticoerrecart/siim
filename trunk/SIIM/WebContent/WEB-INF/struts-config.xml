@@ -221,6 +221,13 @@
 			<forward name="exitoCargaActaDeVerificacion" path=".altaActaDeVerificacion" />
 			<forward name="exitoAltaDeVerificacion" path="/actaDeVerificacion.do?metodo=cargarActaDeVerificacion" />							
 		</action>
+		
+		<action path="/consultaActas" type="ar.com.siim.struts.actions.ActaDeVerificacionAction"
+			parameter="metodo">
+			<forward name="exitoCargarProductoresLocalizacionPeriodo" path=".cargarProductoresParaConsultaActas" />
+			<forward name="exitoRecuperarActas" path="/jsp/bloqueRecuperarActas.jsp" />
+			<forward name="exitoCargarConsultaActas" path=".consultaActas" />
+		</action>
 		<!-- FIN ACTA DE VERIFICACION -->
 		
 	</action-mappings>

@@ -157,6 +157,17 @@
 		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/altaActaDeVerificacion.jsp" />
 	</definition>
+	
+	<definition name=".cargarProductoresParaConsultaActas" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/cargarProductoresParaConsultaActas.jsp" />
+	</definition>
+
+	<definition name=".consultaActas" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/actaDeVerificacion.jsp" />
+	</definition>
+	
 	<!-- FIN ACTA VERIFICACION-->
 
 	<definition name=".error" extends=".base">
