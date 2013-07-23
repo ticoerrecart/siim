@@ -211,7 +211,8 @@
 		<!-- DECLARACION EXTRACCION -->
 		<action path="/declaracionExtraccion" type="ar.com.siim.struts.actions.DeclaracionExtraccionAction"
 			parameter="metodo" name="declaracionExtraccionForm" scope="request">
-			<forward name="exitoCargaAltaDeclaracionExtraccion" path=".altaDeclaracionExtraccion" />					
+			<forward name="exitoCargaAltaDeclaracionExtraccion" path=".altaDeclaracionExtraccion" />
+			<forward name="exitoAltaDeclaracionExtraccion" path="/declaracionExtraccion.do?metodo=cargarAltaDeclaracionExtraccion&amp;msjeExito=true" />
 		</action>
 		<!-- FIN DECLARACION EXTRACCION -->
 

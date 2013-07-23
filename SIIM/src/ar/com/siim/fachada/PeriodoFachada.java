@@ -60,6 +60,13 @@ public class PeriodoFachada implements IPeriodoFachada {
 		return ProviderDTO.getPeriodoDTO(Periodo);
 	}
 	
+	public PeriodoDTO getPeriodoDTOPorPeriodo(String periodo){
+
+		Periodo Periodo = PeriodoDAO.getPeriodoPorPeriodo(periodo);
+		
+		return ProviderDTO.getPeriodoDTO(Periodo);
+	}
+	
 	public void modificacionPeriodo(PeriodoDTO PeriodoDTO) throws NegocioException{
 
 		Periodo Periodo = PeriodoDAO.getPeriodoPorId(PeriodoDTO.getId());	

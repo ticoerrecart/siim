@@ -59,6 +59,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="localizacionDAO" class="ar.com.siim.dao.LocalizacionDAO" parent="abstractRepository" />
 	<bean id="canonMineroDAO" class="ar.com.siim.dao.CanonMineroDAO" parent="abstractRepository" />
 	<bean id="actaDeVerificacionDAO" class="ar.com.siim.dao.ActaDeVerificacionDAO" parent="abstractRepository" />
+	<bean id="declaracionDeExtraccionDAO" class="ar.com.siim.dao.DeclaracionDeExtraccionDAO" parent="abstractRepository" />
 	
 	<!--  *******************-->
 	<!--     Fachadas   -->
@@ -318,6 +319,32 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 
+
+	<!-- DECLARACION DE EXTRACCION --> 
+	<bean id="declaracionDeExtraccionFachadaImpl" class="ar.com.siim.fachada.DeclaracionDeExtraccionFachada">
+		<constructor-arg ref="declaracionDeExtraccionDAO" />
+		<constructor-arg ref="entidadDAO" />
+		<constructor-arg ref="localidadDAO" />
+		<constructor-arg ref="localizacionDAO" /> 
+		<constructor-arg ref="tipoProductoDAO" />
+	</bean>
+
+	<bean id="declaracionDeExtraccionFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="declaracionDeExtraccionFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siim.fachada.IDeclaracionDeExtraccionFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
 
 	<!--  *******************-->
 	<!--       Parameters    -->

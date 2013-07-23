@@ -12,26 +12,43 @@ import org.apache.struts.action.ActionMapping;
 
 import ar.com.siim.dto.BoletaDepositoDTO;
 import ar.com.siim.dto.DeclaracionExtraccionDTO;
+import ar.com.siim.dto.TrimestreDeclaracionDeExtraccionDTO;
 
 public class DeclaracionExtraccionForm extends ActionForm {
 
 	private DeclaracionExtraccionDTO declaracion;
-	
+
 	private List<BoletaDepositoDTO> boletasDeposito;
-	
-	public DeclaracionExtraccionForm(){
-		
+
+	private List<TrimestreDeclaracionDeExtraccionDTO> trimestres;
+
+	public DeclaracionExtraccionForm() {
+
 		declaracion = new DeclaracionExtraccionDTO();
-		
-		boletasDeposito = (List<BoletaDepositoDTO>) LazyList.decorate(new ArrayList(),
-							FactoryUtils.instantiateFactory(BoletaDepositoDTO.class));		
+
+		boletasDeposito = (List<BoletaDepositoDTO>) LazyList.decorate(
+				new ArrayList(),
+				FactoryUtils.instantiateFactory(BoletaDepositoDTO.class));
+
+		trimestres = (List<TrimestreDeclaracionDeExtraccionDTO>) LazyList
+				.decorate(
+						new ArrayList(),
+						FactoryUtils
+								.instantiateFactory(TrimestreDeclaracionDeExtraccionDTO.class));
 	}
-	
+
 	@Override
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
-		
-		boletasDeposito = (List<BoletaDepositoDTO>) LazyList.decorate(new ArrayList(),
-				FactoryUtils.instantiateFactory(BoletaDepositoDTO.class));		
+
+		boletasDeposito = (List<BoletaDepositoDTO>) LazyList.decorate(
+				new ArrayList(),
+				FactoryUtils.instantiateFactory(BoletaDepositoDTO.class));
+
+		trimestres = (List<TrimestreDeclaracionDeExtraccionDTO>) LazyList
+				.decorate(
+						new ArrayList(),
+						FactoryUtils
+								.instantiateFactory(TrimestreDeclaracionDeExtraccionDTO.class));
 	}
 
 	public DeclaracionExtraccionDTO getDeclaracion() {
@@ -49,6 +66,14 @@ public class DeclaracionExtraccionForm extends ActionForm {
 	public void setBoletasDeposito(List<BoletaDepositoDTO> boletasDeposito) {
 		this.boletasDeposito = boletasDeposito;
 	}
-	
-	
+
+	public List<TrimestreDeclaracionDeExtraccionDTO> getTrimestres() {
+		return trimestres;
+	}
+
+	public void setTrimestres(
+			List<TrimestreDeclaracionDeExtraccionDTO> trimestres) {
+		this.trimestres = trimestres;
+	}
+
 }
