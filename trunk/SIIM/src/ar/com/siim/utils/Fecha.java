@@ -14,16 +14,16 @@ public class Fecha {
 	}
 
 	public static void main(String[] args) {
-		//testing ...
-		//String s = formatAAAAMMDDHHMMSS("19750304175536");	
-		
+		// testing ...
+		// String s = formatAAAAMMDDHHMMSS("19750304175536");
+
 		String fecha = getFechaHoyDDMMAAAAhhmmssSlash();
 		Date d = stringAAAAMMDDHHMMSSToDateSlash(fecha);
 		System.out.println(d);
 	}
 
 	/**
-	 *   Recibe una fecha y la convierte a fecha juliana.
+	 * Recibe una fecha y la convierte a fecha juliana.
 	 */
 	public static String julianDate(int intYear, int intMonth, int intDay) {
 		Calendar cal = Calendar.getInstance();
@@ -45,14 +45,15 @@ public class Fecha {
 	}
 
 	/**
-	 * Devuelve el ultimo dia del mes de un año.
-	 * el mes recibido es ENERO = 1, DICIEMBRE = 12 
+	 * Devuelve el ultimo dia del mes de un año. el mes recibido es ENERO = 1,
+	 * DICIEMBRE = 12
 	 */
 	public static byte getUltimoDiaMes(short anio, byte mes) {
 		Calendar cal = Calendar.getInstance();
-		//le pasamos el mes siguiente ya que el calendar interpreta 0=enero, 1=febrero, etc.. 
+		// le pasamos el mes siguiente ya que el calendar interpreta 0=enero,
+		// 1=febrero, etc..
 		cal.set(anio, mes, 1);
-		//le restamos uno para pasar al ultimo dia del mes pasado por parametro
+		// le restamos uno para pasar al ultimo dia del mes pasado por parametro
 		cal.add(Calendar.DATE, -1);
 		return (byte) cal.get(Calendar.DATE);
 	}
@@ -61,7 +62,8 @@ public class Fecha {
 	 * Verifica si un año es bisiesto.
 	 */
 	public static boolean bisiesto(short intYear) {
-		if ((((intYear % 4) == 0) && ((intYear % 100) != 0)) || ((intYear % 400) == 0)) {
+		if ((((intYear % 4) == 0) && ((intYear % 100) != 0))
+				|| ((intYear % 400) == 0)) {
 			return true;
 		} else {
 			return false;
@@ -69,17 +71,16 @@ public class Fecha {
 	}
 
 	/**
-	 * Convierte una fecha en una cadena de caracteres
-	 public static String dateToString(Date pFecha) {
-	 Calendar cal = Calendar.getInstance();
-	 cal.setTime(pFecha);
-	 
-	 String d = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-	 String m = String.valueOf(cal.get(Calendar.MONTH) + 1);
-	 String a = String.valueOf(cal.get(Calendar.YEAR));
-	 
-	 return d + "-" + m + "-" + a;
-	 } */
+	 * Convierte una fecha en una cadena de caracteres public static String
+	 * dateToString(Date pFecha) { Calendar cal = Calendar.getInstance();
+	 * cal.setTime(pFecha);
+	 * 
+	 * String d = String.valueOf(cal.get(Calendar.DAY_OF_MONTH)); String m =
+	 * String.valueOf(cal.get(Calendar.MONTH) + 1); String a =
+	 * String.valueOf(cal.get(Calendar.YEAR));
+	 * 
+	 * return d + "-" + m + "-" + a; }
+	 */
 	/**
 	 * Convierte una fecha en una cadena de caracteres
 	 */
@@ -90,7 +91,8 @@ public class Fecha {
 
 		argLocale = new Locale("es", "AR");
 
-		dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, argLocale);
+		dateFormatter = DateFormat
+				.getDateInstance(DateFormat.MEDIUM, argLocale);
 		strDate = dateFormatter.format(pFecha);
 
 		return strDate.toString();
@@ -106,8 +108,8 @@ public class Fecha {
 
 		argLocale = new Locale("es", "AR");
 
-		dateFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM,
-				argLocale);
+		dateFormatter = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+				DateFormat.MEDIUM, argLocale);
 		strDate = dateFormatter.format(pFecha);
 
 		return strDate.toString();
@@ -142,8 +144,8 @@ public class Fecha {
 	 */
 	public static Date stringAAAAMMDDToDate(String pFecha) {
 		return new GregorianCalendar(Integer.parseInt(pFecha.substring(0, 4)),
-				Integer.parseInt(pFecha.substring(4, 6)) - 1, Integer.parseInt(pFecha.substring(6,
-						8)), 0, 0, 0).getTime();
+				Integer.parseInt(pFecha.substring(4, 6)) - 1,
+				Integer.parseInt(pFecha.substring(6, 8)), 0, 0, 0).getTime();
 	}
 
 	/**
@@ -151,9 +153,11 @@ public class Fecha {
 	 */
 	public static Date stringAAAAMMDDHHMMSSToDate(String pFecha) {
 		return new GregorianCalendar(Integer.parseInt(pFecha.substring(0, 4)),
-				Integer.parseInt(pFecha.substring(4, 6)) - 1, Integer.parseInt(pFecha.substring(6,
-						8)), Integer.parseInt(pFecha.substring(8, 10)), Integer.parseInt(pFecha
-						.substring(10, 12)), Integer.parseInt(pFecha.substring(12, 14))).getTime();
+				Integer.parseInt(pFecha.substring(4, 6)) - 1,
+				Integer.parseInt(pFecha.substring(6, 8)),
+				Integer.parseInt(pFecha.substring(8, 10)),
+				Integer.parseInt(pFecha.substring(10, 12)),
+				Integer.parseInt(pFecha.substring(12, 14))).getTime();
 	}
 
 	/**
@@ -161,11 +165,13 @@ public class Fecha {
 	 */
 	public static Date stringAAAAMMDDHHMMSSToDateSlash(String pFecha) {
 		return new GregorianCalendar(Integer.parseInt(pFecha.substring(0, 4)),
-				Integer.parseInt(pFecha.substring(5, 7)) - 1, Integer.parseInt(pFecha.substring(8,
-						10)), Integer.parseInt(pFecha.substring(11, 13)), Integer.parseInt(pFecha
-						.substring(14, 16)), Integer.parseInt(pFecha.substring(17, 19))).getTime();
-	}	
-	
+				Integer.parseInt(pFecha.substring(5, 7)) - 1,
+				Integer.parseInt(pFecha.substring(8, 10)),
+				Integer.parseInt(pFecha.substring(11, 13)),
+				Integer.parseInt(pFecha.substring(14, 16)),
+				Integer.parseInt(pFecha.substring(17, 19))).getTime();
+	}
+
 	/**
 	 * Formatea una fecha String AAAAMMDDHHMMSS para ser visualizada
 	 */
@@ -184,18 +190,21 @@ public class Fecha {
 		Locale argLocale;
 
 		argLocale = new Locale("es", "AR");
-		dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, argLocale);
+		dateFormatter = DateFormat
+				.getDateInstance(DateFormat.MEDIUM, argLocale);
 
 		dDate = dateFormatter.parse(pFecha);
 		return dDate;
 	}
 
 	/**
-	 * Metodo que devuelve la cantidad de dias que hay entre un rango
-	 * de fechas.
+	 * Metodo que devuelve la cantidad de dias que hay entre un rango de fechas.
+	 * 
 	 * @author Hernan Gabriel Zapata
-	 * @param pFechaDesde Date
-	 * @param pFechaHasta Date
+	 * @param pFechaDesde
+	 *            Date
+	 * @param pFechaHasta
+	 *            Date
 	 * @return int
 	 */
 	public static int getDiasEnRangoFecha(Date pFechaDesde, Date pFechaHasta) {
@@ -204,73 +213,60 @@ public class Fecha {
 		long lMsecDesde = pFechaDesde.getTime();
 		long lMsecHasta = pFechaHasta.getTime();
 
-		// Saco la diferencia de tiempo 
+		// Saco la diferencia de tiempo
 		long lDiff = (lMsecHasta - lMsecDesde);
 
-		// 86.400.000 Es la cantidad de milisegundos que 
+		// 86.400.000 Es la cantidad de milisegundos que
 		// hay por dia, por lo tanto al dividirlo obtengo
 		// la cantidad de dias.
 		double nDias = (double) (lDiff / 86400000.0);
 
-		return (int) (nDias + 0.3); // Para salvar el Gap (ver Javadoc de la clase Date) 
+		return (int) (nDias + 0.3); // Para salvar el Gap (ver Javadoc de la
+									// clase Date)
 	}
 
 	/**
 	 * Metodo que devuelve próxima fecha hábil
+	 * 
 	 * @author Natalia Spañol
-	 * @param pFecha Date
+	 * @param pFecha
+	 *            Date
 	 * @return Date
 	 */
 
 	/*
-	 public static Date proximaFechaHabil(Date pFecha)
-	 throws ErrorInesperadoException {
-	 Date dProximoHabil;
-	 GregorianCalendar gregorianCalendar;
-	 int diaSemana;
-	 
-	 try {
-	 gregorianCalendar = new GregorianCalendar();
-	 gregorianCalendar.setTime(pFecha);
-	 
-	 // Valida que no este en tabla de feriado
-	 while (!esDiaHabil(pFecha)) {
-	 gregorianCalendar.add(GregorianCalendar.DAY_OF_MONTH, 1);
-	 pFecha = gregorianCalendar.getTime();
-	 }
-	 
-	 dProximoHabil = gregorianCalendar.getTime();
-	 } catch (ErrorInesperadoException ei) {
-	 throw ei;
-	 }
-	 
-	 dProximoHabil = gregorianCalendar.getTime();
-	 
-	 return dProximoHabil;
-	 }
-	 
-	 public static boolean esDiaHabil(Date pFecha)
-	 throws ErrorInesperadoException {
-	 GregorianCalendar gregorianCalendar;
-	 int diaSemana;
-	 boolean esHabil;
-	 
-	 try {
-	 gregorianCalendar = new GregorianCalendar();
-	 gregorianCalendar.setTime(pFecha);
-	 diaSemana = gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK);
-	 esHabil = false;
-	 
-	 // No existe en tabla feriados y no es sabado ni domingo
-	 esHabil = (!(ParametrosSistemaDAO.existeEnTablaFeriado(pFecha)) &&
-	 (diaSemana != GregorianCalendar.SATURDAY) &&
-	 (diaSemana != GregorianCalendar.SUNDAY));
-	 } catch (ErrorInesperadoException ei) {
-	 throw ei;
-	 }
-	 
-	 return esHabil;
-	 }
+	 * public static Date proximaFechaHabil(Date pFecha) throws
+	 * ErrorInesperadoException { Date dProximoHabil; GregorianCalendar
+	 * gregorianCalendar; int diaSemana;
+	 * 
+	 * try { gregorianCalendar = new GregorianCalendar();
+	 * gregorianCalendar.setTime(pFecha);
+	 * 
+	 * // Valida que no este en tabla de feriado while (!esDiaHabil(pFecha)) {
+	 * gregorianCalendar.add(GregorianCalendar.DAY_OF_MONTH, 1); pFecha =
+	 * gregorianCalendar.getTime(); }
+	 * 
+	 * dProximoHabil = gregorianCalendar.getTime(); } catch
+	 * (ErrorInesperadoException ei) { throw ei; }
+	 * 
+	 * dProximoHabil = gregorianCalendar.getTime();
+	 * 
+	 * return dProximoHabil; }
+	 * 
+	 * public static boolean esDiaHabil(Date pFecha) throws
+	 * ErrorInesperadoException { GregorianCalendar gregorianCalendar; int
+	 * diaSemana; boolean esHabil;
+	 * 
+	 * try { gregorianCalendar = new GregorianCalendar();
+	 * gregorianCalendar.setTime(pFecha); diaSemana =
+	 * gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK); esHabil = false;
+	 * 
+	 * // No existe en tabla feriados y no es sabado ni domingo esHabil =
+	 * (!(ParametrosSistemaDAO.existeEnTablaFeriado(pFecha)) && (diaSemana !=
+	 * GregorianCalendar.SATURDAY) && (diaSemana != GregorianCalendar.SUNDAY));
+	 * } catch (ErrorInesperadoException ei) { throw ei; }
+	 * 
+	 * return esHabil; }
 	 */
 
 	/**
@@ -286,24 +282,25 @@ public class Fecha {
 	}
 
 	/**
-	 * Convierte un String de la forma dd/mm/aaaa a un java.sql.Date	 
-	 * Vic
+	 * Convierte un String de la forma dd/mm/aaaa a un java.sql.Date Vic
 	 */
 	public static java.sql.Date stringDDMMAAAAToDate(String pFecha) {
-		return new java.sql.Date((new GregorianCalendar(Integer.parseInt(pFecha.substring(6, 10)),
-				Integer.parseInt(pFecha.substring(3, 5)) - 1, Integer.parseInt(pFecha.substring(0,
-						2))).getTime()).getTime());
+		return new java.sql.Date((new GregorianCalendar(Integer.parseInt(pFecha
+				.substring(6, 10)),
+				Integer.parseInt(pFecha.substring(3, 5)) - 1,
+				Integer.parseInt(pFecha.substring(0, 2))).getTime()).getTime());
 	}
 
 	/**
-	 * Convierte un String de la forma dd/mm/aaaa a un java.util.Date	 
+	 * Convierte un String de la forma dd/mm/aaaa a un java.util.Date
 	 */
 	public static java.util.Date stringDDMMAAAAToUtilDate(String pFecha) {
-		return new java.util.Date((new GregorianCalendar(Integer.parseInt(pFecha.substring(6, 10)),
-				Integer.parseInt(pFecha.substring(3, 5)) - 1, Integer.parseInt(pFecha.substring(0,
-						2))).getTime()).getTime());
-	}	
-	
+		return new java.util.Date((new GregorianCalendar(
+				Integer.parseInt(pFecha.substring(6, 10)),
+				Integer.parseInt(pFecha.substring(3, 5)) - 1,
+				Integer.parseInt(pFecha.substring(0, 2))).getTime()).getTime());
+	}
+
 	/**
 	 * formatea la fecha para timeStamp yyyy-mm-dd hh:mi:ss
 	 */
@@ -314,33 +311,37 @@ public class Fecha {
 	}
 
 	/**
-	 * Fecha de hoy con formato DD/MM/AAAA separada por Slash ("/") 
+	 * Fecha de hoy con formato DD/MM/AAAA separada por Slash ("/")
 	 */
-	public static String getFechaHoyDDMMAAAASlash(){
-		
-		Timestamp ts = new Timestamp(new Date().getTime());		
+	public static String getFechaHoyDDMMAAAASlash() {
+
+		Timestamp ts = new Timestamp(new Date().getTime());
 		return getFechaDDMMAAAASlash(dateToStringDDMMAAAA(ts));
 	}
-	
-	public static String getFechaHoyDDMMAAAAhhmmssSlash(){
-		
-	   DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	   Date date = new Date();
-	   return dateFormat.format(date);
-	}  
-	
-	/*public static String getFechaHoyDDMMAAAASlash() {
-		Calendar calendar = new GregorianCalendar(new Locale("es", "AR"));
-		Date trialTime = new Date();
-		calendar.setTime(trialTime);
-		Texto t = new Texto();
-		return t.lpad(new Integer(calendar.get(Calendar.DATE)).toString(), 2, "0") + "/"
-				+ t.lpad(new Integer(calendar.get(Calendar.MONTH) + 1).toString(), 2, "0") + "/"
-				+ calendar.get(Calendar.YEAR);
-	}*/
+
+	public static Date getFechaHoy() {
+		return new Timestamp(new Date().getTime());
+	}
+
+	public static String getFechaHoyDDMMAAAAhhmmssSlash() {
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
+
+	/*
+	 * public static String getFechaHoyDDMMAAAASlash() { Calendar calendar = new
+	 * GregorianCalendar(new Locale("es", "AR")); Date trialTime = new Date();
+	 * calendar.setTime(trialTime); Texto t = new Texto(); return t.lpad(new
+	 * Integer(calendar.get(Calendar.DATE)).toString(), 2, "0") + "/" +
+	 * t.lpad(new Integer(calendar.get(Calendar.MONTH) + 1).toString(), 2, "0")
+	 * + "/" + calendar.get(Calendar.YEAR); }
+	 */
 
 	/**
-	 * Formatea la Fecha pasada como parametro (DDMMAAA) a DD/MM/AAAA separada por Slash ("/") 
+	 * Formatea la Fecha pasada como parametro (DDMMAAA) a DD/MM/AAAA separada
+	 * por Slash ("/")
 	 */
 	public static String getFechaDDMMAAAASlash(String pFecha) {
 
@@ -355,22 +356,27 @@ public class Fecha {
 	}
 
 	/**
-	 * Validate whether the argument string can be parsed into a
-	 * legal date.<br />
-	 *
-	 * Does check for formating errors and illegal data (so an invalid
-	 * month or day number is detected).
-	 * @param allowPast set to true to allow dates in the past, false if
-	 * only dates in the future should be allowed.
-	 * @param formatStr date format string to be used to validate against
+	 * Validate whether the argument string can be parsed into a legal date.<br />
+	 * 
+	 * Does check for formating errors and illegal data (so an invalid month or
+	 * day number is detected).
+	 * 
+	 * @param allowPast
+	 *            set to true to allow dates in the past, false if only dates in
+	 *            the future should be allowed.
+	 * @param formatStr
+	 *            date format string to be used to validate against
 	 * @return true if a correct date and conforms to the restrictions
 	 */
 
-	public static boolean validateDate(String dateStr, boolean allowPast, String formatStr) {
+	public static boolean validateDate(String dateStr, boolean allowPast,
+			String formatStr) {
 
 		if (formatStr == null) {
 
-			return false; // or throw some kinda exception, possibly a InvalidArgumentExceptionVoIP Services and Information			 
+			return false; // or throw some kinda exception, possibly a
+							// InvalidArgumentExceptionVoIP Services and
+							// Information
 		}
 
 		SimpleDateFormat df = new SimpleDateFormat(formatStr);
@@ -380,13 +386,13 @@ public class Fecha {
 			df.setLenient(false);
 			testDate = df.parse(dateStr);
 		} catch (ParseException e) {
-			//invalid date format		
+			// invalid date format
 			return false;
 		}
 		if (!allowPast) {
 
-			//initialise the calendar to midnight to prevent	
-			//the current day from being rejected
+			// initialise the calendar to midnight to prevent
+			// the current day from being rejected
 
 			Calendar cal = Calendar.getInstance();
 			cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -400,7 +406,7 @@ public class Fecha {
 
 		}
 
-		//now test for legal values of parameters		
+		// now test for legal values of parameters
 		if (!df.format(testDate).equals(dateStr)) {
 			return false;
 		}
@@ -411,5 +417,5 @@ public class Fecha {
 		Calendar cal = Calendar.getInstance();
 		return cal.get(Calendar.YEAR);
 	}
-	
+
 }

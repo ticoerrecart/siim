@@ -20,6 +20,8 @@ public interface IPeriodoFachada {
 
 	public PeriodoDTO getPeriodoDTOPorId(Long id);
 
+	public PeriodoDTO getPeriodoDTOPorPeriodo(String periodo);
+
 	public void modificacionPeriodo(PeriodoDTO periodoDTO)
 			throws NegocioException;
 }

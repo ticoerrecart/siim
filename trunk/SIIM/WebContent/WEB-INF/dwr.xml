@@ -22,6 +22,9 @@
 		<convert converter="bean" match="ar.com.siim.dto.LocalidadDestinoDTO">
 			<param name="include" value="id,nombre" />
 		</convert>
+		<convert converter="bean" match="ar.com.siim.dto.PeriodoDTO">
+			<param name="include" value="id,periodo,fechaVencimientoPrimerTrimestre,fechaVencimientoSegundoTrimestre,fechaVencimientoTercerTrimestre,fechaVencimientoCuartoTrimestre" />
+		</convert>
 				
 		
 		<create creator="spring" javascript="RolFachada">
@@ -38,6 +41,9 @@
 		</create>		
 		<create creator="spring" javascript="CanonMineroFachada">
 			<param name="beanName" value="canonMineroFachada" />
+		</create>
+			<create creator="spring" javascript="PeriodoFachada">
+			<param name="beanName" value="periodoFachada" />
 		</create>
 		
 	</allow>

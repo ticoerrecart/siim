@@ -55,6 +55,11 @@ public class BoletaDeposito {
 	@JoinColumn(name = "canonMinero_fk")
 	private CanonMinero canonMinero;
 
+	@ManyToOne()
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "volumenDeclaracionDeExtraccion_fk")
+	private VolumenDeclaracionDeExtraccion volumenDeclaracionDeExtraccion;
+
 	public String getConcepto() {
 		return concepto;
 	}
@@ -173,6 +178,15 @@ public class BoletaDeposito {
 
 	public void setCanonMinero(CanonMinero canonMinero) {
 		this.canonMinero = canonMinero;
+	}
+
+	public VolumenDeclaracionDeExtraccion getVolumenDeclaracionDeExtraccion() {
+		return volumenDeclaracionDeExtraccion;
+	}
+
+	public void setVolumenDeclaracionDeExtraccion(
+			VolumenDeclaracionDeExtraccion volumenDeclaracionDeExtraccion) {
+		this.volumenDeclaracionDeExtraccion = volumenDeclaracionDeExtraccion;
 	}
 
 }

@@ -12,24 +12,24 @@
 	src="<html:rewrite page='/js/validarNum.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
-<script type="text/javascript"
-	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>
+
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/LocalizacionFachada.js'/>"></script>
-<script type="text/javascript"
-	src="<html:rewrite page='/js/fiscalizacion.js'/>"></script>
 
+<script type="text/javascript"
+	src="<html:rewrite page='/dwr/interface/PeriodoFachada.js'/>"></script>
+	
 <link rel="stylesheet" href="<html:rewrite page='/css/ui-lightness/jquery-ui-1.8.10.custom.css'/>"
 	type="text/css">
 	
 
 <script>
 	$(function() {
-
+		
 		$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#datepickerFecha" ).datepicker({ dateFormat: 'dd/mm/yy'});	
+		$( "#datepicker0" ).datepicker({ dateFormat: 'dd/mm/yy'});
 		$( "#datepickerFechaTrim1" ).datepicker({ dateFormat: 'dd/mm/yy'});
 		$( "#datepickerFechaTrim2" ).datepicker({ dateFormat: 'dd/mm/yy'});
 		$( "#datepickerFechaTrim3" ).datepicker({ dateFormat: 'dd/mm/yy'});
@@ -41,11 +41,8 @@ if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="O
 if (document.all) type="IE"; 
 if (!document.all && document.getElementById) type="MO";
 
-function volverAltaGuia(){	
-	var entidad = $('#paramIdTipoDeEntidad').val();
-	var productor = $('#paramProductor').val();
-	parent.location = contextRoot() +
-	'/guiaForestal.do?metodo=recuperarTiposDeEntidadParaAltaGFB&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor;		
+function volverAltaDeclaracionExtraccion(){
+	parent.location = contextRoot() + '/jsp.do?page=.index';		
 }
 
 function setValorLocalizacion(valor){
@@ -53,7 +50,7 @@ function setValorLocalizacion(valor){
 }
 
 function submitir(){
-	validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
+	validarForm("declaracionExtraccionForm","../declaracionExtraccion","validarAltaDeclaracionExtraccionForm","DeclaracionExtraccionForm");
 }
 
 function exp(sec) {
@@ -259,6 +256,16 @@ function cambiarZonaExtraccionCallback(localizacion) {
 	dwr.util.setValue("supZona", localizacion.superficie);				
 }
 
+	function cambioPeriodo(){
+		PeriodoFachada.getPeriodoDTOPorPeriodo($("#periodo").val(),cambioPeriodoCbk);
+	}
+	
+	function cambioPeriodoCbk(periodo){
+		$("#datepickerFechaTrim1").val(periodo.fechaVencimientoPrimerTrimestre);
+		$("#datepickerFechaTrim2").val(periodo.fechaVencimientoSegundoTrimestre);
+		$("#datepickerFechaTrim3").val(periodo.fechaVencimientoTercerTrimestre);
+		$("#datepickerFechaTrim4").val(periodo.fechaVencimientoCuartoTrimestre);
+	}
 </script>
 
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
@@ -267,8 +274,9 @@ function cambiarZonaExtraccionCallback(localizacion) {
 <div id="errores" class="rojoAdvertencia">${warning}</div>
 
 <div id="idDeclaracion">
-<html:form action="declaracionExtraccion" styleId="DeclaracionExtraccionForm">
+<html:form action="declaracionExtraccion" styleId="declaracionExtraccionForm">
 	<html:hidden property="metodo" value="altaDeclaracionExtraccion" />
+
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
 		<tr>
@@ -283,31 +291,31 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Numero'/></td>
 			<td width="30%" align="left">
-				<input name="declaracion.numero" class="botonerab" type="text" size="20" 
+				<input id="nroDeclaracion" name="declaracion.numero" class="botonerab" type="text" size="20"
 						onkeypress="javascript:esNumerico(event);">
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
 			<td align="left">
 				<select id="idProductor" name="declaracion.productor.id" class="botonerab" onchange="cambiarProductor();">
 					<option value="-1">- Seleccione un Productor -</option>
-					<c:forEach items="${productores}" var="prod">						
+					<c:forEach items="${productores}" var="prod">
 						<option value="${prod.id}">
 							<c:out value="${prod.nombre}"></c:out>
 						</option>
 					</c:forEach>
-				</select>				
+				</select>
 			</td>
 		</tr>
 
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaDeclaracion'/></td>
 			<td width="30%" align="left">
-				<input id="datepicker" type="text" name="declaracion.fechaVencimiento" readonly="readonly" class="botonerab">
+				<input id="datepicker" type="text" name="declaracion.fecha" readonly="readonly" class="botonerab">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.AnioDeclaracion'/></td>
 			<td align="left">
-					<select name="declaracion.periodo" class="botonerab" >
+					<select id="periodo" name="declaracion.periodo" class="botonerab" onchange="cambioPeriodo();">
 						<c:forEach items="${periodos}" var="per">
 							<option value="${per.periodo}">
 								<c:out value="${per.periodo}"></c:out>
@@ -389,7 +397,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
-							<select id="idZonaExtraccion" class="botonerab" disabled="disabled" onchange="cambiarZonaExtraccion();">
+							<select id="idZonaExtraccion" name="declaracion.localizacion.id" class="botonerab" disabled="disabled" onchange="cambiarZonaExtraccion();">
 								<option value="-1">--Seleccione una Zona--</option>
 							</select>					
 						</td>						
@@ -465,22 +473,22 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						</tr>
 						<tr>
 							<td>
-								<input class="botonerab" type="text" value="1er Trimestre" readonly="readonly" size="15">																						
+								<input class="botonerab" name="trimestres[0].nroTrimestre" type="text" value="1" readonly="readonly" size="15">																						
 							</td>						
 							<td>
-								<input type="hidden" value="${productoTurba.id}">
+								<input type="hidden" name="trimestres[0].tipoProducto.id" value="${productoTurba.id}">
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[0].volumenPrimerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_1">																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[0].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 								size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_2">
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[0].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 								size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_3">		
 							</td>
 							<td>
@@ -488,7 +496,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								size="15" readonly="readonly" id="idTotal1">														
 							</td>
 							<td>
-								<input id="datepickerFechaTrim1" type="text" readonly="readonly" class="botonerab" size="14">
+								<input id="datepickerFechaTrim1" name="trimestres[0].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
 								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
 							</td>
 						</tr>
@@ -505,22 +513,22 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						</tr>
 						<tr>
 							<td>
-								<input class="botonerab" type="text" value="2do Trimestre" readonly="readonly" size="15">																						
+								<input class="botonerab" type="text" name="trimestres[1].nroTrimestre" value="2" readonly="readonly" size="15">																						
 							</td>						
 							<td>
-								<input type="hidden" value="${productoTurba.id}">
+								<input type="hidden" name="trimestres[1].tipoProducto.id" value="${productoTurba.id}">
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[1].volumenPrimerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_1">																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[1].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_2">
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[1].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_3">		
 							</td>
 							<td>
@@ -528,7 +536,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 									size="15" id="idTotal2" readonly="readonly">														
 							</td>
 							<td>
-								<input id="datepickerFechaTrim2" type="text" readonly="readonly" class="botonerab" size="14">
+								<input id="datepickerFechaTrim2" name="trimestres[1].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
 								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
 							</td>
 						</tr>						
@@ -545,22 +553,22 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						</tr>
 						<tr>
 							<td>
-								<input class="botonerab" type="text" value="3er Trimestre" readonly="readonly" size="15">																						
+								<input class="botonerab" type="text" name="trimestres[2].nroTrimestre" value="3" readonly="readonly" size="15">																						
 							</td>						
 							<td>
-								<input type="hidden" value="${productoTurba.id}">
+								<input type="hidden" name="trimestres[2].tipoProducto.id" value="${productoTurba.id}">
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[2].volumenPrimerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_1">																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[2].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_2">
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[2].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_3">		
 							</td>
 							<td>
@@ -568,7 +576,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 									size="15" id="idTotal3" readonly="readonly">														
 							</td>
 							<td>
-								<input id="datepickerFechaTrim3" type="text" readonly="readonly" class="botonerab" size="14">
+								<input id="datepickerFechaTrim3" name="trimestres[2].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
 								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
 							</td>
 						</tr>						
@@ -585,22 +593,22 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						</tr>
 						<tr>
 							<td>
-								<input class="botonerab" type="text" value="4to Trimestre" readonly="readonly" size="15">																						
+								<input class="botonerab" type="text" name="trimestres[3].nroTrimestre" value="4" readonly="readonly" size="15">																						
 							</td>						
 							<td>
-								<input type="hidden" value="${productoTurba.id}">
+								<input type="hidden" name="trimestres[3].tipoProducto.id" value="${productoTurba.id}">
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[3].volumenPrimerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_1">																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[3].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_2">
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[3].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_3">		
 							</td>
 							<td>
@@ -608,10 +616,11 @@ function cambiarZonaExtraccionCallback(localizacion) {
 									size="15" id="idTotal4" readonly="readonly">														
 							</td>
 							<td>
-								<input id="datepickerFechaTrim4" type="text" readonly="readonly" class="botonerab" size="14">
+								<input id="datepickerFechaTrim4" name="trimestres[3].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
 								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
 							</td>
-						</tr>						
+						</tr>
+
 					</table>
 
 					<table border="0" class="cuadrado" align="center" width="90%"
@@ -645,7 +654,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 							<td width="55%">&nbsp;</td>
 							<td width="13%" class="botoneralNegritaRight">IMPORTE TOTAL</td>
 							<td width="14%">
-								<input id="idImporteTotal" readonly="readonly" class="botonerab" type="text" size="15">
+								<input id="idImporteTotal" name="declaracion.importeTotal" readonly="readonly" class="botonerab" type="text" size="15">
 							</td>
 							<td width="18%">&nbsp;</td>
 						</tr>
@@ -741,22 +750,13 @@ function cambiarZonaExtraccionCallback(localizacion) {
 									</td>
 								</tr>
 								<tr>
-									<td width="10%" class="botoneralNegritaRight">
-										<bean:message key='SIIM.label.FechaVencimiento'/>
-									</td>
+									<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaVencimiento'/></td>
 									<td colspan="3" align="left">
 										<input id="datepicker0" type="text" readonly="readonly" class="botonerab" 
-												name='boletasDeposito[0].fechaVencimiento'>
+												name='<%="boletasDeposito[0].fechaVencimiento"%>'>
 										<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-											align="top" width='17' height='21'>		
-																					
-										<script>
-											$(function() {
-										
-												$( "#datepicker0" ).datepicker({ dateFormat: 'dd/mm/yy'});
-											});
-										</script>	
-																																
+											align="top" width='17' height='21'>															
+								
 									</td>
 								</tr>
 								<tr>
@@ -802,7 +802,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Localidad'/></td>
 			<td width="30%" align="left">				
 				<select id="idLocalidad" class="botonerab" name="declaracion.localidad.id">
-					<option value="">- Seleccione una Localidad -</option>
+					<option value="-1">- Seleccione una Localidad -</option>
 					<c:forEach items="${localidades}" var="localidad">
 						<option value="${localidad.id}">
 							<c:out value="${localidad.nombre}"></c:out>
@@ -811,10 +811,9 @@ function cambiarZonaExtraccionCallback(localizacion) {
 				</select>				
 				
 			</td>
-			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Fecha'/></td>
-			<td align="left">		
-				<input id="datepickerFecha" type="text" name="declaracion.fecha" readonly="readonly" class="botonerab">
-				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				
+			<td width="30%" class="botoneralNegritaRight">&nbsp;</td>
+			<td align="left">
+				&nbsp;
 			</td>
 		</tr>
 		<tr>
@@ -830,7 +829,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			<td height="20" colspan="4">
 				<input type="button" value="Aceptar" id="enviar" 
 					class="botonerab" onclick="javascript:submitir();" > 
-				<input type="button" class="botonerab" value="Volver" onclick="javascript:volverAltaGuia();">
+				<input type="button" class="botonerab" value="Cancelar" onclick="javascript:volverAltaDeclaracionExtraccion();">
 			</td>
 		</tr>
 		<tr>
@@ -838,4 +837,9 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		</tr>
 	</table>
 </html:form>
-</div>	 				  
+</div>
+
+<script>
+	cambioPeriodo();
+	$("#nroDeclaracion").focus();
+</script>

@@ -8,6 +8,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import ar.com.siim.dto.ActaDeVerificacionDTO;
 import ar.com.siim.dto.BoletaDepositoDTO;
 import ar.com.siim.dto.CanonMineroDTO;
+import ar.com.siim.dto.DeclaracionExtraccionDTO;
 import ar.com.siim.dto.EntidadDTO;
 import ar.com.siim.dto.EstudioImpactoAmbientalDTO;
 import ar.com.siim.dto.LocalidadDTO;
@@ -17,11 +18,13 @@ import ar.com.siim.dto.PeriodoDTO;
 import ar.com.siim.dto.ProvinciaDestinoDTO;
 import ar.com.siim.dto.RolDTO;
 import ar.com.siim.dto.TransporteDTO;
+import ar.com.siim.dto.TrimestreDeclaracionDeExtraccionDTO;
 import ar.com.siim.dto.UsuarioDTO;
 import ar.com.siim.enums.TipoDeEntidad;
 import ar.com.siim.negocio.ActaDeVerificacion;
 import ar.com.siim.negocio.BoletaDeposito;
 import ar.com.siim.negocio.CanonMinero;
+import ar.com.siim.negocio.DeclaracionDeExtraccion;
 import ar.com.siim.negocio.Entidad;
 import ar.com.siim.negocio.EstudioImpactoAmbiental;
 import ar.com.siim.negocio.ItemMenu;
@@ -33,8 +36,11 @@ import ar.com.siim.negocio.Productor;
 import ar.com.siim.negocio.ProvinciaDestino;
 import ar.com.siim.negocio.RecursosNaturales;
 import ar.com.siim.negocio.Rol;
+import ar.com.siim.negocio.TipoProducto;
 import ar.com.siim.negocio.Transporte;
+import ar.com.siim.negocio.TrimestreDeclaracionDeExtraccion;
 import ar.com.siim.negocio.Usuario;
+import ar.com.siim.negocio.VolumenDeclaracionDeExtraccion;
 import ar.com.siim.utils.Fecha;
 
 public abstract class ProviderDominio {
@@ -167,7 +173,8 @@ public abstract class ProviderDominio {
 		return rol;
 	}
 
-	public static Localizacion getLocalizacion(LocalizacionDTO localizacionDTO,Entidad productor) {
+	public static Localizacion getLocalizacion(LocalizacionDTO localizacionDTO,
+			Entidad productor) {
 
 		Localizacion localizacion = new Localizacion();
 		localizacion.setExpediente(localizacionDTO.getExpediente());
@@ -178,35 +185,39 @@ public abstract class ProviderDominio {
 		localizacion.setSuperficie(localizacionDTO.getSuperficie());
 
 		List<EstudioImpactoAmbiental> lista = new ArrayList<EstudioImpactoAmbiental>();
-		
+
 		for (EstudioImpactoAmbientalDTO eiaDTO : localizacionDTO.getListaEIA()) {
-			
-			lista.add(ProviderDominio.getEstudioImpactoAmbiental(eiaDTO,localizacion));
+
+			lista.add(ProviderDominio.getEstudioImpactoAmbiental(eiaDTO,
+					localizacion));
 		}
 		localizacion.setListaEIA(lista);
-		
+
 		return localizacion;
 	}
 
-	public static EstudioImpactoAmbiental getEstudioImpactoAmbiental(EstudioImpactoAmbientalDTO eiaDTO, Localizacion localizacion){
-		
+	public static EstudioImpactoAmbiental getEstudioImpactoAmbiental(
+			EstudioImpactoAmbientalDTO eiaDTO, Localizacion localizacion) {
+
 		EstudioImpactoAmbiental eia = new EstudioImpactoAmbiental();
-		
+
 		eia.setEstado(eiaDTO.getEstado());
-		if (eiaDTO.getFechaDesde()!=""){
-			eia.setFechaDesde(Fecha.stringDDMMAAAAToUtilDate(eiaDTO.getFechaDesde()));
+		if (eiaDTO.getFechaDesde() != "") {
+			eia.setFechaDesde(Fecha.stringDDMMAAAAToUtilDate(eiaDTO
+					.getFechaDesde()));
 		}
-		if (eiaDTO.getFechaHasta()!=""){
-			eia.setFechaHasta(Fecha.stringDDMMAAAAToUtilDate(eiaDTO.getFechaHasta()));
-		}		
+		if (eiaDTO.getFechaHasta() != "") {
+			eia.setFechaHasta(Fecha.stringDDMMAAAAToUtilDate(eiaDTO
+					.getFechaHasta()));
+		}
 		eia.setLocalizacion(localizacion);
 		eia.setNroResolucionEIA(eiaDTO.getNroResolucionEIA());
 		eia.setObservaciones(eiaDTO.getObservaciones());
 		eia.setVigente(eiaDTO.isVigente());
-		
+
 		return eia;
 	}
-	
+
 	public static ProvinciaDestino getProvincia(ProvinciaDestinoDTO provinciaDTO) {
 
 		ProvinciaDestino provincia = new ProvinciaDestino();
@@ -338,5 +349,89 @@ public abstract class ProviderDominio {
 		canonMinero.setBoletasDeposito(boletas);
 
 		return canonMinero;
+	}
+
+	public static BoletaDeposito getBoletaDeposito(BoletaDepositoDTO boletaDTO,
+			VolumenDeclaracionDeExtraccion volumen) {
+		BoletaDeposito boleta = new BoletaDeposito();
+		boleta.setVolumenDeclaracionDeExtraccion(volumen);
+		boleta.setAnulado(boletaDTO.getAnulado());
+		boleta.setArea(boletaDTO.getArea());
+		// boleta.setCanonMinero(canonMinero);
+		boleta.setConcepto(boletaDTO.getConcepto());
+		boleta.setEfectivoCheque(boletaDTO.getEfectivoCheque());
+		if (boletaDTO.getFechaPago() != null) {
+			boleta.setFechaPago(Fecha.stringDDMMAAAAToUtilDate(boletaDTO
+					.getFechaPago()));
+		}
+
+		boleta.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(boletaDTO
+				.getFechaVencimiento()));
+		boleta.setMonto(boletaDTO.getMonto());
+		boleta.setNumero(boletaDTO.getNumero());
+		return boleta;
+	}
+
+	public static TrimestreDeclaracionDeExtraccion getTrimestreDeclaracionDeExtraccion(
+			TrimestreDeclaracionDeExtraccionDTO trimestreDTO,
+			TipoProducto tipoProducto, VolumenDeclaracionDeExtraccion volumen) {
+		TrimestreDeclaracionDeExtraccion trimestre = new TrimestreDeclaracionDeExtraccion();
+		trimestre.setVolumenDeclaracionDeExtraccion(volumen);
+		if (trimestreDTO.getFechaVencimiento() != null) {
+			trimestre.setFechaVencimiento(Fecha
+					.stringDDMMAAAAToUtilDate(trimestreDTO
+							.getFechaVencimiento()));
+		}
+
+		trimestre.setNroTrimestre(trimestreDTO.getNroTrimestre());
+		trimestre.setTipoProducto(tipoProducto);
+		trimestre.setVolumenPrimerMes(trimestreDTO.getVolumenPrimerMes());
+		trimestre.setVolumenSegundoMes(trimestreDTO.getVolumenSegundoMes());
+		trimestre.setVolumenTercerMes(trimestreDTO.getVolumenTercerMes());
+		return trimestre;
+	}
+
+	public static DeclaracionDeExtraccion getDeclaracionDeExtraccion(
+			DeclaracionExtraccionDTO declaracionExtraccionDTO,
+			List<TrimestreDeclaracionDeExtraccionDTO> trimestresDTO,
+			List<BoletaDepositoDTO> boletasDTO, Entidad entidad,
+			Localidad localidad, Localizacion localizacion,
+			TipoProducto tipoProducto) {
+
+		DeclaracionDeExtraccion declaracionDeExtraccion = new DeclaracionDeExtraccion();
+		VolumenDeclaracionDeExtraccion volumen = new VolumenDeclaracionDeExtraccion();
+		volumen.setDeclaracionDeExtraccion(declaracionDeExtraccion);
+		volumen.setFecha(Fecha.getFechaHoy());
+		declaracionDeExtraccion.addVolumenDeclaracionDeExtraccion(volumen);
+
+		declaracionDeExtraccion.setAnulado(declaracionExtraccionDTO
+				.getAnulado());
+		declaracionDeExtraccion.setEntidad(entidad);
+		declaracionDeExtraccion.setFecha(declaracionExtraccionDTO.getFecha());
+		declaracionDeExtraccion.setImporteTotal(declaracionExtraccionDTO
+				.getImporteTotal());
+		declaracionDeExtraccion.setLocalidad(localidad);
+		declaracionDeExtraccion.setLocalizacion(localizacion);
+		declaracionDeExtraccion.setNumero(declaracionExtraccionDTO.getNumero());
+		declaracionDeExtraccion.setPeriodo(declaracionExtraccionDTO
+				.getPeriodo());
+
+		List<BoletaDeposito> boletas = new ArrayList<BoletaDeposito>();
+		for (BoletaDepositoDTO boletaDepositoDTO : boletasDTO) {
+			boletas.add(getBoletaDeposito(boletaDepositoDTO, volumen));
+		}
+
+		List<TrimestreDeclaracionDeExtraccion> trimestres = new ArrayList<TrimestreDeclaracionDeExtraccion>();
+		for (TrimestreDeclaracionDeExtraccionDTO trimestreDTO : trimestresDTO) {
+			if (!trimestreDTO.esNulo()) {
+				trimestres.add(getTrimestreDeclaracionDeExtraccion(
+						trimestreDTO, tipoProducto, volumen));
+			}
+		}
+
+		volumen.addBoletaDeposito(boletas);
+		volumen.addTrimestreDeclaracionDeExtraccion(trimestres);
+
+		return declaracionDeExtraccion;
 	}
 }
