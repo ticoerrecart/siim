@@ -28,6 +28,23 @@ public class DeclaracionDeExtraccionDAO extends HibernateDaoSupport {
 				.list();
 		if (declaracionesDeExtraccion.size() > 0) {
 			error = "Ya existe una Declaración de Extracción con éste número.";
+		} else {
+			Criteria criteria2 = getSession().createCriteria(
+					DeclaracionDeExtraccion.class);
+			criteria2.createAlias("entidad", "e");
+			criteria2.createAlias("localizacion", "l");
+			Conjunction conj2 = Restrictions.conjunction();
+			conj2.add(Restrictions.eq("periodo", declaracion.getPeriodo()));
+			conj2.add(Restrictions.eq("e.id", declaracion.getProductor()
+					.getId()));
+			conj2.add(Restrictions.eq("l.id", declaracion.getLocalizacion()
+					.getId()));
+
+			criteria2.add(conj2);
+			declaracionesDeExtraccion = criteria2.list();
+			if (declaracionesDeExtraccion.size() > 0) {
+				error = "Ya existe una Declaración de Extracción con éste Productor-Año de Declaración-Localización.";
+			}
 		}
 
 		return error;
