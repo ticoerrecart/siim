@@ -231,6 +231,14 @@
 		</action>
 		<!-- FIN ACTA DE VERIFICACION -->
 		
+		<!-- REPORTES CANON MINERO -->
+		<action path="/reportesCanonMinero" type="ar.com.siim.struts.actions.ReportesCanonMineroAction"
+			parameter="metodo" scope="request">
+			<forward name="exitoCargarReporteCanonMineroEstadoDeudaPorProductorYPeriodo" path=".reporteGralPorProductorYPeriodo" />
+						
+		</action>
+		<!-- FIN REPORTES CANON MINERO -->		
+		
 	</action-mappings>
 
 	<message-resources parameter="ar.com.siim.struts.resources.application" />
