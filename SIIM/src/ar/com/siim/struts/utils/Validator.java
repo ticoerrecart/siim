@@ -103,6 +103,19 @@ public abstract class Validator {
 	}
 
 	/*
+	 * Si la entrada es nula entonces se considera invalido
+	 */
+	public static boolean validarComboRequeridoSinNull(String valorEntradaDistinto, String entrada,
+			String label, StringBuffer pError) {
+
+		if (entrada == null || entrada.equals("") || entrada.equals("null") || entrada.equals(valorEntradaDistinto)) {
+			addErrorXML(pError, label + " es un dato obligatorio");
+			return false;
+		}
+		return true;
+	}	
+	
+	/*
 	 * Si la entrada es nula entonces se considera valido
 	 */
 	public static boolean validarComboRequeridoSi(String entradaCondicion,

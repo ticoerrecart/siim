@@ -107,7 +107,7 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 			ok3 = Validator.requerido(actaForm.getActa().getTransporte().getDominio(), "Dominio del Transporte", error);
 			ok4 = Validator.requerido(actaForm.getActa().getYacimiento().getId(), "Yacimiento", error);
 			ok5 = Validator.validarEnteroMayorQue(0, String.valueOf(actaForm.getActa().getNumeroDeRemito()), "Numero de Remito", error);
-			ok6 = Validator.requerido(actaForm.getActa().getDestino().getId(), "Localidad Destino", error);
+			ok6 = Validator.validarComboRequeridoSinNull("-1",String.valueOf(actaForm.getActa().getDestino().getId()), "Localidad Destino", error);
 			
 			if (actaForm.getActa().getGranelVolumenM3Declarado() == 0 && actaForm.getActa().getBolsaVolumenD3()==0){
 				Validator.addErrorXML(error, "Debe declarar el Volumen en Granel y/o en Bolsa");

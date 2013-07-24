@@ -41,6 +41,7 @@
 		<mapping class='ar.com.siim.negocio.VolumenDeclaracionDeExtraccion' />
 		<mapping class='ar.com.siim.negocio.TrimestreDeclaracionDeExtraccion' />
 		<mapping class='ar.com.siim.negocio.DeclaracionDeExtraccion' />
+		<mapping class='ar.com.siim.negocio.Reporte' />
 
 	</session-factory>
 </hibernate-configuration>
