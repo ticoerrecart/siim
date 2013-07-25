@@ -170,12 +170,17 @@
 	
 	<!-- FIN ACTA VERIFICACION-->
 
-	<!-- REPORTES CANON MINERO -->
+	<!-- REPORTES -->
 	<definition name=".reporteGralPorProductorYPeriodo" extends=".base">
 		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/reporteGralPorProductorYPeriodo.jsp" />
 	</definition>
-	<!-- FIN REPORTES CANON MINERO -->
+
+	<definition name=".reporteGenerico" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/reporteGenerico.jsp" />
+	</definition>			
+	<!-- FIN REPORTES -->
 
 	<definition name=".error" extends=".base">
 		<put name="title" value="Error en SIIMs" />

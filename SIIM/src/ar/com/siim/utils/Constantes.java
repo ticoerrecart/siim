@@ -147,7 +147,12 @@ public class Constantes {
 
 	// FIN CANON MINERO
 
+	// REPORTES
 	public static final String REPORTE_CANON_MINERO_ESTADO_DEUDA_POR_PRODUCTOR_Y_PERIODO = "reporteCanonMineroEstadoDeDeudaPorProductor";
+	
+	public static final String REPORTE_ESTADO_EIA = "reporteEstadoEIA";
+	
+	//FIN REPORTES
 	
 	public static long TURBA = 1L;
 }
