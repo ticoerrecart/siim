@@ -58,7 +58,8 @@
 			<forward name=".index" path=".index" />
 			<forward name=".altaLocalidad" path=".altaLocalidad" />
 			<forward name=".altaPeriodo" path=".altaPeriodo" />
-			<forward name=".altaProvincia" path=".altaProvincia" />			
+			<forward name=".altaProvincia" path=".altaProvincia" />
+			<forward name=".reporteGenerico" path=".reporteGenerico" />					
 		</action>
 
 		<!-- LOGIN -->
@@ -231,13 +232,15 @@
 		</action>
 		<!-- FIN ACTA DE VERIFICACION -->
 		
-		<!-- REPORTES CANON MINERO -->
+		<!-- REPORTES -->
 		<action path="/reportesCanonMinero" type="ar.com.siim.struts.actions.ReportesCanonMineroAction"
 			parameter="metodo" scope="request">
-			<forward name="exitoCargarReporteCanonMineroEstadoDeudaPorProductorYPeriodo" path=".reporteGralPorProductorYPeriodo" />
-						
+			<forward name="exitoCargarReporteCanonMineroEstadoDeudaPorProductorYPeriodo" path=".reporteGralPorProductorYPeriodo" />						
 		</action>
-		<!-- FIN REPORTES CANON MINERO -->		
+		<action path="/reportesEIA" type="ar.com.siim.struts.actions.ReportesEIAAction"
+			parameter="metodo" scope="request">						
+		</action>				
+		<!-- FIN REPORTES-->		
 		
 	</action-mappings>
 

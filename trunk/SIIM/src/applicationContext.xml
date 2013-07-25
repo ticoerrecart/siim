@@ -347,7 +347,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 
-	<!-- DECLARACION DE EXTRACCION --> 
+	<!-- REPORTES CANON MINERO --> 
 	<bean id="reportesCanonMineroFachadaImpl" class="ar.com.siim.fachada.ReportesCanonMineroFachada">
 		<constructor-arg ref="reportesDAO" />
 	</bean>
@@ -368,6 +368,29 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			</props>
 		</property>
 	</bean>
+
+	<!-- REPORTES CANON MINERO --> 
+	<bean id="reportesEIAFachadaImpl" class="ar.com.siim.fachada.ReportesEIAFachada">
+		<constructor-arg ref="reportesDAO" />
+	</bean>
+
+	<bean id="reportesEIAFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="reportesEIAFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siim.fachada.IReportesEIAFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
 
 	<!--  *******************-->
 	<!--       Parameters    -->
