@@ -235,11 +235,17 @@
 		<!-- REPORTES -->
 		<action path="/reportesCanonMinero" type="ar.com.siim.struts.actions.ReportesCanonMineroAction"
 			parameter="metodo" scope="request">
-			<forward name="exitoCargarReporteCanonMineroEstadoDeudaPorProductorYPeriodo" path=".reporteGralPorProductorYPeriodo" />						
+			<forward name="exitoCargarReporteCanonMineroEstadoDeudaPorProductorLocalizacionYPeriodo" 
+					path=".reporteGralPorProductorLocalizacionYPeriodo" />						
 		</action>
 		<action path="/reportesEIA" type="ar.com.siim.struts.actions.ReportesEIAAction"
 			parameter="metodo" scope="request">						
-		</action>				
+		</action>
+		<action path="/reportesDeclaracionExtraccion" type="ar.com.siim.struts.actions.ReportesDeclaracionExtraccionAction"
+			parameter="metodo" scope="request">
+			<forward name="exitoCargarReporteEstadoDeudaDeclaracionExtraccionPorProductorLocalizacionYPeriodo" 
+					 path=".reporteGralPorProductorLocalizacionYPeriodo" />						
+		</action>
 		<!-- FIN REPORTES-->		
 		
 	</action-mappings>

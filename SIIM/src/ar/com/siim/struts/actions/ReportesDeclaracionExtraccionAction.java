@@ -11,15 +11,15 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siim.fachada.IEntidadFachada;
 import ar.com.siim.fachada.IPeriodoFachada;
-import ar.com.siim.fachada.IReportesCanonMineroFachada;
+import ar.com.siim.fachada.IReportesDeclaracionExtraccionFachada;
 import ar.com.siim.utils.MyLogger;
 
-public class ReportesCanonMineroAction extends ValidadorAction {
+public class ReportesDeclaracionExtraccionAction extends ValidadorAction {
 
-	public ActionForward cargarReporteCanonMineroEstadoDeudaPorProductorYPeriodo(
+	public ActionForward cargarReporteEstadoDeudaDeclaracionExtraccionPorProductorLocalizacionYPeriodo(
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		String strForward = "exitoCargarReporteCanonMineroEstadoDeudaPorProductorLocalizacionYPeriodo";
+		String strForward = "exitoCargarReporteEstadoDeudaDeclaracionExtraccionPorProductorLocalizacionYPeriodo";
 
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
@@ -28,9 +28,9 @@ public class ReportesCanonMineroAction extends ValidadorAction {
 			
 			request.setAttribute("periodos",periodoFachada.getPeriodosDTO());			
 			request.setAttribute("productores",entidadFachada.getProductoresDTO());
-			request.setAttribute("titulo","Reporte Canon Minero - Estado de Deuda");
-			request.setAttribute("action","reportesCanonMinero");
-			request.setAttribute("metodo","generarReporteCanonMineroEstadoDeudaPorProductorLocalizacionYPeriodo");
+			request.setAttribute("titulo","Reporte Declaración de Extracción - Estado de Deuda");
+			request.setAttribute("action","reportesDeclaracionExtraccion");
+			request.setAttribute("metodo","generarReporteEstadoDeudaDeclaracionExtraccionPorProductorLocalizacionYPeriodo");
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -38,9 +38,9 @@ public class ReportesCanonMineroAction extends ValidadorAction {
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
-	}	
-		
-	public ActionForward generarReporteCanonMineroEstadoDeudaPorProductorLocalizacionYPeriodo(
+	}
+	
+	public ActionForward generarReporteEstadoDeudaDeclaracionExtraccionPorProductorLocalizacionYPeriodo(
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
@@ -50,16 +50,16 @@ public class ReportesCanonMineroAction extends ValidadorAction {
 
 			WebApplicationContext ctx = getWebApplicationContext();
 
-			IReportesCanonMineroFachada reportesCanonMineroFachada = (IReportesCanonMineroFachada) ctx
-					.getBean("reportesCanonMineroFachada");
+			IReportesDeclaracionExtraccionFachada reportesDeclaracionExtraccionFachada = 
+					(IReportesDeclaracionExtraccionFachada) ctx.getBean("reportesDeclaracionExtraccionFachada");
 			
 			String productor = request.getParameter("productor");
 			String localizacion = request.getParameter("localizacion");
 			String periodo = request.getParameter("periodo");
-			
-			byte[] bytes = reportesCanonMineroFachada
-					.generarReporteCanonMineroEstadoDeudaPorProductorLocalizacionYPeriodo(
-								path,periodo,Long.valueOf(productor),Long.valueOf(localizacion));
+
+			byte[] bytes = reportesDeclaracionExtraccionFachada
+					.generarReporteEstadoDeudaDeclaracionExtraccionPorProductorLocalizacionYPeriodo(
+															path,periodo,Long.valueOf(productor),Long.valueOf(localizacion));
 
 			// Lo muestro en la salida del response
 			response.setContentType("application/pdf");
@@ -76,5 +76,4 @@ public class ReportesCanonMineroAction extends ValidadorAction {
 
 		return null;
 	}	
-	
 }

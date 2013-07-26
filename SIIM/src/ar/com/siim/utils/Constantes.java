@@ -152,6 +152,7 @@ public class Constantes {
 	
 	public static final String REPORTE_ESTADO_EIA = "reporteEstadoEIA";
 	
+	public static final String REPORTE_ESTADO_DEUDA_DECLARACION_EXTRACCION_POR_PRODUCTOR = "reporteEstadoDeudaDeclaracionExtraccionPorProductor";	
 	//FIN REPORTES
 	
 	public static long TURBA = 1L;
