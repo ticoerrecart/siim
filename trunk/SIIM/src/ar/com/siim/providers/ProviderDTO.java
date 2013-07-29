@@ -166,7 +166,9 @@ public abstract class ProviderDTO {
 		estudioDTO.setNroResolucionEIA(estudio.getNroResolucionEIA());
 		estudioDTO.setObservaciones(estudio.getObservaciones());
 		estudioDTO.setVigente(estudio.isVigente());
-
+		estudioDTO.setFechaAlta(Fecha.getFechaDDMMAAAASlash(Fecha
+					.dateToStringDDMMAAAA(estudio.getFechaAlta())));
+		
 		return estudioDTO;
 	}
 
