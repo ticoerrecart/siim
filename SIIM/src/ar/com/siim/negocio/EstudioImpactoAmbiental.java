@@ -38,6 +38,8 @@ public class EstudioImpactoAmbiental {
 	@JoinColumn(name = "localizacion_fk")	
 	private Localizacion localizacion;
 	
+	private Date fechaAlta;
+	
 	public Long getId() {
 		return id;
 	}
@@ -100,6 +102,14 @@ public class EstudioImpactoAmbiental {
 
 	public void setVigente(boolean vigente) {
 		this.vigente = vigente;
+	}
+
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 
 }

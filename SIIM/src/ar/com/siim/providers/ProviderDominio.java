@@ -214,7 +214,9 @@ public abstract class ProviderDominio {
 		eia.setNroResolucionEIA(eiaDTO.getNroResolucionEIA());
 		eia.setObservaciones(eiaDTO.getObservaciones());
 		eia.setVigente(eiaDTO.isVigente());
-
+		eia.setFechaAlta(Fecha.stringAAAAMMDDHHMMSSToDateSlash(eiaDTO
+											.getFechaAlta()));
+		
 		return eia;
 	}
 

@@ -19,6 +19,8 @@ public class EstudioImpactoAmbientalDTO {
 	
 	private boolean vigente;
 	
+	private String fechaAlta;
+	
 	public EstudioImpactoAmbientalDTO(){
 		
 		localizacion = new LocalizacionDTO();
@@ -86,6 +88,14 @@ public class EstudioImpactoAmbientalDTO {
 
 	public void setVigente(boolean vigente) {
 		this.vigente = vigente;
+	}
+
+	public String getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(String fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}
 	
 }

@@ -183,7 +183,8 @@
 			
 			<!-- ESTUDIO DE IMPACTO AMBIENTAL -->
 			<forward name="exitoCargarLocalizacionesParaAltaEIA" path="/jsp/bloqueLocalizacionesParaAltaEIA.jsp" />
-			<forward name="exitoCargarLocalizacionParaAltaEIA" path="/jsp/bloqueAltaEIA.jsp" />					
+			<forward name="exitoCargarLocalizacionParaAltaEIA" path="/jsp/bloqueAltaEIA.jsp" />
+			<forward name="exitoAltaEIA" path="/localizacion.do?metodo=cargarAltaEIA" />							
 							
 		</action>		
 		<!-- FIN LOCALIZACION -->

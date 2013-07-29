@@ -8,6 +8,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siim.utils.Fecha;
 import ar.com.siim.negocio.exception.NegocioException;
 import ar.com.siim.struts.actions.forms.LocalizacionForm;
 import ar.com.siim.struts.utils.Validator;
@@ -74,6 +75,9 @@ public class LocalizacionAction extends ValidadorAction {
 			
 			LocalizacionDTO localizacionDTO = localizacionForm.getLocalizacionDTO();
 			localizacionForm.getEstudioVigente().setVigente(true);
+			
+			localizacionForm.getEstudioVigente().setFechaAlta(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());			
+			
 			localizacionDTO.getListaEIA().add(localizacionForm.getEstudioVigente());
 			
 			localizacionFachada.altaLocalizacion(localizacionDTO);
@@ -262,6 +266,7 @@ public class LocalizacionAction extends ValidadorAction {
 			EstudioImpactoAmbientalDTO eiaDTO = localizacionForm.getEstudioVigente();
 			eiaDTO.setVigente(true);
 			eiaDTO.setLocalizacion(localizacionDTO);
+			eiaDTO.setFechaAlta(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
 			
 			localizacionFachada.altaEIA(eiaDTO);
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_EIA);			
