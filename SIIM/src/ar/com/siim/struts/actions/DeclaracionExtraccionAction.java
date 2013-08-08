@@ -9,11 +9,13 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siim.fachada.DeclaracionDeExtraccionFachada;
 import ar.com.siim.fachada.IDeclaracionDeExtraccionFachada;
 import ar.com.siim.fachada.IEntidadFachada;
 import ar.com.siim.fachada.ILocalidadFachada;
 import ar.com.siim.fachada.IPeriodoFachada;
 import ar.com.siim.fachada.ITipoProductoFachada;
+import ar.com.siim.negocio.DeclaracionDeExtraccion;
 import ar.com.siim.struts.actions.forms.DeclaracionExtraccionForm;
 import ar.com.siim.struts.utils.Validator;
 import ar.com.siim.utils.MyLogger;
@@ -144,35 +146,131 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			DeclaracionExtraccionForm declaracionDeExtraccionForm = (DeclaracionExtraccionForm) form;
 
-			/*
-			 * IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
-			 * .getBean("periodoFachada");
-			 * 
-			 * IEntidadFachada entidadFachada = (IEntidadFachada) ctx
-			 * .getBean("entidadFachada");
-			 * 
-			 * ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
-			 * .getBean("localidadFachada");
-			 * 
-			 * ITipoProductoFachada tipoProductoFachada = (ITipoProductoFachada)
-			 * ctx .getBean("tipoProductoFachada");
-			 * 
-			 * request.setAttribute("periodos",
-			 * periodoFachada.getPeriodosDTO());
-			 * request.setAttribute("productores",
-			 * entidadFachada.getProductoresDTO());
-			 * request.setAttribute("localidades",
-			 * localidadFachada.getLocalidadesDTO());
-			 * request.setAttribute("productoTurba",
-			 * tipoProductoFachada.recuperarTipoProductoDTO(Constantes.TURBA));
-			 */
-
 			IDeclaracionDeExtraccionFachada declaracionFachada = (IDeclaracionDeExtraccionFachada) ctx
 					.getBean("declaracionDeExtraccionFachada");
 			declaracionFachada.altaDeclaracionExtraccion(
 					declaracionDeExtraccionForm.getDeclaracion(),
 					declaracionDeExtraccionForm.getTrimestres(),
 					declaracionDeExtraccionForm.getBoletasDeposito());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}
+
+	// secuencia de llamados
+	// 1-cargarProductoresParaModificacionDeDeclaracion
+	// 2-recuperarDeclaracionesParaModificar
+	// 3-cargarModificacionDeDeclaracion
+
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarProductoresParaModificacionDeDeclaracion(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoCargarProductoresParaModificacionDeDeclaracion";
+
+		try {
+			String idProductor = request.getParameter("idProductor");
+			String idLocalizacion = request.getParameter("idLocalizacion");
+			String idPeriodo = request.getParameter("idPeriodo");
+			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("idLocalizacion", idLocalizacion);
+			request.setAttribute("idPeriodo", idPeriodo);
+
+			WebApplicationContext ctx = getWebApplicationContext();
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
+
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
+			request.setAttribute("productores",
+					entidadFachada.getProductoresDTO());
+			// request.setAttribute("paramForward",);
+			request.setAttribute("urlDetalle",
+					"../../declaracionExtraccion.do?metodo=recuperarDeclaracionesParaModificar");
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarDeclaracionesParaModificar(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoRecuperarDeclaracionesParaModificar";
+		WebApplicationContext ctx = getWebApplicationContext();
+
+		IDeclaracionDeExtraccionFachada declaracionDeExtraccionFachada = (IDeclaracionDeExtraccionFachada) ctx
+				.getBean("declaracionDeExtraccionFachada");
+		String idLocalizacion = request.getParameter("idLocalizacion");
+		String idPeriodo = request.getParameter("idPeriodo");
+		String idEntidad = request.getParameter("idEntidad");
+
+		DeclaracionDeExtraccion declaracionDeExtraccion = declaracionDeExtraccionFachada
+				.getDeclaracionDeExtraccion(Long.parseLong(idEntidad),
+						Long.parseLong(idLocalizacion), idPeriodo, true);
+
+		request.setAttribute("declaracion", declaracionDeExtraccion);
+		request.setAttribute("tituloLinkDetalle",
+				"Modificar Declaración de Extracción");
+		request.setAttribute("fwdDetalle",
+				"/declaracionExtraccion.do?metodo=cargarModificacionDeclaracionExtraccion");
+
+		return mapping.findForward(strForward);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarModificacionDeclaracionExtraccion(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoCargaAltaDeclaracionExtraccion";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
+
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
+
+			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
+					.getBean("localidadFachada");
+
+			ITipoProductoFachada tipoProductoFachada = (ITipoProductoFachada) ctx
+					.getBean("tipoProductoFachada");
+
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
+			request.setAttribute("productores",
+					entidadFachada.getProductoresDTO());
+			request.setAttribute("localidades",
+					localidadFachada.getLocalidadesDTO());
+			request.setAttribute("productoTurba",
+					tipoProductoFachada.recuperarTipoProductoDTO(1L));
+
+			DeclaracionDeExtraccionFachada declaracionFachada = (DeclaracionDeExtraccionFachada) ctx
+					.getBean("declaracionDeExtraccionFachada");
+			String id = request.getParameter("id");
+			DeclaracionDeExtraccion declaracion = declaracionFachada
+					.getDeclaracionDeExtraccionById(Long.valueOf(id));
+
+			request.setAttribute("declaracionDeExtraccion", declaracion);
+			/*
+			 * String msjeExito = request.getParameter("msjeExito"); if
+			 * (msjeExito != null) { request.setAttribute("exitoGrabado",
+			 * "Se ha dado de alta con éxito la Declaración de Extracción"); }
+			 */
+
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");

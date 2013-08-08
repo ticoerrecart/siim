@@ -150,6 +150,12 @@
 		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/altaDeclaracionExtraccion.jsp" />
 	</definition>
+	
+	<definition name=".cargarProductoresParaModificacionDeDeclaracion" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/cargarProductoresParaModificacionDeDeclaracion.jsp" />
+	</definition>
+	
 	<!-- FIN DECLARACION EXTRACCION -->
 
 	<!-- ACTA VERIFICACION-->

@@ -73,4 +73,14 @@ public class DeclaracionDeExtraccionFachada implements
 		declaracionDeExtraccionDAO
 				.altaDeclaracionExtraccion(declaracionDeExtraccion);
 	}
+
+	public DeclaracionDeExtraccion getDeclaracionDeExtraccionById(Long id) {
+		return declaracionDeExtraccionDAO.getDeclaracionDeExtraccionById(id);
+	}
+
+	public DeclaracionDeExtraccion getDeclaracionDeExtraccion(Long idEntidad,
+			Long idLocalizacion, String idPeriodo, boolean sinAnuladas) {
+		return declaracionDeExtraccionDAO.getDeclaracionDeExtraccion(idEntidad,
+				idLocalizacion, idPeriodo, sinAnuladas);
+	}
 }

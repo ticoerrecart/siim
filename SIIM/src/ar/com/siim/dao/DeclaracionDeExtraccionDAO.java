@@ -55,4 +55,31 @@ public class DeclaracionDeExtraccionDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().saveOrUpdate(declaracion);
 		this.getHibernateTemplate().flush();
 	}
+
+	public DeclaracionDeExtraccion getDeclaracionDeExtraccionById(Long id) {
+		return (DeclaracionDeExtraccion) this.getHibernateTemplate().get(
+				DeclaracionDeExtraccion.class, id);
+	}
+
+	public DeclaracionDeExtraccion getDeclaracionDeExtraccion(Long idEntidad,
+			Long idLocalizacion, String idPeriodo, boolean sinAnuladas) {
+		Criteria criteria2 = getSession().createCriteria(
+				DeclaracionDeExtraccion.class);
+		criteria2.createAlias("entidad", "e");
+		criteria2.createAlias("localizacion", "l");
+		Conjunction conj2 = Restrictions.conjunction();
+		conj2.add(Restrictions.eq("periodo", idPeriodo));
+		if (sinAnuladas) {
+			conj2.add(Restrictions.eq("anulado", false));
+		}
+		conj2.add(Restrictions.eq("e.id", idEntidad));
+		conj2.add(Restrictions.eq("l.id", idLocalizacion));
+
+		criteria2.add(conj2);
+		List<DeclaracionDeExtraccion> lista = criteria2.list();
+		if (lista.size() > 0) {
+			return (DeclaracionDeExtraccion) lista.get(0);
+		}
+		return null;
+	}
 }
