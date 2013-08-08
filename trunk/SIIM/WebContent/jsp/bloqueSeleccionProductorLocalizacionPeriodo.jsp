@@ -22,6 +22,7 @@
 	
 		var idLocalizacion = $('#selectLocalizaciones').val();
 		var idPeriodo = $('#selectPeriodo').val();
+		var idEntidad = $('#selectProductores').val();
 
 		var forward = $('#paramForward').val();
 		$('#divCargando').show();	
@@ -29,15 +30,10 @@
 		$('#errores').html("");
 		
 		if(idLocalizacion != "" && idLocalizacion != "-1"){
-			$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idLocalizacion='+idLocalizacion + '&forward=' + forward + '&idPeriodo=' + idPeriodo, mostrarDetalleCbk);
+			$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idLocalizacion='+idLocalizacion + '&forward=' + forward + '&idPeriodo=' + idPeriodo + '&idEntidad=' + idEntidad, mostrarDetalleCbk);
 			$('#divDetalle').hide();
 			$('#divDetalle').fadeIn(600);
-	
-			/*Concurrent.Thread.create(function(){
-			    while ($('#divDetalle').html() == "") {}
-			    $('#divCargando').hide();
-			});		*/
-			
+				
 		}else{
 			$('#divDetalle').hide(600);
 			$('#divDetalle').html("");

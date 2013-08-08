@@ -5,6 +5,7 @@ import java.util.List;
 import ar.com.siim.dto.BoletaDepositoDTO;
 import ar.com.siim.dto.DeclaracionExtraccionDTO;
 import ar.com.siim.dto.TrimestreDeclaracionDeExtraccionDTO;
+import ar.com.siim.negocio.DeclaracionDeExtraccion;
 
 public interface IDeclaracionDeExtraccionFachada {
 
@@ -15,4 +16,9 @@ public interface IDeclaracionDeExtraccionFachada {
 			DeclaracionExtraccionDTO declaracionExtraccionDTO,
 			List<TrimestreDeclaracionDeExtraccionDTO> trimestresDTO,
 			List<BoletaDepositoDTO> boletasDTO);
+
+	public DeclaracionDeExtraccion getDeclaracionDeExtraccionById(Long id);
+
+	public DeclaracionDeExtraccion getDeclaracionDeExtraccion(Long idEntidad,
+			Long idLocalizacion, String idPeriodo, boolean sinAnuladas);
 }
