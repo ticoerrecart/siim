@@ -31,6 +31,8 @@ public class ReportesDeclaracionExtraccionAction extends ValidadorAction {
 			request.setAttribute("titulo","Reporte Declaración de Extracción - Estado de Deuda");
 			request.setAttribute("action","reportesDeclaracionExtraccion");
 			request.setAttribute("metodo","generarReporteEstadoDeudaDeclaracionExtraccionPorProductorLocalizacionYPeriodo");
+			request.setAttribute("permitirTodosLosPeriodos","S");
+			request.setAttribute("permitirTodasLasLocalizaciones","S");
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);

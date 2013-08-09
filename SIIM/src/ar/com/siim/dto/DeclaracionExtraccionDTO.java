@@ -3,6 +3,8 @@ package ar.com.siim.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.com.siim.enums.TipoOperacion;
+
 public class DeclaracionExtraccionDTO {
 
 	private Long id;//
@@ -25,12 +27,15 @@ public class DeclaracionExtraccionDTO {
 
 	private boolean anulado;//
 
+	private  List<OperacionDeclaracionExtraccionDTO> operaciones;	
+	
 	public DeclaracionExtraccionDTO() {
 
 		productor = new EntidadDTO();
 		localidad = new LocalidadDTO();
 		localizacion = new LocalizacionDTO();
 		volumenes = new ArrayList<VolumenDeclaracionDeExtraccionDTO>();
+		operaciones = new ArrayList<OperacionDeclaracionExtraccionDTO>();
 	}
 
 	public Long getId() {
@@ -113,4 +118,24 @@ public class DeclaracionExtraccionDTO {
 		this.localizacion = localizacion;
 	}
 
+	public OperacionDeclaracionExtraccionDTO getOperacionAlta() {
+		for (OperacionDeclaracionExtraccionDTO operacion : this.getOperaciones()) {
+			if (operacion.getTipoOperacion().equals(TipoOperacion.ALTA.getDescripcion())){
+				return operacion;
+			}
+		}
+		return null;
+	}
+
+	public void addOperacion(OperacionDeclaracionExtraccionDTO operacion) {
+		this.getOperaciones().add(operacion);
+	}
+
+	public List<OperacionDeclaracionExtraccionDTO> getOperaciones() {
+		return operaciones;
+	}
+
+	public void setOperaciones(List<OperacionDeclaracionExtraccionDTO> operaciones) {
+		this.operaciones = operaciones;
+	}
 }

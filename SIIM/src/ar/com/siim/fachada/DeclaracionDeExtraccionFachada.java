@@ -7,14 +7,18 @@ import ar.com.siim.dao.EntidadDAO;
 import ar.com.siim.dao.LocalidadDAO;
 import ar.com.siim.dao.LocalizacionDAO;
 import ar.com.siim.dao.TipoProductoDAO;
+import ar.com.siim.dao.UsuarioDAO;
 import ar.com.siim.dto.BoletaDepositoDTO;
 import ar.com.siim.dto.DeclaracionExtraccionDTO;
+import ar.com.siim.dto.OperacionActaVerificacionDTO;
+import ar.com.siim.dto.OperacionDeclaracionExtraccionDTO;
 import ar.com.siim.dto.TrimestreDeclaracionDeExtraccionDTO;
 import ar.com.siim.negocio.DeclaracionDeExtraccion;
 import ar.com.siim.negocio.Entidad;
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.negocio.Localizacion;
 import ar.com.siim.negocio.TipoProducto;
+import ar.com.siim.negocio.Usuario;
 import ar.com.siim.providers.ProviderDominio;
 import ar.com.siim.utils.Constantes;
 
@@ -31,18 +35,23 @@ public class DeclaracionDeExtraccionFachada implements
 
 	private TipoProductoDAO tipoProductoDAO;
 
+	private UsuarioDAO usuarioDAO;
+	
 	public DeclaracionDeExtraccionFachada() {
 	}
 
 	public DeclaracionDeExtraccionFachada(
 			DeclaracionDeExtraccionDAO declaracionDeExtraccionDAO,
 			EntidadDAO entidadDAO, LocalidadDAO localidadDAO,
-			LocalizacionDAO localizacionDAO, TipoProductoDAO tipoProductoDAO) {
+			LocalizacionDAO localizacionDAO, TipoProductoDAO tipoProductoDAO,
+			UsuarioDAO usuarioDAO) {
+		
 		this.declaracionDeExtraccionDAO = declaracionDeExtraccionDAO;
 		this.entidadDAO = entidadDAO;
 		this.localidadDAO = localidadDAO;
 		this.localizacionDAO = localizacionDAO;
 		this.tipoProductoDAO = tipoProductoDAO;
+		this.usuarioDAO = usuarioDAO;
 	}
 
 	public String existeDeclaracionExtraccion(
@@ -65,10 +74,14 @@ public class DeclaracionDeExtraccionFachada implements
 						.getLocalizacion().getId());
 		TipoProducto tipoProducto = tipoProductoDAO
 				.recuperarTipoProducto(Constantes.TURBA);
+		
+		OperacionDeclaracionExtraccionDTO operacionDTO = declaracionExtraccionDTO.getOperacionAlta();
+		Usuario usuario = usuarioDAO.getUsuario(operacionDTO.getUsuario().getId());		
+		
 		DeclaracionDeExtraccion declaracionDeExtraccion = ProviderDominio
 				.getDeclaracionDeExtraccion(declaracionExtraccionDTO,
 						trimestresDTO, boletasDTO, entidad, localidad,
-						localizacion, tipoProducto);
+						localizacion, tipoProducto, usuario);
 
 		declaracionDeExtraccionDAO
 				.altaDeclaracionExtraccion(declaracionDeExtraccion);

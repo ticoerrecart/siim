@@ -265,8 +265,8 @@ public class LocalizacionAction extends ValidadorAction {
 			LocalizacionDTO localizacionDTO = localizacionForm.getLocalizacionDTO();
 			EstudioImpactoAmbientalDTO eiaDTO = localizacionForm.getEstudioVigente();
 			eiaDTO.setVigente(true);
-			eiaDTO.setLocalizacion(localizacionDTO);
-			eiaDTO.setFechaAlta(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			eiaDTO.setLocalizacion(localizacionDTO);					
+			eiaDTO.setFechaAlta(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());//Es para ordenar los EIA por esta fecha en el reporte de EIA
 			
 			localizacionFachada.altaEIA(eiaDTO);
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_EIA);			

@@ -301,6 +301,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<constructor-arg ref="localidadFachada" />
 		<constructor-arg ref="localizacionFachada" />
 		<constructor-arg ref="entidadFachada" />
+		<constructor-arg ref="usuarioFachada" />
 	</bean>	
 
 	<bean id="actaDeVerificacionFachada"
@@ -328,6 +329,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<constructor-arg ref="localidadDAO" />
 		<constructor-arg ref="localizacionDAO" /> 
 		<constructor-arg ref="tipoProductoDAO" />
+		<constructor-arg ref="usuarioDAO" />
 	</bean>
 
 	<bean id="declaracionDeExtraccionFachada"
@@ -412,6 +414,29 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			</props>
 		</property>
 	</bean>
+
+	<!-- REPORTES --> 
+	<bean id="reportesFachadaImpl" class="ar.com.siim.fachada.ReportesFachada">
+		<constructor-arg ref="reportesDAO" />
+	</bean>
+
+	<bean id="reportesFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="reportesFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siim.fachada.IReportesFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
 
 	<!--  *******************-->
 	<!--       Parameters    -->

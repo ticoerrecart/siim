@@ -15,11 +15,14 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siim.negocio.Reporte;
+import ar.com.siim.utils.Fecha;
 
 public class ReportesDAO extends HibernateDaoSupport {
 
 	public byte[] generarReporte(String nombreReporte,Map<String,Object> parameters) throws Exception 
 	{
+		parameters.put("fechaReporte", Fecha.getFechaHoy());		
+		
 		InputStream input = obtenerReporte(nombreReporte);
 		this.cargarSubReportes(nombreReporte, parameters);
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);

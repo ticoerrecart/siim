@@ -26,7 +26,7 @@ public class ReportesCanonMineroFachada implements IReportesCanonMineroFachada {
 		parameters.put("periodo", periodo);
 		parameters.put("idProductor", idProductor);
 		parameters.put("idLocalizacion", idLocalizacion);
-
+		
 		return reportesDAO.generarReporte(
 				Constantes.REPORTE_CANON_MINERO_ESTADO_DEUDA_POR_PRODUCTOR_Y_PERIODO,
 				parameters);

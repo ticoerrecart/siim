@@ -1,6 +1,8 @@
 package ar.com.siim.negocio;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,11 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-
+import ar.com.siim.enums.TipoOperacion;
 
 @Entity
 public class ActaDeVerificacion {
@@ -85,6 +88,10 @@ public class ActaDeVerificacion {
 
 	private String bolsaObservaciones;
 
+	@OneToMany(mappedBy = "actaVerificacion")
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	private List<OperacionActaVerificacion> operaciones;	
+	
 	public ActaDeVerificacion() {
 		transporte = new Transporte();
 		destino = new LocalidadDestino();
@@ -291,4 +298,37 @@ public class ActaDeVerificacion {
 		this.bolsaObservaciones = bolsaObservaciones;
 	}
 
+	public List<OperacionActaVerificacion> getOperaciones() {
+		return operaciones;
+	}
+
+	public void setOperaciones(List<OperacionActaVerificacion> operaciones) {
+		this.operaciones = operaciones;
+	}
+
+	public OperacionActaVerificacion getOperacionAlta() {
+		for (OperacionActaVerificacion operacion : this.getOperaciones()) {
+			if (operacion.getTipoOperacion().equals(TipoOperacion.ALTA.getDescripcion())){
+				return operacion;
+			}
+		}
+		return null;
+	}
+
+	public List<OperacionActaVerificacion> getOperacionesModificacion() {
+		List<OperacionActaVerificacion> operacionesModificacion = new ArrayList<OperacionActaVerificacion>();
+		for (OperacionActaVerificacion operacion : this.getOperaciones()) {
+			if (operacion.getTipoOperacion().equals(TipoOperacion.MOD.getDescripcion())){
+				operacionesModificacion.add(operacion);
+			}
+		}
+		return operacionesModificacion;
+	}
+
+	public void addOperacion(OperacionActaVerificacion operacionActaVerificacion) {
+		if (this.operaciones == null) {
+			this.operaciones = new ArrayList<OperacionActaVerificacion>();
+		}
+		this.operaciones.add(operacionActaVerificacion);
+	}	
 }
