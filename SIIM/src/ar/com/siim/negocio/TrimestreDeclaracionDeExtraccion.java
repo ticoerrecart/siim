@@ -104,4 +104,8 @@ public class TrimestreDeclaracionDeExtraccion {
 		this.volumenDeclaracionDeExtraccion = volumenDeclaracionDeExtraccion;
 	}
 
+	public Double getVolumenTotal() {
+		return this.getVolumenPrimerMes() + this.getVolumenSegundoMes()
+				+ this.getVolumenTercerMes();
+	}
 }

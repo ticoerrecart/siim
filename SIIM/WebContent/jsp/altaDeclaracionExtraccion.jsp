@@ -256,6 +256,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 	dwr.util.setValue("supZona", localizacion.superficie);				
 }
 
+	//recupera las fechas de vencimiento
 	function cambioPeriodo(){
 		PeriodoFachada.getPeriodoDTOPorPeriodo($("#periodo").val(),cambioPeriodoCbk);
 	}
@@ -266,6 +267,48 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		$("#datepickerFechaTrim3").val(periodo.fechaVencimientoTercerTrimestre);
 		$("#datepickerFechaTrim4").val(periodo.fechaVencimientoCuartoTrimestre);
 	}
+	
+	function setModificacion(){
+		if('${modificacion}'=="S"){
+			$("#idProductor").attr("disabled","disabled");
+			$("#periodo").attr("disabled","disabled");
+			$("#idZonaExtraccion").attr("disabled","disabled");
+			for(var i=1;i<5;i++){
+				calcularVolumenTotalTrimestre(i);
+			}
+
+			for(var i=0;i<4;i++){
+				if ($('[name="trimestres[' +i+ '].volumenPrimerMes"]').val()>0
+					|| $('[name="trimestres[' +i+ '].volumenSegundoMes"]').val()>0
+					|| $('[name="trimestres[' +i+ '].volumenTercerMes"]').val()>0){
+					$('[name="trimestres[' +i+ '].volumenPrimerMes"]').attr("readonly","readonly");
+					$('[name="trimestres[' +i+ '].volumenSegundoMes"]').attr("readonly","readonly");
+					$('[name="trimestres[' +i+ '].volumenTercerMes"]').attr("readonly","readonly");
+				}
+				
+			}
+			cambiarProductorModificacion();
+			cambioPeriodo();
+
+		}
+	}
+	
+	function cambiarProductorModificacion(){
+
+		var idProductor = $('#idProductor').val();
+
+		if(idProductor != "-1"){
+			EntidadFachada.getEntidadDTO(idProductor,cambiarProductorCallback );
+
+			LocalizacionFachada.getLocalizacionesPorProductorDTO(idProductor,actualizarZonasExtraccionModificacionCallback);
+		}
+	}
+	
+	function actualizarZonasExtraccionModificacionCallback(zonas){
+		actualizarZonasExtraccionCallback(zonas);
+		$("#idZonaExtraccion option[value="+'${declaracionDeExtraccion.localizacion.id}'+"]").attr("selected",true);
+	}
+	
 </script>
 
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
@@ -292,16 +335,25 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Numero'/></td>
 			<td width="30%" align="left">
 				<input id="nroDeclaracion" name="declaracion.numero" class="botonerab" type="text" size="20"
-						onkeypress="javascript:esNumerico(event);">
+						onkeypress="javascript:esNumerico(event);" value="${declaracionDeExtraccion.numero}">
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
 			<td align="left">
 				<select id="idProductor" name="declaracion.productor.id" class="botonerab" onchange="cambiarProductor();">
 					<option value="-1">- Seleccione un Productor -</option>
 					<c:forEach items="${productores}" var="prod">
-						<option value="${prod.id}">
-							<c:out value="${prod.nombre}"></c:out>
-						</option>
+						<c:choose>
+							<c:when test="${prod.id==declaracionDeExtraccion.entidad.id}">
+								<option value="${prod.id}" selected="selected">
+									<c:out value="${prod.nombre}"/>
+								</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${prod.id}">
+									<c:out value="${prod.nombre}"/>
+								</option>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 				</select>
 			</td>
@@ -310,16 +362,25 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaDeclaracion'/></td>
 			<td width="30%" align="left">
-				<input id="datepicker" type="text" name="declaracion.fecha" readonly="readonly" class="botonerab">
+				<input id="datepicker" type="text" name="declaracion.fecha" readonly="readonly" class="botonerab" value="${declaracionDeExtraccion.fecha}">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.AnioDeclaracion'/></td>
 			<td align="left">
 					<select id="periodo" name="declaracion.periodo" class="botonerab" onchange="cambioPeriodo();">
 						<c:forEach items="${periodos}" var="per">
-							<option value="${per.periodo}">
-								<c:out value="${per.periodo}"></c:out>
-							</option>
+							<c:choose>
+								<c:when test="${per.periodo==declaracionDeExtraccion.periodo}">
+									<option value="${per.periodo}" selected="selected">
+										<c:out value="${per.periodo}"/>
+									</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${per.periodo}">
+										<c:out value="${per.periodo}"/>
+									</option>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
 					</select>
 			</td>
@@ -480,15 +541,15 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[0].volumenPrimerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[0].volumenPrimerMes" value="${trimestres['1'].volumenPrimerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_1">																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[0].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[0].volumenSegundoMes" value="${trimestres['1'].volumenSegundoMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 								size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_2">
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[0].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[0].volumenTercerMes" value="${trimestres['1'].volumenTercerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 								size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_3">		
 							</td>
 							<td>
@@ -520,15 +581,15 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[1].volumenPrimerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[1].volumenPrimerMes" value=""${trimestres['2'].volumenPrimerMes} onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_1">																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[1].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[1].volumenSegundoMes" value="${trimestres['2'].volumenSegundoMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_2">
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[1].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[1].volumenTercerMes" value="${trimestres['2'].volumenTercerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_3">		
 							</td>
 							<td>
@@ -560,15 +621,15 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[2].volumenPrimerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[2].volumenPrimerMes" value="${trimestres['3'].volumenPrimeroMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_1">																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[2].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[2].volumenSegundoMes" value="${trimestres['3'].volumenSegundoMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_2">
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[2].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[2].volumenTercerMes" value="${trimestres['3'].volumenTercerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_3">		
 							</td>
 							<td>
@@ -600,15 +661,15 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[3].volumenPrimerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[3].volumenPrimerMes" value="${trimestres['4'].volumenPrimeroMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_1">																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[3].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[3].volumenSegundoMes" value="${trimestres['4'].volumenSegundoMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_2">
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[3].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[3].volumenTercerMes" value="${trimestres['4'].volumenTercerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_3">		
 							</td>
 							<td>
@@ -627,7 +688,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						cellpadding="2" cellspacing="0">
 						<tr>
 							<td colspan="4">&nbsp;</td>
-						</tr>										
+						</tr>
 						<tr>
 							<td width="55%">&nbsp;</td>
 							<td width="13%" class="botoneralNegritaRight">Volúmen Total</td>
@@ -804,9 +865,19 @@ function cambiarZonaExtraccionCallback(localizacion) {
 				<select id="idLocalidad" class="botonerab" name="declaracion.localidad.id">
 					<option value="-1">- Seleccione una Localidad -</option>
 					<c:forEach items="${localidades}" var="localidad">
-						<option value="${localidad.id}">
-							<c:out value="${localidad.nombre}"></c:out>
-						</option>
+						<c:choose>
+							<c:when test="${localidad.id==declaracionDeExtraccion.localidad.id}">
+								<option value="${localidad.id}" selected="selected">
+									<c:out value="${localidad.nombre}"></c:out>
+								</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${localidad.id}">
+									<c:out value="${localidad.nombre}"></c:out>
+								</option>
+							</c:otherwise>
+						</c:choose>
+						
 					</c:forEach>
 				</select>				
 				
@@ -840,6 +911,9 @@ function cambiarZonaExtraccionCallback(localizacion) {
 </div>
 
 <script>
-	cambioPeriodo();
+	if('${modificacion}'!="S"){
+		cambioPeriodo();
+	}
 	$("#nroDeclaracion").focus();
+	setModificacion();
 </script>

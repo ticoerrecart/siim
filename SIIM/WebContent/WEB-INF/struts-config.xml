@@ -215,6 +215,8 @@
 			parameter="metodo" name="declaracionExtraccionForm" scope="request">
 			<forward name="exitoCargaAltaDeclaracionExtraccion" path=".altaDeclaracionExtraccion" />
 			<forward name="exitoAltaDeclaracionExtraccion" path="/declaracionExtraccion.do?metodo=cargarAltaDeclaracionExtraccion&amp;msjeExito=true" />
+			<forward name="exitoCargarProductoresParaModificacionDeDeclaracion" path=".cargarProductoresParaModificacionDeDeclaracion" />
+			<forward name="exitoRecuperarDeclaracionesParaModificar" path="/jsp/bloqueRecuperarDeclaracionesParaModificar.jsp"/>
 		</action>
 		<!-- FIN DECLARACION EXTRACCION -->
 
