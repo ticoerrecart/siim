@@ -10,6 +10,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siim.enums.TipoOperacion;
+import ar.com.siim.utils.Fecha;
+import ar.com.siim.dto.OperacionActaVerificacionDTO;
+import ar.com.siim.dto.UsuarioDTO;
+import ar.com.siim.utils.Constantes;
 import ar.com.siim.fachada.IActaDeVerificacionFachada;
 import ar.com.siim.fachada.IEntidadFachada;
 import ar.com.siim.fachada.ILocalidadFachada;
@@ -65,9 +70,17 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 		String strForward = "exitoAltaDeVerificacion";
 
 		try {
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			ActaDeVerificacionForm actaForm = (ActaDeVerificacionForm) form;
 			WebApplicationContext ctx = getWebApplicationContext();
 			IActaDeVerificacionFachada actaDeVerificacionFachada = (IActaDeVerificacionFachada) ctx.getBean("actaDeVerificacionFachada");
+			
+			OperacionActaVerificacionDTO operacionDTO = new OperacionActaVerificacionDTO();
+			operacionDTO.setUsuario(usuario);
+			operacionDTO.setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			operacionDTO.setTipoOperacion(TipoOperacion.ALTA.getDescripcion());
+			actaForm.getActa().addOperacion(operacionDTO);			
+			
 			actaDeVerificacionFachada.altaActaDeVerificacion(actaForm.getActa());
 			request.setAttribute("exitoGrabado", "Acta de Verificación grabada con Exito");
 		} catch (Throwable t) {
@@ -105,7 +118,7 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 
 			ok2 = Validator.requerido(actaForm.getActa().getAgenteVerificacion(), "Agente Verificación", error);
 			ok3 = Validator.requerido(actaForm.getActa().getTransporte().getDominio(), "Dominio del Transporte", error);
-			ok4 = Validator.requerido(actaForm.getActa().getYacimiento().getId(), "Yacimiento", error);
+			ok4 = Validator.validarComboRequeridoSinNull("-1",String.valueOf(actaForm.getActa().getYacimiento().getId()),"Yacimiento",error);
 			ok5 = Validator.validarEnteroMayorQue(0, String.valueOf(actaForm.getActa().getNumeroDeRemito()), "Numero de Remito", error);
 			ok6 = Validator.validarComboRequeridoSinNull("-1",String.valueOf(actaForm.getActa().getDestino().getId()), "Localidad Destino", error);
 			

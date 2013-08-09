@@ -18,7 +18,7 @@
 		<property name="hibernate.format_sql">true</property>
 
 		<!-- Drop and re-create the database schema on startup -->
-		<property name="hbm2ddl.auto">validate</property>
+		<property name="hbm2ddl.auto">update</property>
 
 		<!-- Enable Hibernate's automatic session context management -->
 		<mapping class='ar.com.siim.negocio.BoletaDeposito' />
@@ -42,6 +42,8 @@
 		<mapping class='ar.com.siim.negocio.TrimestreDeclaracionDeExtraccion' />
 		<mapping class='ar.com.siim.negocio.DeclaracionDeExtraccion' />
 		<mapping class='ar.com.siim.negocio.Reporte' />
+		<mapping class='ar.com.siim.negocio.OperacionActaVerificacion' />
+		<mapping class='ar.com.siim.negocio.OperacionDeclaracionExtraccion' />
 
 	</session-factory>
 </hibernate-configuration>

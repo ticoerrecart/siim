@@ -1,5 +1,6 @@
 package ar.com.siim.providers;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import ar.com.siim.dto.EstudioImpactoAmbientalDTO;
 import ar.com.siim.dto.LocalidadDTO;
 import ar.com.siim.dto.LocalidadDestinoDTO;
 import ar.com.siim.dto.LocalizacionDTO;
+import ar.com.siim.dto.OperacionActaVerificacionDTO;
+import ar.com.siim.dto.OperacionDeclaracionExtraccionDTO;
 import ar.com.siim.dto.PeriodoDTO;
 import ar.com.siim.dto.ProvinciaDestinoDTO;
 import ar.com.siim.dto.RolDTO;
@@ -31,6 +34,8 @@ import ar.com.siim.negocio.ItemMenu;
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.negocio.LocalidadDestino;
 import ar.com.siim.negocio.Localizacion;
+import ar.com.siim.negocio.OperacionActaVerificacion;
+import ar.com.siim.negocio.OperacionDeclaracionExtraccion;
 import ar.com.siim.negocio.Periodo;
 import ar.com.siim.negocio.Productor;
 import ar.com.siim.negocio.ProvinciaDestino;
@@ -256,7 +261,7 @@ public abstract class ProviderDominio {
 
 	public static ActaDeVerificacion getActa(ActaDeVerificacionDTO actaDTO,
 			LocalidadDestino destino, Localidad oficinaMinera,
-			Entidad productor, Localizacion yacimiento) {
+			Entidad productor, Localizacion yacimiento, Usuario usuario) {
 		ActaDeVerificacion acta = new ActaDeVerificacion();
 
 		acta.setAgenteVerificacion(actaDTO.getAgenteVerificacion());
@@ -291,9 +296,29 @@ public abstract class ProviderDominio {
 		acta.setDestino(destino);
 		acta.setOficinaMinera(oficinaMinera);
 		acta.setProductor(productor);
+		
+		List<OperacionActaVerificacion> operaciones= new ArrayList<OperacionActaVerificacion>();
+		for (OperacionActaVerificacionDTO operacionActaVerificacionDTO : actaDTO.getOperaciones()) {
+			
+			operaciones.add(ProviderDominio.getOperacionActaVerificacion(operacionActaVerificacionDTO, acta, usuario)); 
+		}
+		acta.setOperaciones(operaciones);		
+		
 		return acta;
 	}
 
+	public static OperacionActaVerificacion getOperacionActaVerificacion(OperacionActaVerificacionDTO operacionDTO,
+																	ActaDeVerificacion acta, Usuario usuario)
+	{
+		OperacionActaVerificacion operacion = new OperacionActaVerificacion();
+		operacion.setFecha(Fecha.stringAAAAMMDDHHMMSSToDateSlash(operacionDTO.getFecha()));
+		operacion.setActaVerificacion(acta);
+		operacion.setTipoOperacion(operacionDTO.getTipoOperacion());
+		operacion.setUsuario(usuario);
+		
+		return operacion;
+	}	
+	
 	private static Transporte getTransporte(TransporteDTO transporteDTO) {
 		Transporte transporte = new Transporte();
 		try {
@@ -398,7 +423,7 @@ public abstract class ProviderDominio {
 			List<TrimestreDeclaracionDeExtraccionDTO> trimestresDTO,
 			List<BoletaDepositoDTO> boletasDTO, Entidad entidad,
 			Localidad localidad, Localizacion localizacion,
-			TipoProducto tipoProducto) {
+			TipoProducto tipoProducto, Usuario usuario) {
 
 		DeclaracionDeExtraccion declaracionDeExtraccion = new DeclaracionDeExtraccion();
 		VolumenDeclaracionDeExtraccion volumen = new VolumenDeclaracionDeExtraccion();
@@ -434,6 +459,27 @@ public abstract class ProviderDominio {
 		volumen.addBoletaDeposito(boletas);
 		volumen.addTrimestreDeclaracionDeExtraccion(trimestres);
 
+		List<OperacionDeclaracionExtraccion> operaciones= new ArrayList<OperacionDeclaracionExtraccion>();
+		for (OperacionDeclaracionExtraccionDTO operacionDeclaracionExtraccionDTO : declaracionExtraccionDTO.getOperaciones()) {
+			
+			operaciones.add(ProviderDominio.getOperacionDeclaracionExtraccion(operacionDeclaracionExtraccionDTO, 
+																		   declaracionDeExtraccion, usuario)); 
+		}
+		declaracionDeExtraccion.setOperaciones(operaciones);		
+		
 		return declaracionDeExtraccion;
 	}
+	
+	public static OperacionDeclaracionExtraccion getOperacionDeclaracionExtraccion(
+													OperacionDeclaracionExtraccionDTO operacionDTO,
+													DeclaracionDeExtraccion declaracion, Usuario usuario)
+	{
+		OperacionDeclaracionExtraccion operacion = new OperacionDeclaracionExtraccion();
+		operacion.setFecha(Fecha.stringAAAAMMDDHHMMSSToDateSlash(operacionDTO.getFecha()));
+		operacion.setDeclaracion(declaracion);
+		operacion.setTipoOperacion(operacionDTO.getTipoOperacion());
+		operacion.setUsuario(usuario);
+		
+		return operacion;
+	}		
 }

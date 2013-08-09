@@ -2,8 +2,11 @@ package ar.com.siim.fachada;
 
 import java.util.List;
 
+import ar.com.siim.negocio.Usuario;
 import ar.com.siim.dao.ActaDeVerificacionDAO;
 import ar.com.siim.dto.ActaDeVerificacionDTO;
+import ar.com.siim.dto.OperacionActaVerificacionDTO;
+import ar.com.siim.dto.UsuarioDTO;
 import ar.com.siim.negocio.ActaDeVerificacion;
 import ar.com.siim.negocio.Entidad;
 import ar.com.siim.negocio.Localidad;
@@ -19,17 +22,18 @@ public class ActaDeVerificacionFachada implements IActaDeVerificacionFachada {
 	private LocalidadFachada localidadFachada;
 	private LocalizacionFachada localizacionFachada;
 	private EntidadFachada entidadFachada;
-
+	private UsuarioFachada usuarioFachada;
+	
 	public ActaDeVerificacionFachada() {
 	}
 
 	public ActaDeVerificacionFachada(ActaDeVerificacionDAO actaDeVerificacionDAO, LocalidadFachada localidadFachada,
-			LocalizacionFachada localizacionFachada, EntidadFachada entidadFachada) {
+			LocalizacionFachada localizacionFachada, EntidadFachada entidadFachada, UsuarioFachada usuarioFachada) {
 		this.actaDAO = actaDeVerificacionDAO;
 		this.localidadFachada = localidadFachada;
 		this.localizacionFachada = localizacionFachada;
 		this.entidadFachada = entidadFachada;
-
+		this.usuarioFachada = usuarioFachada;
 	}
 
 	public void altaActaDeVerificacion(ActaDeVerificacionDTO actaDTO) throws NegocioException {
@@ -38,7 +42,10 @@ public class ActaDeVerificacionFachada implements IActaDeVerificacionFachada {
 		Entidad productor = entidadFachada.getEntidad(actaDTO.getProductor().getId());
 		Localizacion yacimiento = localizacionFachada.getLocalizacion(actaDTO.getYacimiento().getId());
 		LocalidadDestino destino = localidadFachada.getLocalidadDestinoPorId(actaDTO.getDestino().getId());
-		actaDAO.altaActaDeVerificacion(ProviderDominio.getActa(actaDTO, destino, oficinaMinera, productor, yacimiento));
+		OperacionActaVerificacionDTO operacionDTO = actaDTO.getOperacionAlta();
+		Usuario usuario = usuarioFachada.getUsuario(operacionDTO.getUsuario().getId());		
+		actaDAO.altaActaDeVerificacion(ProviderDominio.getActa(actaDTO, destino, oficinaMinera, 
+																productor, yacimiento,usuario));
 	}
 
 	@Override

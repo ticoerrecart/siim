@@ -1,5 +1,10 @@
 package ar.com.siim.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ar.com.siim.enums.TipoOperacion;
+
 public class ActaDeVerificacionDTO {
 
 	private Long id;
@@ -50,6 +55,8 @@ public class ActaDeVerificacionDTO {
 
 	private String bolsaObservaciones;
 
+	private  List<OperacionActaVerificacionDTO> operaciones;	
+	
 	public ActaDeVerificacionDTO() {
 
 		productor = new EntidadDTO();
@@ -57,6 +64,7 @@ public class ActaDeVerificacionDTO {
 		oficinaMinera = new LocalidadDTO();
 		transporte = new TransporteDTO();
 		destino = new LocalidadDestinoDTO();
+		operaciones = new ArrayList<OperacionActaVerificacionDTO>();
 	}
 
 	public Long getId() {
@@ -251,4 +259,24 @@ public class ActaDeVerificacionDTO {
 		this.bolsaObservaciones = bolsaObservaciones;
 	}
 	
+	public OperacionActaVerificacionDTO getOperacionAlta() {
+		for (OperacionActaVerificacionDTO operacion : this.getOperaciones()) {
+			if (operacion.getTipoOperacion().equals(TipoOperacion.ALTA.getDescripcion())){
+				return operacion;
+			}
+		}
+		return null;
+	}
+
+	public void addOperacion(OperacionActaVerificacionDTO operacion) {
+		this.getOperaciones().add(operacion);
+	}
+
+	public List<OperacionActaVerificacionDTO> getOperaciones() {
+		return operaciones;
+	}
+
+	public void setOperaciones(List<OperacionActaVerificacionDTO> operaciones) {
+		this.operaciones = operaciones;
+	}	
 }

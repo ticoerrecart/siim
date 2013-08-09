@@ -9,6 +9,10 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siim.dto.OperacionActaVerificacionDTO;
+import ar.com.siim.dto.OperacionDeclaracionExtraccionDTO;
+import ar.com.siim.dto.UsuarioDTO;
+import ar.com.siim.enums.TipoOperacion;
 import ar.com.siim.fachada.DeclaracionDeExtraccionFachada;
 import ar.com.siim.fachada.IDeclaracionDeExtraccionFachada;
 import ar.com.siim.fachada.IEntidadFachada;
@@ -18,6 +22,8 @@ import ar.com.siim.fachada.ITipoProductoFachada;
 import ar.com.siim.negocio.DeclaracionDeExtraccion;
 import ar.com.siim.struts.actions.forms.DeclaracionExtraccionForm;
 import ar.com.siim.struts.utils.Validator;
+import ar.com.siim.utils.Constantes;
+import ar.com.siim.utils.Fecha;
 import ar.com.siim.utils.MyLogger;
 
 public class DeclaracionExtraccionAction extends ValidadorAction {
@@ -145,7 +151,15 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
 			DeclaracionExtraccionForm declaracionDeExtraccionForm = (DeclaracionExtraccionForm) form;
-
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().
+												getAttribute(Constantes.USER_LABEL_SESSION);
+			
+			OperacionDeclaracionExtraccionDTO operacionDTO = new OperacionDeclaracionExtraccionDTO();
+			operacionDTO.setUsuario(usuario);
+			operacionDTO.setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			operacionDTO.setTipoOperacion(TipoOperacion.ALTA.getDescripcion());
+			declaracionDeExtraccionForm.getDeclaracion().addOperacion(operacionDTO);			
+			
 			IDeclaracionDeExtraccionFachada declaracionFachada = (IDeclaracionDeExtraccionFachada) ctx
 					.getBean("declaracionDeExtraccionFachada");
 			declaracionFachada.altaDeclaracionExtraccion(

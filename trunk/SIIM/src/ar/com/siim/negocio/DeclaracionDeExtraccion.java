@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siim.enums.TipoOperacion;
+
 @Entity
 public class DeclaracionDeExtraccion {
 
@@ -50,6 +52,10 @@ public class DeclaracionDeExtraccion {
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private List<VolumenDeclaracionDeExtraccion> volumenes = new ArrayList<VolumenDeclaracionDeExtraccion>();
 
+	@OneToMany(mappedBy = "declaracion")
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	private List<OperacionDeclaracionExtraccion> operaciones;	
+	
 	public Long getId() {
 		return id;
 	}
@@ -130,4 +136,38 @@ public class DeclaracionDeExtraccion {
 			VolumenDeclaracionDeExtraccion volumen) {
 		this.volumenes.add(volumen);
 	}
+	
+	public List<OperacionDeclaracionExtraccion> getOperaciones() {
+		return operaciones;
+	}
+
+	public void setOperaciones(List<OperacionDeclaracionExtraccion> operaciones) {
+		this.operaciones = operaciones;
+	}
+
+	public OperacionDeclaracionExtraccion getOperacionAlta() {
+		for (OperacionDeclaracionExtraccion operacion : this.getOperaciones()) {
+			if (operacion.getTipoOperacion().equals(TipoOperacion.ALTA.getDescripcion())){
+				return operacion;
+			}
+		}
+		return null;
+	}
+
+	public List<OperacionDeclaracionExtraccion> getOperacionesModificacion() {
+		List<OperacionDeclaracionExtraccion> operacionesModificacion = new ArrayList<OperacionDeclaracionExtraccion>();
+		for (OperacionDeclaracionExtraccion operacion : this.getOperaciones()) {
+			if (operacion.getTipoOperacion().equals(TipoOperacion.MOD.getDescripcion())){
+				operacionesModificacion.add(operacion);
+			}
+		}
+		return operacionesModificacion;
+	}
+
+	public void addOperacion(OperacionDeclaracionExtraccion operacionActaVerificacion) {
+		if (this.operaciones == null) {
+			this.operaciones = new ArrayList<OperacionDeclaracionExtraccion>();
+		}
+		this.operaciones.add(operacionActaVerificacion);
+	}	
 }
