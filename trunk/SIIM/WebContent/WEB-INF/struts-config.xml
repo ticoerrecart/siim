@@ -247,6 +247,15 @@
 			<forward name="exitoCargarReporteEstadoDeudaDeclaracionExtraccionPorProductorLocalizacionYPeriodo" 
 					 path=".reporteGralPorProductorLocalizacionYPeriodo" />						
 		</action>
+
+		<action path="/reportes" type="ar.com.siim.struts.actions.ReportesAction"
+			parameter="metodo" scope="request">
+			<forward name="exitoCargarReporteVolDeclaradoFiscalizado" 
+					 path=".reporteGralPorProductorLocalizacionYPeriodo" />	
+			<forward name="exitoCargarReporteEstadoDeDeudaGeneralPorProductor" 
+					 path=".reporteGralPorProductorYPeriodo" />					 									 					
+		</action>				
+		
 		<!-- FIN REPORTES-->		
 		
 	</action-mappings>
