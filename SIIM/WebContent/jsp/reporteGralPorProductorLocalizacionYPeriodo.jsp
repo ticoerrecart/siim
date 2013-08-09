@@ -66,7 +66,14 @@ function cambiarProductor(){
 
 function actualizarZonasExtraccionCallback(zonas){
 	dwr.util.removeAllOptions("idLocalizacion");
-	var data = [ { razonSocial:"-Seleccione una Localización-", id:-1 },{ razonSocial:"Todas las Localizaciones", id:0 }];
+	var todasLoc = $('#idTodasLocalizaciones').val();
+	var data;
+	
+	if(todasLoc == "N"){
+		data = [ { razonSocial:"-Seleccione una Localización-", id:-1 }];
+	}else{
+		data = [ { razonSocial:"-Seleccione una Localización-", id:-1 },{ razonSocial:"Todas las Localizaciones", id:0 }];
+	}	
 	dwr.util.addOptions("idLocalizacion", data, "id", "razonSocial");	
 	dwr.util.addOptions("idLocalizacion", zonas,"id","razonSocial");	
 }
@@ -76,7 +83,9 @@ function actualizarZonasExtraccionCallback(zonas){
 <div id="error" class="rojoAdvertencia"></div>
 <html:hidden styleId="idMetodo" value="${metodo}" property=""/>
 <html:hidden styleId="idAction" value="${action}" property=""/>
-
+<html:hidden styleId="idTodosPeriodos" value="${permitirTodosLosPeriodos}" property=""/>
+<html:hidden styleId="idTodasLocalizaciones" value="${permitirTodasLasLocalizaciones}" property=""/>
+			
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td class="azulAjustado">
@@ -106,7 +115,7 @@ function actualizarZonasExtraccionCallback(zonas){
 					</td>
 				</tr>				
 				<tr>
-					<td class="botoneralNegritaRight">Productor</td>
+					<td class="botoneralNegritaRight">Localización</td>
 					<td class="botonerab" align="left">
 						<select id="idLocalizacion" class="botonerab" disabled="disabled">
 							<option value="-1">-Seleccione una Localización-</option>
@@ -118,7 +127,9 @@ function actualizarZonasExtraccionCallback(zonas){
 					<td class="botonerab" align="left">
 						<select id="idPeriodo" class="botonerab" onchange="">
 							<option value="-1">- Seleccione un Periodo -</option>
-							<option value="0">Todos los Periodos</option>						
+							<c:if test="${permitirTodosLosPeriodos != 'N'}">
+								<option value="0">Todos los Periodos</option>
+							</c:if>						
 							<c:forEach items="${periodos}" var="periodo" varStatus="i">
 								<option value="<c:out value='${periodo.periodo}'></c:out>">
 									<c:out value="${periodo.periodo}"></c:out>

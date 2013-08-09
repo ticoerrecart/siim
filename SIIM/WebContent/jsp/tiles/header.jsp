@@ -7,22 +7,32 @@
 
 <div>
 <table class="header">
-	<tr>
-		<!--<td width="25%" height="65"><img height="145%" width="62%" src="../../imagenes/logoSIIM.jpg">-->
-		 <td width="25%" height="65"><img src="../../imagenes/Arba.jpg">
-		<!--  <td width="25%" height="65"><img src="../../imagenes/logo5.JPG"> -->
+	<!-- <tr>
+		<td width="25%" height="65"><img src="../../imagenes/Arba.jpg">
 		</td>
 		<td width="50%" style="text-align: center; font-weight: bold"><jsp:useBean
-			id="now" class="java.util.Date" /> <br>
+			id="now2" class="java.util.Date" /> <br>
 		SIIM <br>
 		Usuario: <label id="usuario"></label> <br>
 		Roles: <label id="roles"></label> <br>
 		Fecha: <fmt:formatDate value="${now}" pattern="dd/MM/yyyy" /> <br>
 		Versión: <label id="version"></label></td>
 		 <td width="25%"><img src="../../imagenes/LaProvincia.jpg">
-		<!-- <td width="25%"><img src="../../imagenes/provTF.JPG"> -->
 		</td>
-	</tr>
+	</tr>-->
+	
+	<tr>
+		<td width="20%" height="100%"><img height="80%" width="100%" src="../../imagenes/LOGOSIIM2.jpg">
+		</td>
+		<td width="60%" style="text-align: center; font-weight: bold"><jsp:useBean
+			id="now" class="java.util.Date" /> <br>
+			Usuario: <label id="usuario"></label> <br>
+			Roles: <label id="roles"></label> <br>
+		</td>
+		 <td width="20%"><img src="../../imagenes/LaProvincia1.jpg">
+		</td>
+	</tr>	
+	
 </table>
 
 </div>

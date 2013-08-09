@@ -68,6 +68,9 @@ function generarReporte(){
 					<td class="botonerab" align="left">
 						<select id="selectProductores" class="botonerab" onchange="">
 							<option value="-1">- Seleccione un Productor -</option>
+							<c:if test="${permitirTodosLosProductores != 'N'}">
+								<option value="0">Todos los Productores</option>
+							</c:if>								
 							<c:forEach items="${productores}" var="productor" varStatus="i">
 								<option value="<c:out value='${productor.id}'></c:out>">
 									<c:out value="${productor.nombre}"></c:out>
@@ -81,7 +84,9 @@ function generarReporte(){
 					<td class="botonerab" align="left">
 						<select id="idPeriodo" class="botonerab" onchange="">
 							<option value="-1">- Seleccione un Periodo -</option>
-							<option value="0">Todos los Periodos</option>						
+							<c:if test="${permitirTodosLosPeriodos != 'N'}">
+								<option value="0">Todos los Periodos</option>
+							</c:if>														
 							<c:forEach items="${periodos}" var="periodo" varStatus="i">
 								<option value="<c:out value='${periodo.periodo}'></c:out>">
 									<c:out value="${periodo.periodo}"></c:out>

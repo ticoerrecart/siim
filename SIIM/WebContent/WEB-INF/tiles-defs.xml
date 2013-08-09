@@ -190,7 +190,8 @@
 	<definition name=".reporteGralPorProductorLocalizacionYPeriodo" extends=".base">
 		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/reporteGralPorProductorLocalizacionYPeriodo.jsp" />
-	</definition>				
+	</definition>	
+					
 	<!-- FIN REPORTES -->
 
 	<definition name=".error" extends=".base">
