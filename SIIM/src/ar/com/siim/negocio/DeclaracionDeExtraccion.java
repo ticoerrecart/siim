@@ -136,7 +136,7 @@ public class DeclaracionDeExtraccion {
 			VolumenDeclaracionDeExtraccion volumen) {
 		this.volumenes.add(volumen);
 	}
-	
+
 	public List<OperacionDeclaracionExtraccion> getOperaciones() {
 		return operaciones;
 	}
@@ -169,5 +169,17 @@ public class DeclaracionDeExtraccion {
 			this.operaciones = new ArrayList<OperacionDeclaracionExtraccion>();
 		}
 		this.operaciones.add(operacionActaVerificacion);
-	}	
+	}
+	public TrimestreDeclaracionDeExtraccion getTrimestre(Long nroTrimestre){
+		List<VolumenDeclaracionDeExtraccion> voluemenes = this.getVolumenes();
+		for (VolumenDeclaracionDeExtraccion volumen : voluemenes) {
+			List<TrimestreDeclaracionDeExtraccion>  trimestres = volumen.getTrimestres();
+			for (TrimestreDeclaracionDeExtraccion trimestre : trimestres) {
+				if (nroTrimestre.intValue() == trimestre.getNroTrimestre().intValue()){
+					return trimestre;
+				}
+			}
+		}
+		return null;
+	}
 }
