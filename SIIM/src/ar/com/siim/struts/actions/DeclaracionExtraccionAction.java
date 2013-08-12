@@ -1,5 +1,10 @@
 package ar.com.siim.struts.actions;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,7 +14,6 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 
-import ar.com.siim.dto.OperacionActaVerificacionDTO;
 import ar.com.siim.dto.OperacionDeclaracionExtraccionDTO;
 import ar.com.siim.dto.UsuarioDTO;
 import ar.com.siim.enums.TipoOperacion;
@@ -19,7 +23,10 @@ import ar.com.siim.fachada.IEntidadFachada;
 import ar.com.siim.fachada.ILocalidadFachada;
 import ar.com.siim.fachada.IPeriodoFachada;
 import ar.com.siim.fachada.ITipoProductoFachada;
+import ar.com.siim.negocio.BoletaDeposito;
 import ar.com.siim.negocio.DeclaracionDeExtraccion;
+import ar.com.siim.negocio.TrimestreDeclaracionDeExtraccion;
+import ar.com.siim.negocio.VolumenDeclaracionDeExtraccion;
 import ar.com.siim.struts.actions.forms.DeclaracionExtraccionForm;
 import ar.com.siim.struts.utils.Validator;
 import ar.com.siim.utils.Constantes;
@@ -151,15 +158,16 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
 			DeclaracionExtraccionForm declaracionDeExtraccionForm = (DeclaracionExtraccionForm) form;
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().
-												getAttribute(Constantes.USER_LABEL_SESSION);
-			
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
+					.getAttribute(Constantes.USER_LABEL_SESSION);
+
 			OperacionDeclaracionExtraccionDTO operacionDTO = new OperacionDeclaracionExtraccionDTO();
 			operacionDTO.setUsuario(usuario);
 			operacionDTO.setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
 			operacionDTO.setTipoOperacion(TipoOperacion.ALTA.getDescripcion());
-			declaracionDeExtraccionForm.getDeclaracion().addOperacion(operacionDTO);			
-			
+			declaracionDeExtraccionForm.getDeclaracion().addOperacion(
+					operacionDTO);
+
 			IDeclaracionDeExtraccionFachada declaracionFachada = (IDeclaracionDeExtraccionFachada) ctx
 					.getBean("declaracionDeExtraccionFachada");
 			declaracionFachada.altaDeclaracionExtraccion(
@@ -279,6 +287,26 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 					.getDeclaracionDeExtraccionById(Long.valueOf(id));
 
 			request.setAttribute("declaracionDeExtraccion", declaracion);
+
+			Map<String, TrimestreDeclaracionDeExtraccion> mapTrimestres = new HashMap<String, TrimestreDeclaracionDeExtraccion>();
+			List<BoletaDeposito> boletas = new ArrayList<BoletaDeposito>();
+			for (VolumenDeclaracionDeExtraccion volumen : declaracion
+					.getVolumenes()) {
+				for (TrimestreDeclaracionDeExtraccion trimestre : volumen
+						.getTrimestres()) {
+					mapTrimestres.put(trimestre.getNroTrimestre().toString(),
+							trimestre);
+					for (BoletaDeposito boletaDeposito : boletas) {
+						boletas.add(boletaDeposito);
+					}
+				}
+
+			}
+
+			request.setAttribute("trimestres", mapTrimestres);
+			request.setAttribute("boletas", boletas);
+
+			request.setAttribute("modificacion", "S");
 			/*
 			 * String msjeExito = request.getParameter("msjeExito"); if
 			 * (msjeExito != null) { request.setAttribute("exitoGrabado",
@@ -292,5 +320,4 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		}
 		return mapping.findForward(strForward);
 	}
-
 }
