@@ -336,7 +336,6 @@ function col(sec) {
 					<tr>
 						<td colspan="5" class="azulAjustado"><bean:message key='SIIM.label.BoletasDeposito'/></td>
 					</tr>				
-	
 
 					<tr>
 						<td colspan="5"  class="azulAjustado">
@@ -349,13 +348,7 @@ function col(sec) {
 					<tr>
 						<td height="10" colspan="4"></td>
 					</tr>
-					
-					
-					
-					
-					
-					
-					
+
 					<tr>
 						<td colspan="4">
 							<c:choose>					
@@ -375,9 +368,6 @@ function col(sec) {
 											<td colspan="4">								
 											
 												<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
-													<tr>
-														<td height="5" colspan="5"></td>
-													</tr>
 													<tr>
 														<td width="10%" class="botoneralNegritaRight">
 															<bean:message key='SIIM.label.BoletaDeposito'/>
@@ -462,10 +452,6 @@ function col(sec) {
 														   onclick="registrarPagoSeleccionarFecha('${boletaDeposito.id}','${boletaDeposito.numero}')">
 												</c:if>	
 											</td>
-										</tr>
-
-										<tr>
-											<td height="5" colspan="4"></td>
 										</tr>										
 									</c:forEach>	
 								</c:when>

@@ -9,7 +9,7 @@
 	}
 </script>
 
-<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2" cellspacing="0">		
+<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2" cellspacing="1">		
 	<c:choose>
 		<c:when test="${declaracion == null}">
 			<tr>
@@ -20,36 +20,36 @@
 		</c:when>
 		<c:otherwise>
 			<tr>
-				<td class="azulAjustado botoneralNegritaRight">
+				<td class="grisSubtituloCenter">
 					Número
 				</td>
-				<td class="azulAjustado botoneralNegritaRight">
+				<td class="grisSubtituloCenter">
 					Fecha
 				</td>
-				<td class="azulAjustado botoneralNegritaRight">
+				<td class="grisSubtituloCenter">
 					Localidad
 				</td>
-				<td class="azulAjustado botoneralNegritaRight">
+				<td class="grisSubtituloCenter">
 					Monto Total
 				</td>
-				<td class="azulAjustado botoneralNegritaRight">
+				<td class="grisSubtituloCenter">
 					&nbsp;		
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="botonerab">
 					${declaracion.numero}
 				</td>
-				<td>
+				<td class="botonerab">
 					${declaracion.fecha}
 				</td>
-				<td>
-					${declaracion.localidad.nombre}
+				<td class="botonerab">
+					 ${declaracion.localidad.nombre}
 				</td>
-				<td>
+				<td class="botonerab">
 					${declaracion.importeTotal}
 				</td>
-				<td>
+				<td class="botonerab">
 					<a href="javascript:recuperarDeclaracion(${declaracion.id});">${tituloLinkDetalle}</a>
 				</td>
 			</tr>

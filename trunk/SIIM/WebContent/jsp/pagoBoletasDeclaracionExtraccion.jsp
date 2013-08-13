@@ -28,14 +28,14 @@ if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="O
 if (document.all) type="IE"; 
 if (!document.all && document.getElementById) type="MO";
 
-function volverAltaDeclaracionExtraccion(){
-	parent.location = contextRoot() + '/jsp.do?page=.index';		
+function volver(){
+	
+	var periodo = $("#idPeriodo").val();
+	var productor = $("#idProductor").val();
+	var localizacion = $("#idLocalizacion").val();
+	
+	parent.location = contextRoot() + '/declaracionExtraccion.do?metodo=cargarProductoresParaPagoBoletas&idProductor='+productor+'&idLocalizacion='+localizacion+'&idPeriodo='+periodo;		
 }
-
-function setValorLocalizacion(valor){
-	$("#idLocalizacion").val(valor);
-}
-
 
 function exp(sec) {
 	
@@ -61,23 +61,16 @@ function col(sec) {
    }
 }
 
+function pintarFila(idTd){
 
-var clase2;
-function pintarFila(idTr){
-
-	$('#tr'+idTr).attr("class", "seleccionado");	
+	$('#'+idTd).addClass("verdeSubtitulo");
+	$('#'+idTd).removeClass("grisSubtitulo");
 }
 
-function despintarFila(idTr){
-
-	if(!$('#idCheck'+idTr).is(':checked')){
-		if(idTr%2){
-			clase2 = "par";		
-		}else{
-			clase2 = "";
-		}	
-		$('#tr'+idTr).attr("class", clase2);
-	}		
+function despintarFila(idTd){
+	
+	$('#'+idTd).addClass("grisSubtitulo");
+	$('#'+idTd).removeClass("verdeSubtitulo");
 }
 
 function expBoletaNro(){
@@ -140,6 +133,9 @@ function cerrarVentanaPagoBoleta(){
 
 </script>
 
+<input id="idProductor" type="hidden" value="${declaracionDeExtraccion.entidad.id}">
+<input id="idLocalizacion" type="hidden" value="${declaracionDeExtraccion.localizacion.id}">
+<input id="idPeriodo" type="hidden" value="${declaracionDeExtraccion.periodo}">
 
 <div id="dialogo" style="display: none" >
 	<br>
@@ -602,18 +598,15 @@ function cerrarVentanaPagoBoleta(){
 						</td>
 					</tr>
 					<tr>
-						<td height="10" colspan="4"></td>
-					</tr>
-					<tr>
 						<td colspan="4">
 	
 							<c:forEach items="${declaracionDeExtraccion.volumenes}" var="volumenTrimestre" varStatus="index">									
 								<c:forEach items="${volumenTrimestre.boletas}" var="boletaDeposito" varStatus="index">
 								
 									<tr onclick="$('#idTrBoleta<c:out value='${boletaDeposito.numero}'/>').toggle();">								
-										<td colspan="5" class="grisSubtitulo" id="tdBoleta<c:out value='${index.count}'></c:out>" 									
-											onmouseover="javascript:pintarFilaVale('tdBoleta<c:out value='${index.count}'></c:out>');"
-											onmouseout="javascript:despintarFilaVale('tdBoleta<c:out value='${index.count}'></c:out>');">
+										<td colspan="5" class="grisSubtitulo" id="tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>" 									
+											onmouseover="javascript:pintarFila('tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>');"
+											onmouseout="javascript:despintarFila('tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>');">
 											Boleta de Deposito n° <c:out value="${boletaDeposito.numero}"></c:out>
 										</td>
 									</tr>						
@@ -709,11 +702,7 @@ function cerrarVentanaPagoBoleta(){
 													   onclick="registrarPagoSeleccionarFecha('${boletaDeposito.id}','${boletaDeposito.numero}')">
 											</c:if>	
 										</td>
-									</tr>
-
-									<tr>
-										<td height="5" colspan="4"></td>
-									</tr>										
+									</tr>									
 								</c:forEach>	
 							</c:forEach>	
 						</td>	
@@ -756,7 +745,7 @@ function cerrarVentanaPagoBoleta(){
 		</tr>
 		<tr>
 			<td height="20" colspan="4">
-				<input type="button" class="botonerab" value="Vovler" onclick="javascript:volverAltaDeclaracionExtraccion();">
+				<input type="button" class="botonerab" value="Vovler" onclick="javascript:volver();">
 			</td>
 		</tr>
 		<tr>
