@@ -19,8 +19,10 @@ import ar.com.siim.negocio.Localidad;
 import ar.com.siim.negocio.Localizacion;
 import ar.com.siim.negocio.TipoProducto;
 import ar.com.siim.negocio.Usuario;
+import ar.com.siim.negocio.exception.NegocioException;
 import ar.com.siim.providers.ProviderDominio;
 import ar.com.siim.utils.Constantes;
+import ar.com.siim.utils.MyLogger;
 
 public class DeclaracionDeExtraccionFachada implements
 		IDeclaracionDeExtraccionFachada {
@@ -96,4 +98,15 @@ public class DeclaracionDeExtraccionFachada implements
 		return declaracionDeExtraccionDAO.getDeclaracionDeExtraccion(idEntidad,
 				idLocalizacion, idPeriodo, sinAnuladas);
 	}
+	
+	public String registrarPagoBoletaDeposito(Long idBoleta, String fechaPago)throws NegocioException 
+	{
+		try {
+			return declaracionDeExtraccionDAO.registrarPagoBoletaDeposito(idBoleta,fechaPago);
+		
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}
+	}	
 }

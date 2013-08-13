@@ -217,6 +217,7 @@
 			<forward name="exitoAltaDeclaracionExtraccion" path="/declaracionExtraccion.do?metodo=cargarAltaDeclaracionExtraccion&amp;msjeExito=true" />
 			<forward name="exitoCargarProductoresParaModificacionDeDeclaracion" path=".cargarProductoresParaModificacionDeDeclaracion" />
 			<forward name="exitoRecuperarDeclaracionesParaModificar" path="/jsp/bloqueRecuperarDeclaracionesParaModificar.jsp"/>
+			<forward name="exitoCargarDeclaracionParaPagoBoletas" path=".pagoBoletasDeclaracionExtraccion"/>								
 		</action>
 		<!-- FIN DECLARACION EXTRACCION -->
 

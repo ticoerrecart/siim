@@ -155,6 +155,11 @@
 		<put name="title" value="SIIMs" />
 		<put name="body" value="/jsp/cargarProductoresParaModificacionDeDeclaracion.jsp" />
 	</definition>
+
+	<definition name=".pagoBoletasDeclaracionExtraccion" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/pagoBoletasDeclaracionExtraccion.jsp" />
+	</definition>
 	
 	<!-- FIN DECLARACION EXTRACCION -->
 

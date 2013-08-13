@@ -15,7 +15,16 @@
 <br>
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
-		<td class="azulAjustado"><bean:message key='SIIM.label.ModificacionDeDeclaracion'/></td>
+		<td class="azulAjustado">
+			<c:choose>
+				<c:when test="${titulo != null}">
+					<c:out value="${titulo}"></c:out>
+				</c:when>
+				<c:otherwise>
+					<bean:message key='SIIM.label.ModificacionDeDeclaracion'/>
+				</c:otherwise>
+			</c:choose>			
+		</td>
 	</tr>
 	<tr>
 		<td height="20"></td>

@@ -320,4 +320,116 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		}
 		return mapping.findForward(strForward);
 	}
+	// secuencia de llamados
+	// 1-cargarProductoresParaPagoBoletas
+	// 2-recuperarDeclaracionesParaPagoBoletas
+	// 3-cargarDeclaracionParaPagoBoletas
+
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarProductoresParaPagoBoletas(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoCargarProductoresParaModificacionDeDeclaracion";
+
+		try {
+			String idProductor = request.getParameter("idProductor");
+			String idLocalizacion = request.getParameter("idLocalizacion");
+			String idPeriodo = request.getParameter("idPeriodo");
+			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("idLocalizacion", idLocalizacion);
+			request.setAttribute("idPeriodo", idPeriodo);
+
+			WebApplicationContext ctx = getWebApplicationContext();
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
+			request.setAttribute("productores",
+					entidadFachada.getProductoresDTO());
+			request.setAttribute("urlDetalle",
+					"../../declaracionExtraccion.do?metodo=recuperarDeclaracionesParaPagoBoletas");
+			request.setAttribute("titulo","Pago Boletas de Deposito");
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarDeclaracionesParaPagoBoletas(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoRecuperarDeclaracionesParaModificar";
+		WebApplicationContext ctx = getWebApplicationContext();
+
+		IDeclaracionDeExtraccionFachada declaracionDeExtraccionFachada = (IDeclaracionDeExtraccionFachada) ctx
+				.getBean("declaracionDeExtraccionFachada");
+		String idLocalizacion = request.getParameter("idLocalizacion");
+		String idPeriodo = request.getParameter("idPeriodo");
+		String idEntidad = request.getParameter("idEntidad");
+
+		DeclaracionDeExtraccion declaracionDeExtraccion = declaracionDeExtraccionFachada
+				.getDeclaracionDeExtraccion(Long.parseLong(idEntidad),
+						Long.parseLong(idLocalizacion), idPeriodo, true);
+
+		request.setAttribute("declaracion", declaracionDeExtraccion);
+		request.setAttribute("tituloLinkDetalle",
+				"Pagar Boletas");
+		request.setAttribute("fwdDetalle",
+				"/declaracionExtraccion.do?metodo=cargarDeclaracionParaPagoBoletas");
+
+		return mapping.findForward(strForward);
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarDeclaracionParaPagoBoletas(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoCargarDeclaracionParaPagoBoletas";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			/*IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
+
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
+
+			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
+					.getBean("localidadFachada");
+
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
+			request.setAttribute("productores",
+					entidadFachada.getProductoresDTO());
+			request.setAttribute("localidades",
+					localidadFachada.getLocalidadesDTO());*/
+			
+			ITipoProductoFachada tipoProductoFachada = (ITipoProductoFachada) ctx
+					.getBean("tipoProductoFachada");			
+			
+			request.setAttribute("productoTurba",
+					tipoProductoFachada.recuperarTipoProductoDTO(1L));
+
+			DeclaracionDeExtraccionFachada declaracionFachada = (DeclaracionDeExtraccionFachada) ctx
+					.getBean("declaracionDeExtraccionFachada");
+			String id = request.getParameter("id");
+			DeclaracionDeExtraccion declaracion = declaracionFachada
+					.getDeclaracionDeExtraccionById(Long.valueOf(id));
+			request.setAttribute("declaracionDeExtraccion", declaracion);
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}	
 }
