@@ -8,7 +8,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siim.dto.DeclaracionExtraccionDTO;
+import ar.com.siim.negocio.BoletaDeposito;
 import ar.com.siim.negocio.DeclaracionDeExtraccion;
+import ar.com.siim.utils.DateUtils;
 
 public class DeclaracionDeExtraccionDAO extends HibernateDaoSupport {
 
@@ -82,4 +84,17 @@ public class DeclaracionDeExtraccionDAO extends HibernateDaoSupport {
 		}
 		return null;
 	}
+	
+	public String registrarPagoBoletaDeposito(Long idBoleta, String fechaPago) {
+		BoletaDeposito boletaDeposito = (BoletaDeposito) this
+				.getHibernateTemplate().get(BoletaDeposito.class, idBoleta);
+
+		boletaDeposito.setFechaPago(DateUtils.dateFromString(fechaPago,
+				"dd/MM/yyyy"));
+		this.getHibernateTemplate().saveOrUpdate(boletaDeposito);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+
+		return fechaPago;
+	}	
 }

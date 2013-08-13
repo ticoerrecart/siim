@@ -42,8 +42,11 @@
 		<create creator="spring" javascript="CanonMineroFachada">
 			<param name="beanName" value="canonMineroFachada" />
 		</create>
-			<create creator="spring" javascript="PeriodoFachada">
+		<create creator="spring" javascript="PeriodoFachada">
 			<param name="beanName" value="periodoFachada" />
+		</create>
+		<create creator="spring" javascript="DeclaracionDeExtraccionFachada">
+			<param name="beanName" value="declaracionDeExtraccionFachada" />
 		</create>
 		
 	</allow>
