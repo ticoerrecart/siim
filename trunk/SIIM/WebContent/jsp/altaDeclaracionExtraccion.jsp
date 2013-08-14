@@ -23,13 +23,14 @@
 	
 <link rel="stylesheet" href="<html:rewrite page='/css/ui-lightness/jquery-ui-1.8.10.custom.css'/>"
 	type="text/css">
-	
+<link rel="stylesheet" href="<html:rewrite page='/css/main.css'/>"
+	type="text/css">
 
 <script>
 	$(function() {
 		
 		$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#datepicker0" ).datepicker({ dateFormat: 'dd/mm/yy'});
+
 		$( "#datepickerFechaTrim1" ).datepicker({ dateFormat: 'dd/mm/yy'});
 		$( "#datepickerFechaTrim2" ).datepicker({ dateFormat: 'dd/mm/yy'});
 		$( "#datepickerFechaTrim3" ).datepicker({ dateFormat: 'dd/mm/yy'});
@@ -308,7 +309,71 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		actualizarZonasExtraccionCallback(zonas);
 		$("#idZonaExtraccion option[value="+'${declaracionDeExtraccion.localizacion.id}'+"]").attr("selected",true);
 	}
+
+	function expBoletaNro(){
+		var idBoletaExp = $('#expBoleta').val();
+		$('[id="idTrBoleta' + idBoletaExp +'"]').show();
+	}
+
+	function expBoletasPagas(){
+		$('td.verdeExitoLeft').parents('[id^="idTrBoleta"]').show();
+		$('td.rojoAdvertenciaLeft').parents('[id^="idTrBoleta"]').hide();
+	}
+
+	function expBoletasImpagas(){
+		$('td.rojoAdvertenciaLeft').parents('[id^="idTrBoleta"]').show();
+		$('td.verdeExitoLeft').parents('[id^="idTrBoleta"]').hide();	
+	}
+
+	function pintarFilaVale(idTd){
+
+		$('#'+idTd).addClass("verdeSubtitulo");
+		$('#'+idTd).removeClass("grisSubtitulo");
+	}
+
+	function despintarFilaVale(idTd){
+		
+		$('#'+idTd).addClass("grisSubtitulo");
+		$('#'+idTd).removeClass("verdeSubtitulo");
+	}
 	
+	function eliminarCuota(index){
+		alert(index)
+		ind = index - 1;
+		bd = 'boletasDeposito['+ ind +'].eliminada';
+		alert(bd)
+		$("[name='"+bd+"']").val(true);	
+		apagar($('#tBoleta'+index));
+		$("#tdBoleta" + index).addClass("tachado");
+		$("#idBotonEliminarCuota"+index).hide();
+		$("#idBotonRestituirCuota"+index).show();
+		
+	}
+	
+	function restituirCuota(index){
+			ind = index - 1;
+			bd = 'boletasDeposito['+ ind +'].eliminada';
+			$("[name='"+bd+"']").val(false);	
+			encender($('#tBoleta'+index));
+			$("#tdBoleta" + index).removeClass("tachado");
+			$("#idBotonEliminarCuota"+index).show();
+			$("#idBotonRestituirCuota"+index).hide();
+	}
+
+	function apagar(id){
+		$(id).animate(
+			{opacity:"0.3"},
+			{duration:300}
+		  );
+	}
+
+	function encender(id){
+		$(id).animate(
+			{opacity:"1"},
+			{duration:300}
+		  );
+	}
+
 </script>
 
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
@@ -728,6 +793,12 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			</td>
 		</tr>
 
+
+
+
+
+
+
 		<!-- PLAN DE PAGO -->
 
 		<tr>
@@ -746,115 +817,209 @@ function cambiarZonaExtraccionCallback(localizacion) {
 				<br>
 				<table class="cuadrado" align="center" width="90%" cellpadding="2"> 
 					<tr>
-						<td colspan="4" class="azulAjustado"><bean:message key='SIIM.label.BoletasDeposito'/></td>
+						<td colspan="5" class="azulAjustado"><bean:message key='SIIM.label.BoletasDeposito'/></td>
 					</tr>				
-	
 					<tr>
-						<td height="10" colspan="4"></td>
+						<td colspan="5"  class="azulAjustado">
+							<input type="button" class="botonerab" onclick="expBoletasImpagas();" value="Expandir Boletas Impagas">
+							<input type="button" class="botonerab" onclick="expBoletasPagas();" value="Expandir Boletas Pagas">
+							<input type="button" class="botonerab" onclick="expBoletaNro();" value="Expandir Boleta Nro">
+							<input type="text" value="" id="expBoleta">
+						</td>
 					</tr>
 					<tr>
-						<td colspan="4">
-							<c:choose>
-								<c:when test="${modificacion!='S'}">
-									<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
-										<tr>
-											<td colspan="4" class="grisSubtitulo"><bean:message key='SIIM.label.CuotaNro'/>1</td>
-										</tr>
-										<tr>
-											<td height="5" colspan="4"></td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIM.label.NroBoleta'/>
-											</td>
-											<td width="40%" align="left">
-												<input name="boletasDeposito[0].numero" class="botonerab" type="text"
-													size="20" onkeypress="javascript:esNumerico(event);">
-											</td>
-											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIM.label.Productor'/>
-											</td>
-											<td width="40%" align="left">
-												<input id="idProductor0" value="" class="botonerab" type="text" size="40" readonly="readonly">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIM.label.Concepto'/>
-											</td>
-											<td colspan="3" align="left">
-												<input name="boletasDeposito[0].concepto" class="botonerab" type="text" size="90"
-														value="Aforo">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIM.label.Area'/>
-											</td>
-											<td colspan="3" align="left">
-												<input name="boletasDeposito[0].area" class="botonerab" type="text" size="90" 
-														value="Dirección General de Minería">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIM.label.EfectivoCheque'/>
-											</td>
-											<td width="40%" align="left">
-												<input name="boletasDeposito[0].efectivoCheque" class="botonerab" 
-												type="text" size="20" onkeypress="javascript:esAlfaNumerico(event);">
-											</td>
-											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIM.label.Monto$'/>
-											</td>
-											<td width="40%" align="left">
-												<input name="boletasDeposito[0].monto" class="botonerab" type="text"
-													size="20" onkeypress="javascript:esNumericoConDecimal(event);">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaVencimiento'/></td>
-											<td colspan="3" align="left">
-												<input id="datepicker0" type="text" readonly="readonly" class="botonerab" 
-														name='<%="boletasDeposito[0].fechaVencimiento"%>'>
-												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-													align="top" width='17' height='21'>															
-										
-											</td>
-										</tr>
-										<tr>
-											<td height="5" colspan="4"></td>
-										</tr>
-				
-									</table>								
-				
-									<div id="dummy" style="display: none"></div>
-									<div id="divPlanDePagos2"></div>
-									
-									<table  class="cuadradoSinBorde" align="center" width="80%" cellpadding="2">
-										<tr>
-											<td height="5" colspan="4"></td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<input id="idBotonAgregarCuota" type="button" value="+" 
-													onclick="javascript:agregarCuota();">
-												<input id="idBotonRemoverCuota" disabled="disabled" type="button"
-													value="-" onclick="javascript:removerCuota();"></td>
-										</tr>
-										<tr>
-											<td height="5" colspan="4"></td>
-										</tr>
-									</table>
-							
-								</c:when>
+						<td height="10" colspan="5"></td>
+					</tr>
+					<tr>
+						<td colspan="5">
+							<table border="0" class="cuadrado" align="center" width="100%" cellpadding="2">
+								<input type="hidden" name="boletasDeposito[0].eliminada" value="false"/>
+
+								<tr onclick="$('#idTrBoleta${boletas[0].numero}').toggle();">
+									<td colspan="5" class="grisSubtitulo" id="tdBoleta1" 									
+										onmouseover="javascript:pintarFilaVale('tdBoleta1');"
+										onmouseout="javascript:despintarFilaVale('tdBoleta1');">
+										Boleta de Deposito n° ${boletas[0].numero}
+									</td>
+								</tr>
 								
-								<c:otherwise>
-									for each con las $boletas
-								</c:otherwise>
-							</c:choose>
-						
-						
+								<tr id="idTrBoleta${boletas[0].numero}">
+									<td>
+										<table id="tBoleta1" border="0" align="center" width="100%" cellpadding="2">
+											<tr>
+												<td width="10%" class="botoneralNegritaRight">
+													<bean:message key='SIIM.label.NroBoleta'/>
+												</td>
+												<td width="40%" align="left">
+													<c:choose>
+														<c:when test="${boletas[0].fechaPago!=null}">
+															<input name="boletasDeposito[0].numero" class="botonerab" type="text" readonly="readonly"
+																size="20" onkeypress="javascript:esNumerico(event);" value="${boletas[0].numero}">
+														</c:when>
+														<c:otherwise>
+															<input name="boletasDeposito[0].numero" class="botonerab" type="text"
+																size="20" onkeypress="javascript:esNumerico(event);" value="${boletas[0].numero}">
+														</c:otherwise>
+													</c:choose>
+												</td>
+												<td width="10%" class="botoneralNegritaRight">
+													<bean:message key='SIIM.label.Productor'/>
+												</td>
+												<td width="40%" align="left">
+													<input id="idProductor0" value="" class="botonerab" type="text" size="40" readonly="readonly">
+												</td>
+												<td>&nbsp;</td>
+											</tr>
+											<tr>
+												<td width="10%" class="botoneralNegritaRight">
+													<bean:message key='SIIM.label.Concepto'/>
+												</td>
+												<td colspan="4" align="left">
+													<c:choose>
+														<c:when test="${boletas[0].fechaPago!=null}">
+															<input name="boletasDeposito[0].concepto" class="botonerab" type="text" size="90" readonly="readonly"
+																value="Aforo" value="${boletas[0].concepto}">
+														</c:when>
+														<c:otherwise>
+															<input name="boletasDeposito[0].concepto" class="botonerab" type="text" size="90"
+															value="Aforo" value="${boletas[0].concepto}">
+														</c:otherwise>
+													</c:choose>
+												</td>
+											</tr>
+											<tr>
+												<td width="10%" class="botoneralNegritaRight">
+													<bean:message key='SIIM.label.Area'/>
+												</td>
+												<td colspan="4" align="left">
+													<c:choose>
+														<c:when test="${boletas[0].fechaPago!=null}">
+															<input name="boletasDeposito[0].area" class="botonerab" type="text" size="90" readonly="readonly" 
+																	value="Dirección General de Minería" value="${boletas[0].area}">
+														</c:when>
+														<c:otherwise>
+															<input name="boletasDeposito[0].area" class="botonerab" type="text" size="90" 
+																	value="Dirección General de Minería" value="${boletas[0].area}">
+														</c:otherwise>
+													</c:choose>
+												</td>
+											</tr>
+											<tr>
+												<td width="10%" class="botoneralNegritaRight">
+													<bean:message key='SIIM.label.EfectivoCheque'/>
+												</td>
+												<td width="40%" align="left">
+													<c:choose>
+														<c:when test="${boletas[0].fechaPago!=null}">
+															<input name="boletasDeposito[0].efectivoCheque" class="botonerab" readonly="readonly" 
+																type="text" size="20" onkeypress="javascript:esAlfaNumerico(event);" value="${boletas[0].efectivoCheque}">
+														</c:when>
+														<c:otherwise>
+															<input name="boletasDeposito[0].efectivoCheque" class="botonerab" 
+																type="text" size="20" onkeypress="javascript:esAlfaNumerico(event);" value="${boletas[0].efectivoCheque}">
+														</c:otherwise>
+													</c:choose>
+												</td>
+												<td width="10%" class="botoneralNegritaRight">
+													<bean:message key='SIIM.label.Monto$'/>
+												</td>
+												<td width="40%" align="left">
+													<c:choose>
+														<c:when test="${boletas[0].fechaPago!=null}">
+															<input name="boletasDeposito[0].monto" class="botonerab" type="text" readonly="readonly"
+																size="20" onkeypress="javascript:esNumericoConDecimal(event);" value="${boletas[0].monto}">
+														</c:when>
+														<c:otherwise>
+															<input name="boletasDeposito[0].monto" class="botonerab" type="text"
+																size="20" onkeypress="javascript:esNumericoConDecimal(event);" value="${boletas[0].monto}">
+														</c:otherwise>
+													</c:choose>
+												</td>
+												<td>&nbsp;</td>
+											</tr>
+											<tr>
+												<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaVencimiento'/></td>
+												<td align="left">
+													<input id="datepicker0" type="text" readonly="readonly" class="botonerab"
+															name='<%="boletasDeposito[0].fechaVencimiento"%>' value="${boletas[0].fechaVencimientoStr}">
+													<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+														align="top" width='17' height='21'>															
+			
+												</td>
+												<c:if test="${boletas[0].fechaPago==null}">
+													<script>
+														$( "#datepicker0" ).datepicker({ dateFormat: 'dd/mm/yy'});
+													</script>
+												</c:if>
+												
+												<td width="15%" class="botoneralNegritaRight">
+													<bean:message key='SIIM.label.FechaPago'/>
+												</td>
+												<td width="23%" align="left">
+													<input type="text" id="idFechaPago${boletas[0].id}" readonly="readonly" class="botonerab" size="17"
+														   value="<c:out value='${boletas[0].fechaPagoStr}'/>">
+													<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+														 align="top" width='17' height='21'>																						
+												</td>										
+												<c:choose>
+													<c:when test="${boletas[0].fechaPago==null}">
+														<td id="idEstadoBoleta${boletas[0].id}" width="17%" class="rojoAdvertenciaLeft">
+															<bean:message key='SIIM.label.NOPAGADA'/>
+														</td>		
+													</c:when>
+													<c:otherwise>
+														<td id="idEstadoBoleta${boletas[0].id}" width="17%" class="verdeExitoLeft">
+															<bean:message key='SIIM.label.PAGADA'/>
+														</td>
+													</c:otherwise>
+												</c:choose>	
+																	
+											</tr>
+											
+											<tr>
+												<td height="5" colspan="5"></td>
+											</tr>
+														
+										</table><!-- id="tBoleta1" -->
+									</td>
+								</tr>
+								
+										
+							</table>								
+		
+		
+							<table  class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
+								<tr>
+									<td height="5" colspan="5"></td>
+								</tr>
+								<tr>
+									<td colspan="5" class="grisSubtitulo">
+										Agregar Cuotas Nuevas
+									</td>
+								</tr>
+								
+							</table>
+				
+				
+				
+							<div id="dummy" style="display: none"></div>
+							<div id="divPlanDePagos2"></div>
+							
+							<table  class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
+								<tr>
+									<td height="5" colspan="4"></td>
+								</tr>
+								<tr>
+									<td colspan="4">
+										<input id="idBotonAgregarCuota" type="button" value="+" 
+											onclick="javascript:agregarCuota();">
+										<input id="idBotonRemoverCuota" disabled="disabled" type="button"
+											value="-" onclick="javascript:removerCuota();"></td>
+								</tr>
+								<tr>
+									<td height="5" colspan="4"></td>
+								</tr>
+							</table>
 							
 						</td>
 					</tr>
