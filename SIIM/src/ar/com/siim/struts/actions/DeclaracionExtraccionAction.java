@@ -30,6 +30,7 @@ import ar.com.siim.negocio.VolumenDeclaracionDeExtraccion;
 import ar.com.siim.struts.actions.forms.DeclaracionExtraccionForm;
 import ar.com.siim.struts.utils.Validator;
 import ar.com.siim.utils.Constantes;
+import ar.com.siim.utils.DateUtils;
 import ar.com.siim.utils.Fecha;
 import ar.com.siim.utils.MyLogger;
 
@@ -296,7 +297,8 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 						.getTrimestres()) {
 					mapTrimestres.put(trimestre.getNroTrimestre().toString(),
 							trimestre);
-					for (BoletaDeposito boletaDeposito : boletas) {
+					for (BoletaDeposito boletaDeposito : volumen.getBoletas()) {
+						//boletaDeposito.setFechaPago(DateUtils.getTodayDate());
 						boletas.add(boletaDeposito);
 					}
 				}
