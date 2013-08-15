@@ -15,6 +15,8 @@
 <br>
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
+
+		<c:if test="${consulta == null}">
 		<td class="azulAjustado">
 			<c:choose>
 				<c:when test="${titulo != null}">
@@ -25,6 +27,11 @@
 				</c:otherwise>
 			</c:choose>			
 		</td>
+		</c:if>
+		<c:if test="${consulta != null}">
+			<td class="azulAjustado"><bean:message key='SIIM.titulo.ConsultaDeclaracionExtraccion'/></td>
+		</c:if>
+		
 	</tr>
 	<tr>
 		<td height="20"></td>

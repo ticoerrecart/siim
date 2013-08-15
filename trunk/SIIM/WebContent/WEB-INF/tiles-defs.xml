@@ -161,6 +161,12 @@
 		<put name="body" value="/jsp/pagoBoletasDeclaracionExtraccion.jsp" />
 	</definition>
 	
+	<definition name=".consultaDeclaracionExtraccion" extends=".base">
+		<put name="title" value="SIIMs" />
+		<put name="body" value="/jsp/declaracionExtraccion.jsp" />
+	</definition>
+	
+	
 	<!-- FIN DECLARACION EXTRACCION -->
 
 	<!-- ACTA VERIFICACION-->

@@ -199,9 +199,11 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 			String idProductor = request.getParameter("idProductor");
 			String idLocalizacion = request.getParameter("idLocalizacion");
 			String idPeriodo = request.getParameter("idPeriodo");
+			String consulta = request.getParameter("consulta");
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("idLocalizacion", idLocalizacion);
 			request.setAttribute("idPeriodo", idPeriodo);
+			request.setAttribute("consulta", consulta);
 
 			WebApplicationContext ctx = getWebApplicationContext();
 			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
@@ -237,16 +239,23 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		String idLocalizacion = request.getParameter("idLocalizacion");
 		String idPeriodo = request.getParameter("idPeriodo");
 		String idEntidad = request.getParameter("idEntidad");
+		String consulta = request.getParameter("consulta");
 
 		DeclaracionDeExtraccion declaracionDeExtraccion = declaracionDeExtraccionFachada
 				.getDeclaracionDeExtraccion(Long.parseLong(idEntidad),
 						Long.parseLong(idLocalizacion), idPeriodo, true);
-
 		request.setAttribute("declaracion", declaracionDeExtraccion);
-		request.setAttribute("tituloLinkDetalle",
-				"Modificar Declaración de Extracción");
-		request.setAttribute("fwdDetalle",
-				"/declaracionExtraccion.do?metodo=cargarModificacionDeclaracionExtraccion");
+		if (StringUtils.hasText(consulta)){
+			request.setAttribute("tituloLinkDetalle",
+					"Consulta Declaración de Extracción");
+			request.setAttribute("fwdDetalle",
+					"/declaracionExtraccion.do?metodo=cargarConsultaDeclaracionExtraccion");
+		} else {
+			request.setAttribute("tituloLinkDetalle",
+					"Modificar Declaración de Extracción");
+			request.setAttribute("fwdDetalle",
+					"/declaracionExtraccion.do?metodo=cargarModificacionDeclaracionExtraccion");
+		}
 
 		return mapping.findForward(strForward);
 	}
@@ -434,4 +443,56 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		}
 		return mapping.findForward(strForward);
 	}	
+
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarConsultaDeclaracionExtraccion(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoConsultaDeclaracion";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
+
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
+
+			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
+					.getBean("localidadFachada");
+
+			ITipoProductoFachada tipoProductoFachada = (ITipoProductoFachada) ctx
+					.getBean("tipoProductoFachada");
+
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
+			request.setAttribute("productores",
+					entidadFachada.getProductoresDTO());
+			request.setAttribute("localidades",
+					localidadFachada.getLocalidadesDTO());
+			request.setAttribute("productoTurba",
+					tipoProductoFachada.recuperarTipoProductoDTO(1L));
+
+			DeclaracionDeExtraccionFachada declaracionFachada = (DeclaracionDeExtraccionFachada) ctx
+					.getBean("declaracionDeExtraccionFachada");
+			String id = request.getParameter("id");
+			DeclaracionDeExtraccion declaracion = declaracionFachada
+					.getDeclaracionDeExtraccionById(Long.valueOf(id));
+
+			request.setAttribute("declaracion", declaracion);
+			/*
+			 * String msjeExito = request.getParameter("msjeExito"); if
+			 * (msjeExito != null) { request.setAttribute("exitoGrabado",
+			 * "Se ha dado de alta con éxito la Declaración de Extracción"); }
+			 */
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}
+
 }
