@@ -36,6 +36,15 @@ function volverAltaDeclaracionExtraccion(){
 	parent.location = contextRoot() + '/jsp.do?page=.index';		
 }
 
+function volver(){
+	
+	var periodo = $("#idPeriodo").val();
+	var productor = $("#idProductor").val();
+	var localizacion = $("#idLocalizacion").val();
+	
+	parent.location = contextRoot() + '/declaracionExtraccion.do?metodo=cargarProductoresParaModificacionDeDeclaracion&consulta=S&idProductor='+productor+'&idLocalizacion='+localizacion+'&idPeriodo='+periodo;		
+}									
+
 function setValorLocalizacion(valor){
 	$("#idLocalizacion").val(valor);
 }
@@ -221,6 +230,13 @@ function calcularImporteTotal(){
 
 <div id="idDeclaracion">
 
+
+<input id="idProductor" type="hidden" value="${declaracion.entidad.id}">
+<input id="idLocalizacion" type="hidden" value="${declaracion.localizacion.id}">
+<input id="idPeriodo" type="hidden" value="${declaracion.periodo}">
+
+
+
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
 		<tr>
@@ -370,27 +386,18 @@ function calcularImporteTotal(){
 		<!-- Volumenes -->
 		<tr>
 			<td colspan="4" align="left">
-				<div id="e1" style="DISPLAY: ">
-					<label onclick="javascript:exp('1')"> 
-						<img src="../../imagenes/expand.gif" border="0" /> 
-						<U class="azulOpcion">
-							<bean:message key='SIIM.label.Volumenes'/>						
-						</U>
-						<BR>
-					</label>
-				</div>
-				<div id="c1" style="DISPLAY: none">
-					<label onclick="javascript:col('1')"> 
-						<img src="../../imagenes/collapse.gif" border="0" /> 
-						<U class="azulOpcion">
-							<bean:message key='SIIM.label.Volumenes'/>						
-						</U>
-						<BR>
-					</label>
-					<br>
 					<table border="0" class="cuadrado" align="center" width="90%"
 						cellpadding="2" cellspacing="0" id="tablaImportes">
-						
+						<tr>
+							<td width="100%" colspan="7" class="grisSubtituloCenter">
+								<bean:message key='SIIM.label.Volumenes'/>
+							</td>
+						</tr>	
+							<tr>
+							<td width="100%" >
+								&nbsp;
+							</td>
+						</tr>
 						<!-- 1er TRIMESTRE -->
 						<tr>
 							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
@@ -419,7 +426,7 @@ function calcularImporteTotal(){
 								<input readonly="readonly" class="botonerab" type="text" name="trimestres[0].volumenTercerMes" value="${declaracion.getTrimestre(1).volumenTercerMes}" size="15" >		
 							</td>
 							<td>
-								<input readonly="readonly" class="botonerab" type="text" value="${declaracion.getTrimestre(1).volumenTotal}" size="15" >														
+								<input id="idTotal1" readonly="readonly" class="botonerab" type="text" value="${declaracion.getTrimestre(1).volumenTotal}" size="15" >														
 							</td>
 							<td>
 								<input readonly="readonly" class="botonerab"  type="text" value="<fmt:formatDate value="${declaracion.getTrimestre(1).fechaVencimiento}" pattern="dd/MM/yyyy" />" size="14">
@@ -446,23 +453,19 @@ function calcularImporteTotal(){
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[1].volumenPrimerMes" value="${declaracion.getTrimestre(2).volumenPrimerMes}" size="15" >																	
+								<input readonly="readonly" class="botonerab" type="text" name="trimestres[1].volumenPrimerMes" value="${declaracion.getTrimestre(2).volumenPrimerMes}" size="15" >																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[1].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_2">
+								<input readonly="readonly" class="botonerab" type="text" name="trimestres[1].volumenSegundoMes" value="${declaracion.getTrimestre(2).volumenSegundoMes}" size="15" >
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[1].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_3">		
+								<input readonly="readonly" class="botonerab" type="text" name="trimestres[1].volumenTercerMes" value="${declaracion.getTrimestre(2).volumenTercerMes}" size="15" >		
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" id="idTotal2" readonly="readonly">														
+								<input id="idTotal2" readonly="readonly" class="botonerab" type="text" value="${declaracion.getTrimestre(2).volumenTotal}" size="15" >														
 							</td>
 							<td>
-								<input id="datepickerFechaTrim2" name="trimestres[1].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
+								<input readonly="readonly" class="botonerab"  type="text" value="<fmt:formatDate value="${declaracion.getTrimestre(2).fechaVencimiento}" pattern="dd/MM/yyyy" />" size="14">								
 							</td>
 						</tr>						
 						
@@ -485,23 +488,19 @@ function calcularImporteTotal(){
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[2].volumenPrimerMes" value="${declaracion.getTrimestre(3).volumenPrimerMes}" size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_1">																	
+								<input readonly="readonly" class="botonerab" type="text" name="trimestres[2].volumenPrimerMes" value="${declaracion.getTrimestre(3).volumenPrimerMes}" size="15" >																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[2].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_2">
+								<input readonly="readonly" class="botonerab" type="text" name="trimestres[2].volumenSegundoMes" value="${declaracion.getTrimestre(3).volumenSegundoMes}" size="15">
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[2].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_3">		
+								<input readonly="readonly" class="botonerab" type="text" name="trimestres[2].volumenTercerMes" value="${declaracion.getTrimestre(3).volumenTercerMes}" size="15">		
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" id="idTotal3" readonly="readonly">														
+								<input id="idTotal3" readonly="readonly" class="botonerab" type="text" value="${declaracion.getTrimestre(3).volumenTotal}" size="15" >														
 							</td>
 							<td>
-								<input id="datepickerFechaTrim3" name="trimestres[2].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
+								<input readonly="readonly" class="botonerab"  type="text" value="<fmt:formatDate value="${declaracion.getTrimestre(3).fechaVencimiento}" pattern="dd/MM/yyyy" />" size="14">								
 							</td>
 						</tr>						
 												
@@ -524,29 +523,24 @@ function calcularImporteTotal(){
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[3].volumenPrimerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_1">																	
+								<input readonly="readonly" class="botonerab" type="text" name="trimestres[3].volumenPrimerMes" value="${declaracion.getTrimestre(4).volumenPrimerMes}" size="15" >																	
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[3].volumenSegundoMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_2">
+								<input readonly="readonly" class="botonerab" type="text" name="trimestres[3].volumenSegundoMes" value="${declaracion.getTrimestre(4).volumenSegundoMes}" size="15" >
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[3].volumenTercerMes" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_3">		
+								<input readonly="readonly" class="botonerab" type="text" name="trimestres[3].volumenTercerMes" value="${declaracion.getTrimestre(4).volumenTercerMes}" size="15" >
 							</td>
 							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" id="idTotal4" readonly="readonly">														
+								<input id="idTotal4" readonly="readonly" class="botonerab" type="text" value="${declaracion.getTrimestre(4).volumenTotal}" size="15" >														
 							</td>
 							<td>
-								<input id="datepickerFechaTrim4" name="trimestres[3].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
+								<input readonly="readonly" class="botonerab"  type="text" value="<fmt:formatDate value="${declaracion.getTrimestre(4).fechaVencimiento}" pattern="dd/MM/yyyy" />" size="14">								
 							</td>
 						</tr>
 
 					</table>
-
+					
 					<table border="0" class="cuadrado" align="center" width="90%"
 						cellpadding="2" cellspacing="0">
 						<tr>
@@ -587,129 +581,127 @@ function calcularImporteTotal(){
 						</tr>
 					</table>
 
-				</div>
+				
 			</td>
 		</tr>
 
+		<script>
+			calcularImporteTotal();
+		</script>
 		<!-- PLAN DE PAGO -->
 
 		<tr>
-			<td colspan="4" align="left">
-			<div id="e2" style="DISPLAY: ">
-				<label onclick="javascript:exp('2')"> 
-					<img src="../../imagenes/expand.gif" border="0" /> 
-					<U class="azulOpcion"><bean:message key='SIIM.subTitulo.PlanPagos'/></U><BR>
-				</label>
-			</div>
-			<div id="c2" style="DISPLAY: none">
-				<label onclick="javascript:col('2')"> 
-					<img src="../../imagenes/collapse.gif" border="0" /> 
-					<U class="azulOpcion"><bean:message key='SIIM.subTitulo.PlanPagos'/> </U><BR>
-				</label>
-				<br>
+			<td height="10" colspan="4"></td>
+		</tr>	
+		<tr>
+			<td colspan="4">		
 				<table class="cuadrado" align="center" width="90%" cellpadding="2"> 
 					<tr>
-						<td colspan="4" class="azulAjustado"><bean:message key='SIIM.label.BoletasDeposito'/></td>
+						<td colspan="4" class="grisSubtituloCenter"><bean:message key='SIIM.label.BoletasDeposito'/></td>
 					</tr>				
-	
-					<tr>
-						<td height="10" colspan="4"></td>
-					</tr>
-					<tr>
-						<td colspan="4">
-							<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
-								<tr>
-									<td colspan="4" class="grisSubtitulo"><bean:message key='SIIM.label.CuotaNro'/>1</td>
-								</tr>
-								<tr>
-									<td height="5" colspan="4"></td>
-								</tr>
-								<tr>
-									<td width="10%" class="botoneralNegritaRight">
-										<bean:message key='SIIM.label.NroBoleta'/>
-									</td>
-									<td width="40%" align="left">
-										<input name="boletasDeposito[0].numero" class="botonerab" type="text"
-											size="20" onkeypress="javascript:esNumerico(event);">
-									</td>
-									<td width="10%" class="botoneralNegritaRight">
-										<bean:message key='SIIM.label.Productor'/>
-									</td>
-									<td width="40%" align="left">
-										<input id="idProductor0" value="" class="botonerab" type="text" size="40" readonly="readonly">
-									</td>
-								</tr>
-								<tr>
-									<td width="10%" class="botoneralNegritaRight">
-										<bean:message key='SIIM.label.Concepto'/>
-									</td>
-									<td colspan="3" align="left">
-										<input name="boletasDeposito[0].concepto" class="botonerab" type="text" size="90"
-												value="Aforo">
-									</td>
-								</tr>
-								<tr>
-									<td width="10%" class="botoneralNegritaRight">
-										<bean:message key='SIIM.label.Area'/>
-									</td>
-									<td colspan="3" align="left">
-										<input name="boletasDeposito[0].area" class="botonerab" type="text" size="90" 
-												value="Dirección General de Minería">
-									</td>
-								</tr>
-								<tr>
-									<td width="10%" class="botoneralNegritaRight">
-										<bean:message key='SIIM.label.EfectivoCheque'/>
-									</td>
-									<td width="40%" align="left">
-										<input name="boletasDeposito[0].efectivoCheque" class="botonerab" 
-										type="text" size="20" onkeypress="javascript:esAlfaNumerico(event);">
-									</td>
-									<td width="10%" class="botoneralNegritaRight">
-										<bean:message key='SIIM.label.Monto$'/>
-									</td>
-									<td width="40%" align="left">
-										<input name="boletasDeposito[0].monto" class="botonerab" type="text"
-											size="20" onkeypress="javascript:esNumericoConDecimal(event);">
-									</td>
-								</tr>
-								<tr>
-									<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaVencimiento'/></td>
-									<td colspan="3" align="left">
-										<input id="datepicker0" type="text" readonly="readonly" class="botonerab" 
-												name='<%="boletasDeposito[0].fechaVencimiento"%>'>
-										<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-											align="top" width='17' height='21'>															
-								
-									</td>
-								</tr>
-								<tr>
-									<td height="5" colspan="4"></td>
-								</tr>
-		
-							</table>								
-		
-							<div id="dummy" style="display: none"></div>
-							<div id="divPlanDePagos2"></div>
+
+					
 							
-							<table  class="cuadradoSinBorde" align="center" width="80%" cellpadding="2">
-								<tr>
-									<td height="5" colspan="4"></td>
-								</tr>
-								<tr>
-									<td colspan="4">
-										<input id="idBotonAgregarCuota" type="button" value="+" 
-											onclick="javascript:agregarCuota();">
-										<input id="idBotonRemoverCuota" disabled="disabled" type="button"
-											value="-" onclick="javascript:removerCuota();"></td>
-								</tr>
-								<tr>
-									<td height="5" colspan="4"></td>
-								</tr>
-							</table>
-						</td>
+							<c:forEach items="${declaracion.volumenes}" var="volumenTrimestre" varStatus="index">									
+								<c:forEach items="${volumenTrimestre.boletas}" var="boletaDeposito" varStatus="index">
+								
+									<tr>								
+										<td colspan="5" class="grisSubtitulo" id="tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>" >
+											Boleta de Deposito n° <c:out value="${boletaDeposito.numero}"></c:out>
+										</td>
+									</tr>						
+								
+									<tr id="idTrBoleta${boletaDeposito.numero}" style="display: ">
+										<td colspan="4">								
+										
+											<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+												<tr>
+													<td height="5" colspan="5"></td>
+												</tr>
+												<tr>
+													<td width="10%" class="botoneralNegritaRight">
+														<bean:message key='SIIM.label.BoletaDeposito'/>
+													</td>
+													<td width="35%" align="left">
+														<input value="${boletaDeposito.numero}" class="botonerab" type="text"
+															   size="20" readonly="readonly">
+													</td>
+													<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIM.label.RazonSocial'/></td>
+													<td width="40%" align="left" colspan="2">
+														<input value="${declaracion.localizacion.razonSocial}"
+															   class="botonerab" type="text" size="40" readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Concepto'/></td>
+													<td colspan="4" align="left">
+														<input value="${boletaDeposito.concepto}" class="botonerab" type="text" size="94"
+														 	   readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Area'/></td>
+													<td colspan="4" align="left">
+														<input value="${boletaDeposito.area}" class="botonerab" type="text" size="94"
+															   readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.EfectivoCheque'/></td>
+													<td width="35%" align="left">
+														<input value="${boletaDeposito.efectivoCheque}" class="botonerab"
+															   type="text" size="20" readonly="readonly">
+													</td>
+													<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Monto$'/></td>
+													<td width="40%" align="left" colspan="2">
+														<input value="${boletaDeposito.monto}" class="botonerab" type="text"
+															   size="20" readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<td width="10%" class="botoneralNegritaRight">
+														<bean:message key='SIIM.label.FechaVencimiento'/>
+													</td>
+													<td width="35%" align="left">
+														<input type="text" readonly="readonly" class="botonerab" size="17"
+															   value="<c:out value='${boletaDeposito.fechaVencimientoStr}'/>">
+														<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+															 align="top" width='17' height='21'>		
+													</td>
+													<td width="15%" class="botoneralNegritaRight">
+														<bean:message key='SIIM.label.FechaPago'/>
+													</td>
+													<td width="23%" align="left">
+														<input type="text" id="idFechaPago${boletaDeposito.id}" readonly="readonly" class="botonerab" size="17"
+															   value="<c:out value='${boletaDeposito.fechaPagoStr}'/>">
+														<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+															 align="top" width='17' height='21'>																						
+													</td>										
+													<c:choose>
+														<c:when test="${boletaDeposito.fechaPago ==null}">
+															<td id="idEstadoBoleta${boletaDeposito.id}" width="17%" class="rojoAdvertenciaLeft">
+																<bean:message key='SIIM.label.NOPAGADA'/>
+															</td>		
+														</c:when>
+														<c:otherwise>
+															<td id="idEstadoBoleta${boletaDeposito.id}" width="17%" class="verdeExitoLeft">
+																<bean:message key='SIIM.label.PAGADA'/>
+															</td>
+														</c:otherwise>
+													</c:choose>																						
+												</tr>
+												<tr>
+													<td height="5" colspan="5"></td>
+												</tr>
+											</table>
+										</td>
+										
+									</tr>									
+								</c:forEach>	
+							</c:forEach>	
+						</td>	
 					</tr>
-				</table>
+				</table>				
 			</div>
 			</td>
 		</tr>
@@ -717,6 +709,8 @@ function calcularImporteTotal(){
 			<td height="10" colspan="4"></td>
 		</tr>
 	</table>
+	
+	
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
 		<tr>
@@ -724,16 +718,10 @@ function calcularImporteTotal(){
 		</tr>
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Localidad'/></td>
-			<td width="30%" align="left">				
-				<select id="idLocalidad" class="botonerab" name="declaracion.localidad.id">
-					<option value="-1">- Seleccione una Localidad -</option>
-					<c:forEach items="${localidades}" var="localidad">
-						<option value="${localidad.id}">
-							<c:out value="${localidad.nombre}"></c:out>
-						</option>
-					</c:forEach>
-				</select>				
-				
+			<td width="30%" align="left">
+			
+				<input id="supZona" class="botonerab" type="text" size="25" readonly="readonly"
+						value="${declaracion.localidad.nombre}">		
 			</td>
 			<td width="30%" class="botoneralNegritaRight">&nbsp;</td>
 			<td align="left">
@@ -751,9 +739,7 @@ function calcularImporteTotal(){
 		</tr>
 		<tr>
 			<td height="20" colspan="4">
-				<input type="button" value="Aceptar" id="enviar" 
-					class="botonerab" onclick="javascript:submitir();" > 
-				<input type="button" class="botonerab" value="Cancelar" onclick="javascript:volverAltaDeclaracionExtraccion();">
+				<input type="button" class="botonerab" value="Vovler" onclick="javascript:volver();" />
 			</td>
 		</tr>
 		<tr>

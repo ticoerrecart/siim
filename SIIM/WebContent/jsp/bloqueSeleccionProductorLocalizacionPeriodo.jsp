@@ -23,14 +23,14 @@
 		var idLocalizacion = $('#selectLocalizaciones').val();
 		var idPeriodo = $('#selectPeriodo').val();
 		var idEntidad = $('#selectProductores').val();
-
+		var consulta = $('#consulta').val();
 		var forward = $('#paramForward').val();
 		$('#divCargando').show();	
 		$('#divDetalle').html("");
 		$('#errores').html("");
 		
 		if(idLocalizacion != "" && idLocalizacion != "-1"){
-			$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idLocalizacion='+idLocalizacion + '&forward=' + forward + '&idPeriodo=' + idPeriodo + '&idEntidad=' + idEntidad, mostrarDetalleCbk);
+			$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idLocalizacion='+idLocalizacion + '&forward=' + forward + '&idPeriodo=' + idPeriodo + '&idEntidad=' + idEntidad + '&consulta=' + consulta, mostrarDetalleCbk);
 			$('#divDetalle').hide();
 			$('#divDetalle').fadeIn(600);
 				
@@ -86,6 +86,7 @@
 <input id="paramProductor" type="hidden" value="${idProductor}">
 <input id="paramUrlDetalle" type="hidden" value="${urlDetalle}">
 <input id="paramForward" type="hidden" value="${paramForward}">
+<input id="consulta" type="hidden" value="${consulta}">
 <tr>
 	<td>
 		<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2" cellspacing="0">		
