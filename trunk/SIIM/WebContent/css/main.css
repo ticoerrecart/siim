@@ -125,6 +125,15 @@
 	color: black;
 }
 
+.verdeSeleccionFila {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #5FB404;
+	text-align: middle;
+	vertical-align: middle;
+	font-style: normal;
+	color: black;
+}
+
 .teal {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;

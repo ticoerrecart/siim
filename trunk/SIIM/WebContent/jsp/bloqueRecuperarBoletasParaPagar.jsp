@@ -9,7 +9,7 @@
 	}
 </script>
 
-<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2" cellspacing="0">		
+<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2" cellspacing="1">		
 	<c:choose>
 		<c:when test="${canonMinero==null}">
 			<tr>
@@ -20,23 +20,23 @@
 		</c:when>
 		<c:otherwise>
 			<tr>
-				<td class="azulAjustado botoneralNegritaRight">
+				<td class="azulAjustado botoneralNegrita">
 					Hectáreas
 				</td>
-				<td class="azulAjustado botoneralNegritaRight">
+				<td class="azulAjustado botoneralNegrita">
 					Cant Ha x Pertenencia Minera
 				</td>
-				<td class="azulAjustado botoneralNegritaRight">
+				<td class="azulAjustado botoneralNegrita">
 					Canon Minero x Pertenencia
 				</td>
-				<td class="azulAjustado botoneralNegritaRight">
+				<td class="azulAjustado botoneralNegrita">
 					Monto Total
 				</td>
-				<td class="azulAjustado botoneralNegritaRight">
+				<td class="azulAjustado botoneralNegrita">
 					&nbsp;		
 				</td>
 			</tr>
-			<tr>
+			<tr class="par">
 				<td>
 					${canonMinero.hectareas}
 				</td>
