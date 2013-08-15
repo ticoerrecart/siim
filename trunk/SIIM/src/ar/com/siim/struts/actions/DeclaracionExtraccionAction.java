@@ -30,7 +30,6 @@ import ar.com.siim.negocio.VolumenDeclaracionDeExtraccion;
 import ar.com.siim.struts.actions.forms.DeclaracionExtraccionForm;
 import ar.com.siim.struts.utils.Validator;
 import ar.com.siim.utils.Constantes;
-import ar.com.siim.utils.DateUtils;
 import ar.com.siim.utils.Fecha;
 import ar.com.siim.utils.MyLogger;
 
@@ -244,6 +243,7 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		DeclaracionDeExtraccion declaracionDeExtraccion = declaracionDeExtraccionFachada
 				.getDeclaracionDeExtraccion(Long.parseLong(idEntidad),
 						Long.parseLong(idLocalizacion), idPeriodo, true);
+
 		request.setAttribute("declaracion", declaracionDeExtraccion);
 		if (StringUtils.hasText(consulta)){
 			request.setAttribute("tituloLinkDetalle",
@@ -307,7 +307,7 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 					mapTrimestres.put(trimestre.getNroTrimestre().toString(),
 							trimestre);
 					for (BoletaDeposito boletaDeposito : volumen.getBoletas()) {
-						//boletaDeposito.setFechaPago(DateUtils.getTodayDate());
+						// boletaDeposito.setFechaPago(DateUtils.getTodayDate());
 						boletas.add(boletaDeposito);
 					}
 				}
@@ -331,6 +331,7 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		}
 		return mapping.findForward(strForward);
 	}
+
 	// secuencia de llamados
 	// 1-cargarProductoresParaPagoBoletas
 	// 2-recuperarDeclaracionesParaPagoBoletas
@@ -361,16 +362,16 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 					entidadFachada.getProductoresDTO());
 			request.setAttribute("urlDetalle",
 					"../../declaracionExtraccion.do?metodo=recuperarDeclaracionesParaPagoBoletas");
-			request.setAttribute("titulo","Pago Boletas de Deposito");
-			
+			request.setAttribute("titulo", "Pago Boletas de Deposito");
+
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
-	}	
-	
+	}
+
 	@SuppressWarnings("unchecked")
 	public ActionForward recuperarDeclaracionesParaPagoBoletas(
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -390,14 +391,13 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 						Long.parseLong(idLocalizacion), idPeriodo, true);
 
 		request.setAttribute("declaracion", declaracionDeExtraccion);
-		request.setAttribute("tituloLinkDetalle",
-				"Pagar Boletas");
+		request.setAttribute("tituloLinkDetalle", "Pagar Boletas");
 		request.setAttribute("fwdDetalle",
 				"/declaracionExtraccion.do?metodo=cargarDeclaracionParaPagoBoletas");
 
 		return mapping.findForward(strForward);
-	}	
-	
+	}
+
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarDeclaracionParaPagoBoletas(
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -408,24 +408,27 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
 
-			/*IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
-					.getBean("periodoFachada");
+			/*
+			 * IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+			 * .getBean("periodoFachada");
+			 * 
+			 * IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+			 * .getBean("entidadFachada");
+			 * 
+			 * ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
+			 * .getBean("localidadFachada");
+			 * 
+			 * request.setAttribute("periodos",
+			 * periodoFachada.getPeriodosDTO());
+			 * request.setAttribute("productores",
+			 * entidadFachada.getProductoresDTO());
+			 * request.setAttribute("localidades",
+			 * localidadFachada.getLocalidadesDTO());
+			 */
 
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
-					.getBean("entidadFachada");
-
-			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
-					.getBean("localidadFachada");
-
-			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
-			request.setAttribute("productores",
-					entidadFachada.getProductoresDTO());
-			request.setAttribute("localidades",
-					localidadFachada.getLocalidadesDTO());*/
-			
 			ITipoProductoFachada tipoProductoFachada = (ITipoProductoFachada) ctx
-					.getBean("tipoProductoFachada");			
-			
+					.getBean("tipoProductoFachada");
+
 			request.setAttribute("productoTurba",
 					tipoProductoFachada.recuperarTipoProductoDTO(1L));
 
@@ -442,7 +445,16 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
-	}	
+	}
+
+	@SuppressWarnings("unchecked")
+	public ActionForward modificacionDeclaracionExtraccion(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String strForward = "exitoModificacionDeclaracionExtraccion";
+
+		return mapping.findForward(strForward);
+	}
 
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarConsultaDeclaracionExtraccion(
@@ -494,5 +506,6 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		}
 		return mapping.findForward(strForward);
 	}
+
 
 }
