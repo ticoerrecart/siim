@@ -9,20 +9,24 @@
 	
 %>
 
-
 <table id="idTable<%=i%>" border="0" class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
-	<tr id="idTrCuotaEspacio<%=i%>">
+	<input type="hidden" name="boletasDeposito[<%=i%>].eliminada" value="false"/>
+	
+	<tr id="idTrBoletaEspacio<%=i%>">
 		<td height="5" colspan="4"></td>
 	</tr>
-	<tr id="idTrCuota<%=i%>">
-		<td colspan="4">
-			<table border="0" class="cuadrado" align="center" width="100%" cellpadding="2">
-				<tr>
-					<td colspan="4" class="grisSubtitulo">Boleta de Deposito n° <%=i%></td>
-				</tr>
-				<tr>
-					<td height="5" colspan="4"></td>
-				</tr>
+	
+	<tr onclick="$('#idTrBoleta<%=i%>').toggle();">
+		<td colspan="5" class="grisSubtitulo" id="tdBoleta<%=i%>" 									
+			onmouseover="javascript:pintarFilaVale('tdBoleta<%=i%>');"
+			onmouseout="javascript:despintarFilaVale('tdBoleta<%=i%>');">
+			Boleta de Deposito n° <%=i%>
+		</td>
+	</tr>
+	
+	<tr id="idTrBoleta<%=i%>">
+		<td>
+			<table id="tBoleta<%=i%>" border="0" align="center" width="100%" cellpadding="2">
 				<tr>
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.NroBoleta'/></td>
 					<td width="40%" align="left">

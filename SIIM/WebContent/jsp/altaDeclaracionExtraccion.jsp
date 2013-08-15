@@ -269,15 +269,26 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		$("#datepickerFechaTrim4").val(periodo.fechaVencimientoCuartoTrimestre);
 	}
 	
+	/*function setDisable(){
+		$("#idProductor").attr("disabled","disabled");
+		$("#periodo").attr("disabled","disabled");
+		$("#idZonaExtraccion").attr("disabled","disabled");
+	}*/
+
+	/*function setEnable(){
+		$("#idProductor").removeAttr("disabled");
+		$("#periodo").removeAttr("disabled");
+		$("#idZonaExtraccion").removeAttr("disabled");
+	}*/
+
 	function setModificacion(){
 		if('${modificacion}'=="S"){
-			$("#idProductor").attr("disabled","disabled");
-			$("#periodo").attr("disabled","disabled");
-			$("#idZonaExtraccion").attr("disabled","disabled");
+			//setDisable();
 			for(var i=1;i<5;i++){
 				calcularVolumenTotalTrimestre(i);
 			}
 
+			//seteo readonly los trimestres que ya estén cargados
 			for(var i=0;i<4;i++){
 				if ($('[name="trimestres[' +i+ '].volumenPrimerMes"]').val()>0
 					|| $('[name="trimestres[' +i+ '].volumenSegundoMes"]').val()>0
@@ -288,13 +299,13 @@ function cambiarZonaExtraccionCallback(localizacion) {
 				}
 				
 			}
-			cambiarProductorModificacion();
-			cambioPeriodo();
+			//cambiarProductorModificacion();
+			//cambioPeriodo();
 
 		}
 	}
 	
-	function cambiarProductorModificacion(){
+	/*function cambiarProductorModificacion(){
 
 		var idProductor = $('#idProductor').val();
 
@@ -303,12 +314,12 @@ function cambiarZonaExtraccionCallback(localizacion) {
 
 			LocalizacionFachada.getLocalizacionesPorProductorDTO(idProductor,actualizarZonasExtraccionModificacionCallback);
 		}
-	}
+	}*/
 	
-	function actualizarZonasExtraccionModificacionCallback(zonas){
+	/*function actualizarZonasExtraccionModificacionCallback(zonas){
 		actualizarZonasExtraccionCallback(zonas);
 		$("#idZonaExtraccion option[value="+'${declaracionDeExtraccion.localizacion.id}'+"]").attr("selected",true);
-	}
+	}*/
 
 	function expBoletaNro(){
 		var idBoletaExp = $('#expBoleta').val();
@@ -338,10 +349,8 @@ function cambiarZonaExtraccionCallback(localizacion) {
 	}
 	
 	function eliminarCuota(index){
-		alert(index)
 		ind = index - 1;
 		bd = 'boletasDeposito['+ ind +'].eliminada';
-		alert(bd)
 		$("[name='"+bd+"']").val(true);	
 		apagar($('#tBoleta'+index));
 		$("#tdBoleta" + index).addClass("tachado");
@@ -383,7 +392,8 @@ function cambiarZonaExtraccionCallback(localizacion) {
 
 <div id="idDeclaracion">
 <html:form action="declaracionExtraccion" styleId="declaracionExtraccionForm">
-	<html:hidden property="metodo" value="altaDeclaracionExtraccion" />
+	<html:hidden property="metodo" value="modificacionDeclaracionExtraccion" />
+	<input type="hidden" name="declaracion.id" value="${declaracionDeExtraccion.id}" />
 
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
@@ -404,23 +414,34 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
 			<td align="left">
-				<select id="idProductor" name="declaracion.productor.id" class="botonerab" onchange="cambiarProductor();">
-					<option value="-1">- Seleccione un Productor -</option>
-					<c:forEach items="${productores}" var="prod">
-						<c:choose>
-							<c:when test="${prod.id==declaracionDeExtraccion.entidad.id}">
-								<option value="${prod.id}" selected="selected">
-									<c:out value="${prod.nombre}"/>
-								</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${prod.id}">
-									<c:out value="${prod.nombre}"/>
-								</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
+				<c:choose>
+					<c:when test="${modificacion!='S'}">
+						<select id="idProductor" name="declaracion.productor.id" class="botonerab" onchange="cambiarProductor();">
+							<option value="-1">- Seleccione un Productor -</option>
+							<c:forEach items="${productores}" var="prod">
+								<c:choose>
+									<c:when test="${prod.id==declaracionDeExtraccion.entidad.id}">
+										<option value="${prod.id}" selected="selected">
+											<c:out value="${prod.nombre}"/>
+										</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${prod.id}">
+											<c:out value="${prod.nombre}"/>
+										</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					
+					</c:when>
+
+					<c:otherwise>
+						<input type="hidden" id="idProductor" name="declaracion.productor.id" value="${declaracionDeExtraccion.entidad.id}">
+						<input type="text" value="${declaracionDeExtraccion.entidad.nombre}" class="botonerab" readonly="readonly">
+					</c:otherwise>
+					
+				</c:choose>
 			</td>
 		</tr>
 
@@ -432,22 +453,32 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.AnioDeclaracion'/></td>
 			<td align="left">
-					<select id="periodo" name="declaracion.periodo" class="botonerab" onchange="cambioPeriodo();">
-						<c:forEach items="${periodos}" var="per">
-							<c:choose>
-								<c:when test="${per.periodo==declaracionDeExtraccion.periodo}">
-									<option value="${per.periodo}" selected="selected">
-										<c:out value="${per.periodo}"/>
-									</option>
-								</c:when>
-								<c:otherwise>
-									<option value="${per.periodo}">
-										<c:out value="${per.periodo}"/>
-									</option>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select>
+				<c:choose>
+					<c:when test="${modificacion!='S'}">
+						<select id="periodo" name="declaracion.periodo" class="botonerab" onchange="cambioPeriodo();">
+							<c:forEach items="${periodos}" var="per">
+								<c:choose>
+									<c:when test="${per.periodo==declaracionDeExtraccion.periodo}">
+										<option value="${per.periodo}" selected="selected">
+											<c:out value="${per.periodo}"/>
+										</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${per.periodo}">
+											<c:out value="${per.periodo}"/>
+										</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</c:when>
+					
+					<c:otherwise>
+						<input type="hidden" id="periodo" name="declaracion.periodo" value="${declaracionDeExtraccion.periodo}">
+						<input type="text" value="${declaracionDeExtraccion.periodo}" class="botonerab" readonly="readonly">
+					</c:otherwise>
+					
+				</c:choose>
 			</td>
 		</tr>
 		<tr>
@@ -523,9 +554,18 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
-							<select id="idZonaExtraccion" name="declaracion.localizacion.id" class="botonerab" disabled="disabled" onchange="cambiarZonaExtraccion();">
-								<option value="-1">--Seleccione una Zona--</option>
-							</select>					
+							<c:choose>
+								<c:when test="${modificacion!='S'}">
+									<select id="idZonaExtraccion" name="declaracion.localizacion.id" class="botonerab" disabled="disabled" onchange="cambiarZonaExtraccion();">
+										<option value="-1">--Seleccione una Zona--</option>
+									</select>
+								</c:when>
+								
+								<c:otherwise>
+									<input type="hidden" id="idZonaExtraccion" name="declaracion.localizacion.id" value="${declaracionDeExtraccion.localizacion.id}">
+									<input type="text" value="${declaracionDeExtraccion.localizacion.razonSocial}" class="botonerab">
+								</c:otherwise>
+							</c:choose>
 						</td>						
 					</tr>	
 					<tr>
@@ -534,7 +574,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
-							<input id="domZona" class="botonerab" type="text" size="25" readonly="readonly">
+							<input id="domZona" class="botonerab" type="text" size="25" readonly="readonly" value="${declaracionDeExtraccion.localizacion.domicilio}">
 						</td>						
 					</tr>
 					<tr>
@@ -543,7 +583,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
-							<input id="supZona" class="botonerab" type="text" size="25" readonly="readonly">
+							<input id="supZona" class="botonerab" type="text" size="25" readonly="readonly" value="${declaracionDeExtraccion.localizacion.superficie}">
 						</td>						
 					</tr>																					
 					<tr>
