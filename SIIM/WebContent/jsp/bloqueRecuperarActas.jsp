@@ -8,9 +8,24 @@
 	function recuperarActa(id){
 		parent.location=contextRoot() + '${fwdDetalle}' + '&id=' + id;
 	}
+
+	var clase;
+	function pintarFila(idTr){
+		
+		clase = $('#'+idTr).attr("class");
+		$('#'+idTr).removeClass(clase);
+		$('#'+idTr).addClass("verdeSeleccionFila");		
+	}
+
+	function despintarFila(idTr){
+		
+		$('#'+idTr).addClass(clase);
+		$('#'+idTr).removeClass("verdeSeleccionFila");
+	}
+	
 </script>
 
-<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2" cellspacing="0">		
+<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="1">		
 	<c:choose>
 		<c:when test="${empty actas}">
 			<tr>
@@ -43,9 +58,12 @@
 								
 					</td>
 				</tr>
-			<c:forEach items="${actas}" var="acta">
-				
-				<tr>
+			<%String clase=""; %>	
+			<c:forEach items="${actas}" var="acta" varStatus="index">
+				<%clase=(clase.equals("")?"par":""); %>
+				<tr class="<%=clase%>" onmouseover="javascript:pintarFila('idTr<c:out value='${index.index}'></c:out>');"
+					onmouseout="javascript:despintarFila('idTr<c:out value='${index.index}'></c:out>');"
+					id="idTr<c:out value='${index.index}'></c:out>">
 					<td>
 						${acta.numero}
 					</td>

@@ -20,23 +20,23 @@
 		</c:when>
 		<c:otherwise>
 			<tr>
-				<td class="grisSubtituloCenter">
+				<td class="azulAjustado botoneralNegrita">
 					Número
 				</td>
-				<td class="grisSubtituloCenter">
+				<td class="azulAjustado botoneralNegrita">
 					Fecha
 				</td>
-				<td class="grisSubtituloCenter">
+				<td class="azulAjustado botoneralNegrita">
 					Localidad
 				</td>
-				<td class="grisSubtituloCenter">
+				<td class="azulAjustado botoneralNegrita">
 					Monto Total
 				</td>
-				<td class="grisSubtituloCenter">
+				<td class="azulAjustado botoneralNegrita">
 					&nbsp;		
 				</td>
 			</tr>
-			<tr>
+			<tr class="par">
 				<td class="botonerab">
 					${declaracion.numero}
 				</td>

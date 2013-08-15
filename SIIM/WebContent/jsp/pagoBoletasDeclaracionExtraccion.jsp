@@ -562,14 +562,7 @@ function cerrarVentanaPagoBoleta(){
 			</td>
 		</tr>
 
-
-
-
-
-
-
 		<!-- PLAN DE PAGO -->
-
 		<tr>
 			<td colspan="4" align="left">
 			<div id="e2" style="DISPLAY: ">
@@ -717,8 +710,7 @@ function cerrarVentanaPagoBoleta(){
 	</table>
 
 
-	<table border="0" class="cuadrado" align="center" width="80%"
-		cellpadding="2">
+	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 		<tr>
 			<td height="10" colspan="4"></td>
 		</tr>
@@ -745,7 +737,7 @@ function cerrarVentanaPagoBoleta(){
 		</tr>
 		<tr>
 			<td height="20" colspan="4">
-				<input type="button" class="botonerab" value="Vovler" onclick="javascript:volver();">
+				<input type="button" class="botonerab" value="Volver" onclick="javascript:volver();">
 			</td>
 		</tr>
 		<tr>
