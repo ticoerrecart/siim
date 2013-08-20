@@ -1,6 +1,5 @@
 package ar.com.siim.providers;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +44,6 @@ import ar.com.siim.negocio.TipoProducto;
 import ar.com.siim.negocio.Transporte;
 import ar.com.siim.negocio.TrimestreDeclaracionDeExtraccion;
 import ar.com.siim.negocio.Usuario;
-import ar.com.siim.negocio.VolumenDeclaracionDeExtraccion;
 import ar.com.siim.utils.Fecha;
 
 public abstract class ProviderDominio {
@@ -220,8 +218,8 @@ public abstract class ProviderDominio {
 		eia.setObservaciones(eiaDTO.getObservaciones());
 		eia.setVigente(eiaDTO.isVigente());
 		eia.setFechaAlta(Fecha.stringAAAAMMDDHHMMSSToDateSlash(eiaDTO
-											.getFechaAlta()));
-		
+				.getFechaAlta()));
+
 		return eia;
 	}
 
@@ -296,29 +294,32 @@ public abstract class ProviderDominio {
 		acta.setDestino(destino);
 		acta.setOficinaMinera(oficinaMinera);
 		acta.setProductor(productor);
-		
-		List<OperacionActaVerificacion> operaciones= new ArrayList<OperacionActaVerificacion>();
-		for (OperacionActaVerificacionDTO operacionActaVerificacionDTO : actaDTO.getOperaciones()) {
-			
-			operaciones.add(ProviderDominio.getOperacionActaVerificacion(operacionActaVerificacionDTO, acta, usuario)); 
+
+		List<OperacionActaVerificacion> operaciones = new ArrayList<OperacionActaVerificacion>();
+		for (OperacionActaVerificacionDTO operacionActaVerificacionDTO : actaDTO
+				.getOperaciones()) {
+
+			operaciones.add(ProviderDominio.getOperacionActaVerificacion(
+					operacionActaVerificacionDTO, acta, usuario));
 		}
-		acta.setOperaciones(operaciones);		
-		
+		acta.setOperaciones(operaciones);
+
 		return acta;
 	}
 
-	public static OperacionActaVerificacion getOperacionActaVerificacion(OperacionActaVerificacionDTO operacionDTO,
-																	ActaDeVerificacion acta, Usuario usuario)
-	{
+	public static OperacionActaVerificacion getOperacionActaVerificacion(
+			OperacionActaVerificacionDTO operacionDTO, ActaDeVerificacion acta,
+			Usuario usuario) {
 		OperacionActaVerificacion operacion = new OperacionActaVerificacion();
-		operacion.setFecha(Fecha.stringAAAAMMDDHHMMSSToDateSlash(operacionDTO.getFecha()));
+		operacion.setFecha(Fecha.stringAAAAMMDDHHMMSSToDateSlash(operacionDTO
+				.getFecha()));
 		operacion.setActaVerificacion(acta);
 		operacion.setTipoOperacion(operacionDTO.getTipoOperacion());
 		operacion.setUsuario(usuario);
-		
+
 		return operacion;
-	}	
-	
+	}
+
 	private static Transporte getTransporte(TransporteDTO transporteDTO) {
 		Transporte transporte = new Transporte();
 		try {
@@ -379,10 +380,33 @@ public abstract class ProviderDominio {
 	}
 
 	public static BoletaDeposito getBoletaDeposito(BoletaDepositoDTO boletaDTO,
-			VolumenDeclaracionDeExtraccion volumen) {
+			DeclaracionDeExtraccion declaracionDeExtraccion) {
 		BoletaDeposito boleta = new BoletaDeposito();
-		boleta.setVolumenDeclaracionDeExtraccion(volumen);
+		boleta.setDeclaracionDeExtraccion(declaracionDeExtraccion);
 		boleta.setAnulado(boletaDTO.getAnulado());
+		boleta.setArea(boletaDTO.getArea());
+		// boleta.setCanonMinero(canonMinero);
+		boleta.setConcepto(boletaDTO.getConcepto());
+		boleta.setEfectivoCheque(boletaDTO.getEfectivoCheque());
+		if (boletaDTO.getFechaPago() != null) {
+			boleta.setFechaPago(Fecha.stringDDMMAAAAToUtilDate(boletaDTO
+					.getFechaPago()));
+		}
+
+		boleta.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(boletaDTO
+				.getFechaVencimiento()));
+		boleta.setMonto(boletaDTO.getMonto());
+		boleta.setNumero(boletaDTO.getNumero());
+		return boleta;
+	}
+
+	public static BoletaDeposito getBoletaDeposito(
+			DeclaracionDeExtraccion declaracionDeExtraccion,
+			BoletaDepositoDTO boletaDTO) {
+		BoletaDeposito boleta = new BoletaDeposito();
+
+		boleta.setDeclaracionDeExtraccion(declaracionDeExtraccion);
+		// boleta.setAnulado(boletaDTO.getAnulado());
 		boleta.setArea(boletaDTO.getArea());
 		// boleta.setCanonMinero(canonMinero);
 		boleta.setConcepto(boletaDTO.getConcepto());
@@ -401,15 +425,16 @@ public abstract class ProviderDominio {
 
 	public static TrimestreDeclaracionDeExtraccion getTrimestreDeclaracionDeExtraccion(
 			TrimestreDeclaracionDeExtraccionDTO trimestreDTO,
-			TipoProducto tipoProducto, VolumenDeclaracionDeExtraccion volumen) {
+			TipoProducto tipoProducto,
+			DeclaracionDeExtraccion declaracionDeExtraccion) {
 		TrimestreDeclaracionDeExtraccion trimestre = new TrimestreDeclaracionDeExtraccion();
-		trimestre.setVolumenDeclaracionDeExtraccion(volumen);
+		trimestre.setDeclaracionDeExtraccion(declaracionDeExtraccion);
 		if (trimestreDTO.getFechaVencimiento() != null) {
 			trimestre.setFechaVencimiento(Fecha
 					.stringDDMMAAAAToUtilDate(trimestreDTO
 							.getFechaVencimiento()));
 		}
-
+		trimestre.setFecha(Fecha.getFechaHoy());
 		trimestre.setNroTrimestre(trimestreDTO.getNroTrimestre());
 		trimestre.setTipoProducto(tipoProducto);
 		trimestre.setVolumenPrimerMes(trimestreDTO.getVolumenPrimerMes());
@@ -426,10 +451,6 @@ public abstract class ProviderDominio {
 			TipoProducto tipoProducto, Usuario usuario) {
 
 		DeclaracionDeExtraccion declaracionDeExtraccion = new DeclaracionDeExtraccion();
-		VolumenDeclaracionDeExtraccion volumen = new VolumenDeclaracionDeExtraccion();
-		volumen.setDeclaracionDeExtraccion(declaracionDeExtraccion);
-		volumen.setFecha(Fecha.getFechaHoy());
-		declaracionDeExtraccion.addVolumenDeclaracionDeExtraccion(volumen);
 
 		declaracionDeExtraccion.setAnulado(declaracionExtraccionDTO
 				.getAnulado());
@@ -443,43 +464,46 @@ public abstract class ProviderDominio {
 		declaracionDeExtraccion.setPeriodo(declaracionExtraccionDTO
 				.getPeriodo());
 
-		List<BoletaDeposito> boletas = new ArrayList<BoletaDeposito>();
+		// List<BoletaDeposito> boletas = new ArrayList<BoletaDeposito>();
 		for (BoletaDepositoDTO boletaDepositoDTO : boletasDTO) {
-			boletas.add(getBoletaDeposito(boletaDepositoDTO, volumen));
+			declaracionDeExtraccion.addBoleta(getBoletaDeposito(
+					boletaDepositoDTO, declaracionDeExtraccion));
 		}
 
-		List<TrimestreDeclaracionDeExtraccion> trimestres = new ArrayList<TrimestreDeclaracionDeExtraccion>();
+		// List<TrimestreDeclaracionDeExtraccion> trimestres = new
+		// ArrayList<TrimestreDeclaracionDeExtraccion>();
 		for (TrimestreDeclaracionDeExtraccionDTO trimestreDTO : trimestresDTO) {
 			if (!trimestreDTO.esNulo()) {
-				trimestres.add(getTrimestreDeclaracionDeExtraccion(
-						trimestreDTO, tipoProducto, volumen));
+				declaracionDeExtraccion
+						.addTrimestre(getTrimestreDeclaracionDeExtraccion(
+								trimestreDTO, tipoProducto,
+								declaracionDeExtraccion));
 			}
 		}
 
-		volumen.addBoletaDeposito(boletas);
-		volumen.addTrimestreDeclaracionDeExtraccion(trimestres);
+		List<OperacionDeclaracionExtraccion> operaciones = new ArrayList<OperacionDeclaracionExtraccion>();
+		for (OperacionDeclaracionExtraccionDTO operacionDeclaracionExtraccionDTO : declaracionExtraccionDTO
+				.getOperaciones()) {
 
-		List<OperacionDeclaracionExtraccion> operaciones= new ArrayList<OperacionDeclaracionExtraccion>();
-		for (OperacionDeclaracionExtraccionDTO operacionDeclaracionExtraccionDTO : declaracionExtraccionDTO.getOperaciones()) {
-			
-			operaciones.add(ProviderDominio.getOperacionDeclaracionExtraccion(operacionDeclaracionExtraccionDTO, 
-																		   declaracionDeExtraccion, usuario)); 
+			operaciones.add(ProviderDominio.getOperacionDeclaracionExtraccion(
+					operacionDeclaracionExtraccionDTO, declaracionDeExtraccion,
+					usuario));
 		}
-		declaracionDeExtraccion.setOperaciones(operaciones);		
-		
+		declaracionDeExtraccion.setOperaciones(operaciones);
+
 		return declaracionDeExtraccion;
 	}
-	
+
 	public static OperacionDeclaracionExtraccion getOperacionDeclaracionExtraccion(
-													OperacionDeclaracionExtraccionDTO operacionDTO,
-													DeclaracionDeExtraccion declaracion, Usuario usuario)
-	{
+			OperacionDeclaracionExtraccionDTO operacionDTO,
+			DeclaracionDeExtraccion declaracion, Usuario usuario) {
 		OperacionDeclaracionExtraccion operacion = new OperacionDeclaracionExtraccion();
-		operacion.setFecha(Fecha.stringAAAAMMDDHHMMSSToDateSlash(operacionDTO.getFecha()));
+		operacion.setFecha(Fecha.stringAAAAMMDDHHMMSSToDateSlash(operacionDTO
+				.getFecha()));
 		operacion.setDeclaracion(declaracion);
 		operacion.setTipoOperacion(operacionDTO.getTipoOperacion());
 		operacion.setUsuario(usuario);
-		
+
 		return operacion;
-	}		
+	}
 }

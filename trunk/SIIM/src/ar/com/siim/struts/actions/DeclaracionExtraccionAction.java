@@ -1,8 +1,6 @@
 package ar.com.siim.struts.actions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +21,8 @@ import ar.com.siim.fachada.IEntidadFachada;
 import ar.com.siim.fachada.ILocalidadFachada;
 import ar.com.siim.fachada.IPeriodoFachada;
 import ar.com.siim.fachada.ITipoProductoFachada;
-import ar.com.siim.negocio.BoletaDeposito;
 import ar.com.siim.negocio.DeclaracionDeExtraccion;
 import ar.com.siim.negocio.TrimestreDeclaracionDeExtraccion;
-import ar.com.siim.negocio.VolumenDeclaracionDeExtraccion;
 import ar.com.siim.struts.actions.forms.DeclaracionExtraccionForm;
 import ar.com.siim.struts.utils.Validator;
 import ar.com.siim.utils.Constantes;
@@ -71,6 +67,7 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 						"Se ha dado de alta con éxito la Declaración de Extracción");
 			}
 
+			request.setAttribute("metodo", "altaDeclaracionExtraccion");
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
@@ -245,7 +242,7 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 						Long.parseLong(idLocalizacion), idPeriodo, true);
 
 		request.setAttribute("declaracion", declaracionDeExtraccion);
-		if (StringUtils.hasText(consulta)){
+		if (StringUtils.hasText(consulta)) {
 			request.setAttribute("tituloLinkDetalle",
 					"Consulta Declaración de Extracción");
 			request.setAttribute("fwdDetalle",
@@ -299,25 +296,18 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 			request.setAttribute("declaracionDeExtraccion", declaracion);
 
 			Map<String, TrimestreDeclaracionDeExtraccion> mapTrimestres = new HashMap<String, TrimestreDeclaracionDeExtraccion>();
-			List<BoletaDeposito> boletas = new ArrayList<BoletaDeposito>();
-			for (VolumenDeclaracionDeExtraccion volumen : declaracion
-					.getVolumenes()) {
-				for (TrimestreDeclaracionDeExtraccion trimestre : volumen
-						.getTrimestres()) {
-					mapTrimestres.put(trimestre.getNroTrimestre().toString(),
-							trimestre);
-					for (BoletaDeposito boletaDeposito : volumen.getBoletas()) {
-						// boletaDeposito.setFechaPago(DateUtils.getTodayDate());
-						boletas.add(boletaDeposito);
-					}
-				}
-
+			for (TrimestreDeclaracionDeExtraccion trimestre : declaracion
+					.getTrimestres()) {
+				mapTrimestres.put(trimestre.getNroTrimestre().toString(),
+						trimestre);
 			}
 
 			request.setAttribute("trimestres", mapTrimestres);
-			request.setAttribute("boletas", boletas);
+			request.setAttribute("boletas", declaracion.getBoletas());
 
 			request.setAttribute("modificacion", "S");
+			request.setAttribute("metodo", "modificacionDeclaracionExtraccion");
+
 			/*
 			 * String msjeExito = request.getParameter("msjeExito"); if
 			 * (msjeExito != null) { request.setAttribute("exitoGrabado",
@@ -506,6 +496,5 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		}
 		return mapping.findForward(strForward);
 	}
-
 
 }
