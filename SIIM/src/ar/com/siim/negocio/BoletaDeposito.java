@@ -57,8 +57,8 @@ public class BoletaDeposito {
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "volumenDeclaracionDeExtraccion_fk")
-	private VolumenDeclaracionDeExtraccion volumenDeclaracionDeExtraccion;
+	@JoinColumn(name = "declaracionDeExtraccion_fk")
+	private DeclaracionDeExtraccion declaracionDeExtraccion;
 
 	public String getConcepto() {
 		return concepto;
@@ -180,13 +180,12 @@ public class BoletaDeposito {
 		this.canonMinero = canonMinero;
 	}
 
-	public VolumenDeclaracionDeExtraccion getVolumenDeclaracionDeExtraccion() {
-		return volumenDeclaracionDeExtraccion;
+	public DeclaracionDeExtraccion getDeclaracionDeExtraccion() {
+		return declaracionDeExtraccion;
 	}
 
-	public void setVolumenDeclaracionDeExtraccion(
-			VolumenDeclaracionDeExtraccion volumenDeclaracionDeExtraccion) {
-		this.volumenDeclaracionDeExtraccion = volumenDeclaracionDeExtraccion;
+	public void setDeclaracionDeExtraccion(
+			DeclaracionDeExtraccion declaracionDeExtraccion) {
+		this.declaracionDeExtraccion = declaracionDeExtraccion;
 	}
-
 }

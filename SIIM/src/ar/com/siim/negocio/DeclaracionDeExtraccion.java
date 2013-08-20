@@ -50,12 +50,16 @@ public class DeclaracionDeExtraccion {
 
 	@OneToMany(mappedBy = "declaracionDeExtraccion")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	private List<VolumenDeclaracionDeExtraccion> volumenes = new ArrayList<VolumenDeclaracionDeExtraccion>();
+	private List<BoletaDeposito> boletas = new ArrayList<BoletaDeposito>();
+
+	@OneToMany(mappedBy = "declaracionDeExtraccion")
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	private List<TrimestreDeclaracionDeExtraccion> trimestres = new ArrayList<TrimestreDeclaracionDeExtraccion>();
 
 	@OneToMany(mappedBy = "declaracion")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	private List<OperacionDeclaracionExtraccion> operaciones;	
-	
+	private List<OperacionDeclaracionExtraccion> operaciones;
+
 	public Long getId() {
 		return id;
 	}
@@ -128,15 +132,6 @@ public class DeclaracionDeExtraccion {
 		this.localidad = localidad;
 	}
 
-	public List<VolumenDeclaracionDeExtraccion> getVolumenes() {
-		return volumenes;
-	}
-
-	public void addVolumenDeclaracionDeExtraccion(
-			VolumenDeclaracionDeExtraccion volumen) {
-		this.volumenes.add(volumen);
-	}
-
 	public List<OperacionDeclaracionExtraccion> getOperaciones() {
 		return operaciones;
 	}
@@ -147,7 +142,8 @@ public class DeclaracionDeExtraccion {
 
 	public OperacionDeclaracionExtraccion getOperacionAlta() {
 		for (OperacionDeclaracionExtraccion operacion : this.getOperaciones()) {
-			if (operacion.getTipoOperacion().equals(TipoOperacion.ALTA.getDescripcion())){
+			if (operacion.getTipoOperacion().equals(
+					TipoOperacion.ALTA.getDescripcion())) {
 				return operacion;
 			}
 		}
@@ -157,29 +153,43 @@ public class DeclaracionDeExtraccion {
 	public List<OperacionDeclaracionExtraccion> getOperacionesModificacion() {
 		List<OperacionDeclaracionExtraccion> operacionesModificacion = new ArrayList<OperacionDeclaracionExtraccion>();
 		for (OperacionDeclaracionExtraccion operacion : this.getOperaciones()) {
-			if (operacion.getTipoOperacion().equals(TipoOperacion.MOD.getDescripcion())){
+			if (operacion.getTipoOperacion().equals(
+					TipoOperacion.MOD.getDescripcion())) {
 				operacionesModificacion.add(operacion);
 			}
 		}
 		return operacionesModificacion;
 	}
 
-	public void addOperacion(OperacionDeclaracionExtraccion operacionActaVerificacion) {
+	public void addOperacion(
+			OperacionDeclaracionExtraccion operacionActaVerificacion) {
 		if (this.operaciones == null) {
 			this.operaciones = new ArrayList<OperacionDeclaracionExtraccion>();
 		}
 		this.operaciones.add(operacionActaVerificacion);
 	}
-	public TrimestreDeclaracionDeExtraccion getTrimestre(Long nroTrimestre){
-		List<VolumenDeclaracionDeExtraccion> voluemenes = this.getVolumenes();
-		for (VolumenDeclaracionDeExtraccion volumen : voluemenes) {
-			List<TrimestreDeclaracionDeExtraccion>  trimestres = volumen.getTrimestres();
-			for (TrimestreDeclaracionDeExtraccion trimestre : trimestres) {
-				if (nroTrimestre.intValue() == trimestre.getNroTrimestre().intValue()){
-					return trimestre;
-				}
-			}
-		}
-		return null;
+
+	public List<BoletaDeposito> getBoletas() {
+		return boletas;
 	}
+
+	public void addBoleta(BoletaDeposito boleta) {
+		if (this.getBoletas() == null) {
+			boletas = new ArrayList<BoletaDeposito>();
+		}
+
+		boletas.add(boleta);
+	}
+
+	public List<TrimestreDeclaracionDeExtraccion> getTrimestres() {
+		return trimestres;
+	}
+
+	public void addTrimestre(TrimestreDeclaracionDeExtraccion trimestre) {
+		if (this.getTrimestres() == null) {
+			trimestres = new ArrayList<TrimestreDeclaracionDeExtraccion>();
+		}
+		trimestres.add(trimestre);
+	}
+
 }

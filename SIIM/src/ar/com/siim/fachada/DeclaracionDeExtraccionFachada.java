@@ -1,6 +1,9 @@
 package ar.com.siim.fachada;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.util.StringUtils;
 
 import ar.com.siim.dao.DeclaracionDeExtraccionDAO;
 import ar.com.siim.dao.EntidadDAO;
@@ -10,9 +13,9 @@ import ar.com.siim.dao.TipoProductoDAO;
 import ar.com.siim.dao.UsuarioDAO;
 import ar.com.siim.dto.BoletaDepositoDTO;
 import ar.com.siim.dto.DeclaracionExtraccionDTO;
-import ar.com.siim.dto.OperacionActaVerificacionDTO;
 import ar.com.siim.dto.OperacionDeclaracionExtraccionDTO;
 import ar.com.siim.dto.TrimestreDeclaracionDeExtraccionDTO;
+import ar.com.siim.negocio.BoletaDeposito;
 import ar.com.siim.negocio.DeclaracionDeExtraccion;
 import ar.com.siim.negocio.Entidad;
 import ar.com.siim.negocio.Localidad;
@@ -22,6 +25,7 @@ import ar.com.siim.negocio.Usuario;
 import ar.com.siim.negocio.exception.NegocioException;
 import ar.com.siim.providers.ProviderDominio;
 import ar.com.siim.utils.Constantes;
+import ar.com.siim.utils.Fecha;
 import ar.com.siim.utils.MyLogger;
 
 public class DeclaracionDeExtraccionFachada implements
@@ -38,7 +42,7 @@ public class DeclaracionDeExtraccionFachada implements
 	private TipoProductoDAO tipoProductoDAO;
 
 	private UsuarioDAO usuarioDAO;
-	
+
 	public DeclaracionDeExtraccionFachada() {
 	}
 
@@ -47,7 +51,7 @@ public class DeclaracionDeExtraccionFachada implements
 			EntidadDAO entidadDAO, LocalidadDAO localidadDAO,
 			LocalizacionDAO localizacionDAO, TipoProductoDAO tipoProductoDAO,
 			UsuarioDAO usuarioDAO) {
-		
+
 		this.declaracionDeExtraccionDAO = declaracionDeExtraccionDAO;
 		this.entidadDAO = entidadDAO;
 		this.localidadDAO = localidadDAO;
@@ -76,10 +80,12 @@ public class DeclaracionDeExtraccionFachada implements
 						.getLocalizacion().getId());
 		TipoProducto tipoProducto = tipoProductoDAO
 				.recuperarTipoProducto(Constantes.TURBA);
-		
-		OperacionDeclaracionExtraccionDTO operacionDTO = declaracionExtraccionDTO.getOperacionAlta();
-		Usuario usuario = usuarioDAO.getUsuario(operacionDTO.getUsuario().getId());		
-		
+
+		OperacionDeclaracionExtraccionDTO operacionDTO = declaracionExtraccionDTO
+				.getOperacionAlta();
+		Usuario usuario = usuarioDAO.getUsuario(operacionDTO.getUsuario()
+				.getId());
+
 		DeclaracionDeExtraccion declaracionDeExtraccion = ProviderDominio
 				.getDeclaracionDeExtraccion(declaracionExtraccionDTO,
 						trimestresDTO, boletasDTO, entidad, localidad,
@@ -98,15 +104,71 @@ public class DeclaracionDeExtraccionFachada implements
 		return declaracionDeExtraccionDAO.getDeclaracionDeExtraccion(idEntidad,
 				idLocalizacion, idPeriodo, sinAnuladas);
 	}
-	
-	public String registrarPagoBoletaDeposito(Long idBoleta, String fechaPago)throws NegocioException 
-	{
+
+	public String registrarPagoBoletaDeposito(Long idBoleta, String fechaPago)
+			throws NegocioException {
 		try {
-			return declaracionDeExtraccionDAO.registrarPagoBoletaDeposito(idBoleta,fechaPago);
-		
+			return declaracionDeExtraccionDAO.registrarPagoBoletaDeposito(
+					idBoleta, fechaPago);
+
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			throw new NegocioException("Error Inesperado");
 		}
-	}	
+	}
+
+	public void modificacionDeclaracionDeExtraccion(
+			DeclaracionExtraccionDTO declaracion,
+			List<BoletaDepositoDTO> boletasDepositoDTO,
+			List<TrimestreDeclaracionDeExtraccionDTO> trimestres)
+			throws NegocioException {
+		String existe = existeDeclaracionExtraccion(declaracion);
+		if (!StringUtils.hasText(existe)) {
+
+			DeclaracionDeExtraccion declaracionDeExtraccion = declaracionDeExtraccionDAO
+					.getDeclaracionDeExtraccionById(declaracion.getId());
+			Localidad localidad = localidadDAO.getLocalidadPorId(declaracion
+					.getLocalidad().getId());
+
+			declaracionDeExtraccion.setLocalidad(localidad);
+			declaracionDeExtraccion.setNumero(declaracion.getNumero());
+			declaracionDeExtraccion.setFecha(declaracion.getFecha());
+
+			/* actualizo boletas */
+			List<BoletaDeposito> boletasABorrar = new ArrayList<BoletaDeposito>();
+			List<BoletaDeposito> boletas = declaracionDeExtraccion.getBoletas();
+			for (BoletaDeposito boleta : boletas) {
+				for (BoletaDepositoDTO boletaDTO : boletasDepositoDTO) {
+					if (boleta.getId().longValue() == boletaDTO.getIdBoleta()
+							&& boletaDTO.getAnulado()) {
+						boletasABorrar.add(boleta);
+						boleta.setCanonMinero(null);
+					}
+
+					if (boleta.getId().longValue() == boletaDTO.getIdBoleta()
+							&& boletaDTO.getFechaPago() != null
+							&& boletaDTO.getFechaPago() != "") {
+						boleta.setFechaPago(Fecha
+								.stringDDMMAAAAToUtilDate(boletaDTO
+										.getFechaPago()));
+					}
+				}
+			}
+
+			boletas.removeAll(boletasABorrar);
+
+			/* agrego boletas nuevas */
+			for (BoletaDepositoDTO boletaDTO : boletasDepositoDTO) {
+				if (boletaDTO.getIdBoleta() == 0) {
+					boletas.add(ProviderDominio.getBoletaDeposito(
+							declaracionDeExtraccion, boletaDTO));
+				}
+			}
+
+		} else {
+			throw new NegocioException(
+					"Ya existe una Declaración de Extracción con éste número.");
+		}
+
+	}
 }

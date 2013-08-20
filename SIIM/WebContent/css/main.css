@@ -311,3 +311,5 @@
 .seleccionado {
 	background-color: #5FB404;
 }
+
+.tachado{text-decoration:line-through;}

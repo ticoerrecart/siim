@@ -38,7 +38,6 @@
 		<mapping class='ar.com.siim.negocio.Transporte' />
 		<mapping class='ar.com.siim.negocio.ActaDeVerificacion' />
 		<mapping class='ar.com.siim.negocio.EstudioImpactoAmbiental' />
-		<mapping class='ar.com.siim.negocio.VolumenDeclaracionDeExtraccion' />
 		<mapping class='ar.com.siim.negocio.TrimestreDeclaracionDeExtraccion' />
 		<mapping class='ar.com.siim.negocio.DeclaracionDeExtraccion' />
 		<mapping class='ar.com.siim.negocio.Reporte' />

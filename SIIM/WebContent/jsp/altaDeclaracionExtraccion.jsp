@@ -188,7 +188,7 @@ function cambiarProductor(){
 }
 
 function cambiarProductorCallback(productor) {
-	
+
 	dwr.util.setValue("nomProductor", productor.nombre);
 	dwr.util.setValue("domProductor", productor.direccion);
 	dwr.util.setValue("locProductor", productor.localidad.nombre);
@@ -299,6 +299,8 @@ function cambiarZonaExtraccionCallback(localizacion) {
 				}
 				
 			}
+			cambiarProductor();
+			cambiarZonaExtraccion();
 			//cambiarProductorModificacion();
 			//cambioPeriodo();
 
@@ -350,7 +352,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 	
 	function eliminarCuota(index){
 		ind = index - 1;
-		bd = 'boletasDeposito['+ ind +'].eliminada';
+		bd = 'boletasDeposito['+ ind +'].anulado';
 		$("[name='"+bd+"']").val(true);	
 		apagar($('#tBoleta'+index));
 		$("#tdBoleta" + index).addClass("tachado");
@@ -361,7 +363,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 	
 	function restituirCuota(index){
 			ind = index - 1;
-			bd = 'boletasDeposito['+ ind +'].eliminada';
+			bd = 'boletasDeposito['+ ind +'].anulado';
 			$("[name='"+bd+"']").val(false);	
 			encender($('#tBoleta'+index));
 			$("#tdBoleta" + index).removeClass("tachado");
@@ -392,7 +394,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 
 <div id="idDeclaracion">
 <html:form action="declaracionExtraccion" styleId="declaracionExtraccionForm">
-	<html:hidden property="metodo" value="modificacionDeclaracionExtraccion" />
+	<html:hidden property="metodo" value="${metodo}" />
 	<input type="hidden" name="declaracion.id" value="${declaracionDeExtraccion.id}" />
 
 	<table border="0" class="cuadrado" align="center" width="80%"
@@ -873,7 +875,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 					<tr>
 						<td colspan="5">
 							<table border="0" class="cuadrado" align="center" width="100%" cellpadding="2">
-								<input type="hidden" name="boletasDeposito[0].eliminada" value="false"/>
+								<input type="hidden" name="boletasDeposito[0].anulado" value="false"/>
 
 								<tr onclick="$('#idTrBoleta${boletas[0].numero}').toggle();">
 									<td colspan="5" class="grisSubtitulo" id="tdBoleta1" 									
@@ -1021,6 +1023,12 @@ function cambiarZonaExtraccionCallback(localizacion) {
 											</tr>
 														
 										</table><!-- id="tBoleta1" -->
+
+										<!--c:if test="${boletas[0].fechaPago==null && modificacion=='S'}">
+											<input id="idBotonEliminarCuota1" type="button"	value="-" onclick="javascript:eliminarCuota(1);">
+											<input style="display: none" id="idBotonRestituirCuota1" type="button"	value="+" onclick="javascript:restituirCuota(1);">
+										</c:if-->
+										
 									</td>
 								</tr>
 								

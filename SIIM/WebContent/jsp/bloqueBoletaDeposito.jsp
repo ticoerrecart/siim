@@ -10,7 +10,7 @@
 %>
 
 <table id="idTable<%=i%>" border="0" class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
-	<input type="hidden" name="boletasDeposito[<%=i%>].eliminada" value="false"/>
+	<input type="hidden" name="boletasDeposito[<%=i%>].anulado" value="false"/>
 	
 	<tr id="idTrBoletaEspacio<%=i%>">
 		<td height="5" colspan="4"></td>

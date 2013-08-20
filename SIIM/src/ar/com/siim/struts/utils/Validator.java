@@ -105,16 +105,18 @@ public abstract class Validator {
 	/*
 	 * Si la entrada es nula entonces se considera invalido
 	 */
-	public static boolean validarComboRequeridoSinNull(String valorEntradaDistinto, String entrada,
-			String label, StringBuffer pError) {
+	public static boolean validarComboRequeridoSinNull(
+			String valorEntradaDistinto, String entrada, String label,
+			StringBuffer pError) {
 
-		if (entrada == null || entrada.equals("") || entrada.equals("null") || entrada.equals(valorEntradaDistinto)) {
+		if (entrada == null || entrada.equals("") || entrada.equals("null")
+				|| entrada.equals(valorEntradaDistinto)) {
 			addErrorXML(pError, label + " es un dato obligatorio");
 			return false;
 		}
 		return true;
-	}	
-	
+	}
+
 	/*
 	 * Si la entrada es nula entonces se considera valido
 	 */
@@ -524,67 +526,79 @@ public abstract class Validator {
 			addErrorXML(pError,
 					"La Cantidad de Boletas de Deposito debe ser un numero mayor a 0");
 			return false;
-		}
+		}/*
+		 * else { // verifico que haya al menos una boleta no eliminada int
+		 * cantEliminadas = 0; for (BoletaDepositoDTO boletaDepositoDTO :
+		 * boletas) { if (boletaDepositoDTO.getAnulado()) { cantEliminadas++; }
+		 * } if (cantEliminadas == boletas.size()) { addErrorXML(pError,
+		 * "La Cantidad de Boletas de Deposito debe ser un numero mayor a 0");
+		 * return false; } }
+		 */
+
 		double montoSumaBoletas = 0;
 		List<BoletaDepositoDTO> listaBoletas = new ArrayList<BoletaDepositoDTO>();
 		for (BoletaDepositoDTO boleta : boletas) {
-			if (listaBoletas.size() == 0) {
-				// tengo q crear una nueva porq sino no anda, se borra de la
-				// coleccion
-				BoletaDepositoDTO b = new BoletaDepositoDTO();
-				b.setNumero(boleta.getNumero());
-				listaBoletas.add(b);
-			} else {
-				BoletaDepositoDTO boletaEncontrada = (BoletaDepositoDTO) CollectionUtils
-						.find(listaBoletas,
-								new BeanPropertyValueEqualsPredicate("numero",
-										boleta.getNumero()));
-				if (boletaEncontrada == null) {
+			if (!boleta.getAnulado()) {
+				if (listaBoletas.size() == 0) {
 					// tengo q crear una nueva porq sino no anda, se borra de la
 					// coleccion
 					BoletaDepositoDTO b = new BoletaDepositoDTO();
 					b.setNumero(boleta.getNumero());
 					listaBoletas.add(b);
 				} else {
+					BoletaDepositoDTO boletaEncontrada = (BoletaDepositoDTO) CollectionUtils
+							.find(listaBoletas,
+									new BeanPropertyValueEqualsPredicate(
+											"numero", boleta.getNumero()));
+					if (boletaEncontrada == null) {
+						// tengo q crear una nueva porq sino no anda, se borra
+						// de la
+						// coleccion
+						BoletaDepositoDTO b = new BoletaDepositoDTO();
+						b.setNumero(boleta.getNumero());
+						listaBoletas.add(b);
+					} else {
+						addErrorXML(pError,
+								"Los Números de las Boletas de Deposito no se pueden repetir");
+						return false;
+					}
+				}
+
+				montoSumaBoletas = montoSumaBoletas + boleta.getMonto();
+				if (boleta.getNumero() <= 0) {
 					addErrorXML(pError,
-							"Los Números de las Boletas de Deposito no se pueden repetir");
+							"Faltan datos en el Nro de Boleta de Deposito");
 					return false;
 				}
-			}
 
-			montoSumaBoletas = montoSumaBoletas + boleta.getMonto();
-			if (boleta.getNumero() <= 0) {
-				addErrorXML(pError,
-						"Faltan datos en el Nro de Boleta de Deposito");
-				return false;
-			}
+				if (boleta.getConcepto() == null
+						|| boleta.getConcepto().equals("")) {
+					addErrorXML(pError,
+							"Faltan datos en el Concepto de la Boleta de Deposito");
+					return false;
+				}
 
-			if (boleta.getConcepto() == null || boleta.getConcepto().equals("")) {
-				addErrorXML(pError,
-						"Faltan datos en el Concepto de la Boleta de Deposito");
-				return false;
-			}
+				if (boleta.getArea() == null || boleta.getArea().equals("")) {
+					addErrorXML(pError,
+							"Faltan datos en el Area de la Boleta de Deposito");
+					return false;
+				}
 
-			if (boleta.getArea() == null || boleta.getArea().equals("")) {
-				addErrorXML(pError,
-						"Faltan datos en el Area de la Boleta de Deposito");
-				return false;
-			}
+				if (boleta.getFechaVencimiento() == null
+						|| boleta.getFechaVencimiento().equals("")) {
+					addErrorXML(pError,
+							"Faltan datos en la Fecha de Vencimiento de la Boleta de Deposito");
+					return false;
+				}
 
-			if (boleta.getFechaVencimiento() == null
-					|| boleta.getFechaVencimiento().equals("")) {
-				addErrorXML(pError,
-						"Faltan datos en la Fecha de Vencimiento de la Boleta de Deposito");
-				return false;
-			}
+				if (boleta.getMonto() <= 0.0) {
+					addErrorXML(pError,
+							"Faltan datos en el monto de la Boleta de Deposito");
+					return false;
+				}
 
-			if (boleta.getMonto() <= 0.0) {
-				addErrorXML(pError,
-						"Faltan datos en el monto de la Boleta de Deposito");
-				return false;
 			}
-
-		}
+		}// end for
 
 		montoSumaBoletas = MathUtils.round(montoSumaBoletas, 2);
 
