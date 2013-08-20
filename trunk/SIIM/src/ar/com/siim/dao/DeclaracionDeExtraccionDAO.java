@@ -36,6 +36,9 @@ public class DeclaracionDeExtraccionDAO extends HibernateDaoSupport {
 			criteria2.createAlias("entidad", "e");
 			criteria2.createAlias("localizacion", "l");
 			Conjunction conj2 = Restrictions.conjunction();
+			if (declaracion.getId() != null) {
+				conj2.add(Restrictions.ne("id", declaracion.getId()));
+			}
 			conj2.add(Restrictions.eq("periodo", declaracion.getPeriodo()));
 			conj2.add(Restrictions.eq("e.id", declaracion.getProductor()
 					.getId()));
