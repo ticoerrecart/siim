@@ -61,6 +61,16 @@ public class DeclaracionDeExtraccionDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().flush();
 	}
 
+	public void modificacionDeclaracionExtraccion(
+			DeclaracionDeExtraccion declaracion,
+			List<BoletaDeposito> boletasABorrar) {
+		for (BoletaDeposito boletaDeposito : boletasABorrar) {
+			this.getHibernateTemplate().delete(boletaDeposito);
+		}
+		this.getHibernateTemplate().saveOrUpdate(declaracion);
+		this.getHibernateTemplate().flush();
+	}
+
 	public DeclaracionDeExtraccion getDeclaracionDeExtraccionById(Long id) {
 		return (DeclaracionDeExtraccion) this.getHibernateTemplate().get(
 				DeclaracionDeExtraccion.class, id);
@@ -87,7 +97,7 @@ public class DeclaracionDeExtraccionDAO extends HibernateDaoSupport {
 		}
 		return null;
 	}
-	
+
 	public String registrarPagoBoletaDeposito(Long idBoleta, String fechaPago) {
 		BoletaDeposito boletaDeposito = (BoletaDeposito) this
 				.getHibernateTemplate().get(BoletaDeposito.class, idBoleta);
@@ -99,5 +109,5 @@ public class DeclaracionDeExtraccionDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().clear();
 
 		return fechaPago;
-	}	
+	}
 }

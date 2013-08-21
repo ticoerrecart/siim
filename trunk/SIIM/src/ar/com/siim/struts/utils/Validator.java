@@ -538,7 +538,7 @@ public abstract class Validator {
 		double montoSumaBoletas = 0;
 		List<BoletaDepositoDTO> listaBoletas = new ArrayList<BoletaDepositoDTO>();
 		for (BoletaDepositoDTO boleta : boletas) {
-			if (!boleta.getAnulado()) {
+			if (!boleta.esNula() && !boleta.getAnulado()) {
 				if (listaBoletas.size() == 0) {
 					// tengo q crear una nueva porq sino no anda, se borra de la
 					// coleccion

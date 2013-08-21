@@ -118,39 +118,53 @@ public class DeclaracionDeExtraccionFachada implements
 	}
 
 	public void modificacionDeclaracionDeExtraccion(
-			DeclaracionExtraccionDTO declaracion,
+			DeclaracionExtraccionDTO declaracionDTO,
 			List<BoletaDepositoDTO> boletasDepositoDTO,
 			List<TrimestreDeclaracionDeExtraccionDTO> trimestres)
 			throws NegocioException {
-		String existe = existeDeclaracionExtraccion(declaracion);
+		String existe = existeDeclaracionExtraccion(declaracionDTO);
 		if (!StringUtils.hasText(existe)) {
 
 			DeclaracionDeExtraccion declaracionDeExtraccion = declaracionDeExtraccionDAO
-					.getDeclaracionDeExtraccionById(declaracion.getId());
-			Localidad localidad = localidadDAO.getLocalidadPorId(declaracion
+					.getDeclaracionDeExtraccionById(declaracionDTO.getId());
+			Localidad localidad = localidadDAO.getLocalidadPorId(declaracionDTO
 					.getLocalidad().getId());
 
 			declaracionDeExtraccion.setLocalidad(localidad);
-			declaracionDeExtraccion.setNumero(declaracion.getNumero());
-			declaracionDeExtraccion.setFecha(declaracion.getFecha());
+			declaracionDeExtraccion.setNumero(declaracionDTO.getNumero());
+			declaracionDeExtraccion.setFecha(declaracionDTO.getFecha());
 
 			/* actualizo boletas */
 			List<BoletaDeposito> boletasABorrar = new ArrayList<BoletaDeposito>();
 			List<BoletaDeposito> boletas = declaracionDeExtraccion.getBoletas();
 			for (BoletaDeposito boleta : boletas) {
 				for (BoletaDepositoDTO boletaDTO : boletasDepositoDTO) {
-					if (boleta.getId().longValue() == boletaDTO.getIdBoleta()
-							&& boletaDTO.getAnulado()) {
-						boletasABorrar.add(boleta);
-						boleta.setCanonMinero(null);
-					}
 
-					if (boleta.getId().longValue() == boletaDTO.getIdBoleta()
-							&& boletaDTO.getFechaPago() != null
-							&& boletaDTO.getFechaPago() != "") {
-						boleta.setFechaPago(Fecha
-								.stringDDMMAAAAToUtilDate(boletaDTO
-										.getFechaPago()));
+					if (boleta.getId().longValue() == boletaDTO.getIdBoleta()) {
+						if (boletaDTO.getAnulado()) {
+							// borro
+							boletasABorrar.add(boleta);
+							boleta.setCanonMinero(null);
+							boleta.setDeclaracionDeExtraccion(null);
+						} else {
+							// actualizo los datos
+							boleta.setNumero(boletaDTO.getNumero());
+							boleta.setConcepto(boletaDTO.getConcepto());
+							boleta.setArea(boletaDTO.getArea());
+							boleta.setEfectivoCheque(boletaDTO
+									.getEfectivoCheque());
+							boleta.setFechaVencimiento(Fecha
+									.stringDDMMAAAAToUtilDate(boletaDTO
+											.getFechaVencimiento()));
+							boleta.setMonto(boletaDTO.getMonto());
+
+							if (boletaDTO.getFechaPago() != null
+									&& boletaDTO.getFechaPago() != "") {
+								boleta.setFechaPago(Fecha
+										.stringDDMMAAAAToUtilDate(boletaDTO
+												.getFechaPago()));
+							}
+						}
 					}
 				}
 			}
@@ -159,12 +173,15 @@ public class DeclaracionDeExtraccionFachada implements
 
 			/* agrego boletas nuevas */
 			for (BoletaDepositoDTO boletaDTO : boletasDepositoDTO) {
-				if (boletaDTO.getIdBoleta() == 0) {
+				if (boletaDTO.getIdBoleta() == 0 && !boletaDTO.esNula()
+						&& !boletaDTO.getAnulado()) {
 					boletas.add(ProviderDominio.getBoletaDeposito(
 							declaracionDeExtraccion, boletaDTO));
 				}
 			}
 
+			declaracionDeExtraccionDAO.modificacionDeclaracionExtraccion(
+					declaracionDeExtraccion, boletasABorrar);
 		} else {
 			throw new NegocioException(
 					"Ya existe una Declaración de Extracción con éste número.");

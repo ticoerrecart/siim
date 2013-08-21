@@ -108,4 +108,8 @@ public class BoletaDepositoDTO {
 		this.anulado = anulado;
 	}
 
+	public boolean esNula() {
+		return area == null && concepto == null && efectivoCheque == null
+				&& fechaVencimiento == null && monto == 0.0 && numero == null;
+	}
 }
