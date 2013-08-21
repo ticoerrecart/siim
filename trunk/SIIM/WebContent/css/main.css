@@ -236,6 +236,23 @@
 	font-weight: bold;
 }
 
+.rojoAdvertenciaChico {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: bold;
+	color: #FF0000;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 8px;
+	font-variant: normal;
+	text-transform: none;
+	border: 0px solid #CCCCCC;
+}
+
 .rojoAdvertencia {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 12px;

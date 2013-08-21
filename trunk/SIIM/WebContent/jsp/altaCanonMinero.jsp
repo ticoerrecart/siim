@@ -298,6 +298,7 @@ function limpiarCamposLocalizacion(){
 						</option>
 					</c:forEach>
 				</select>	
+				<font class="rojoAdvertencia">*</font>
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Periodo'/></td>
 			<td align="left">
@@ -309,7 +310,7 @@ function limpiarCamposLocalizacion(){
 						</c:forEach>
 					</select>
 			</td>
-		</tr>
+		</tr>		
 		<tr>
 			<td height="10" colspan="4"></td>
 		</tr>
@@ -340,7 +341,8 @@ function limpiarCamposLocalizacion(){
 							<select id="idZonaExtraccion" class="botonerab" name="canonMinero.zonaExtraccion.id" 
 								disabled="disabled" onchange="cambiarZonaExtraccion();">
 								<option value="-1">--Seleccione una Zona--</option>
-							</select>					
+							</select>
+							<font class="rojoAdvertencia">*</font>					
 						</td>						
 					</tr>	
 					<tr>
@@ -457,12 +459,13 @@ function limpiarCamposLocalizacion(){
 									<td width="40%" align="left">
 										<input name="boletasDeposito[0].numero" class="botonerab" type="text"
 											size="20" onkeypress="javascript:esNumerico(event);">
+										<font class="rojoAdvertencia">*</font>
 									</td>
 									<td width="10%" class="botoneralNegritaRight">
 										<bean:message key='SIIM.label.Productor'/>
 									</td>
 									<td width="40%" align="left">
-										<input id="idProductor0" value="" class="botonerab" type="text" size="40" readonly="readonly">
+										<input id="idProductor0" value="" class="botonerab" type="text" size="35" readonly="readonly">
 									</td>
 								</tr>
 								<tr>
@@ -497,6 +500,7 @@ function limpiarCamposLocalizacion(){
 									<td width="40%" align="left">
 										<input name="boletasDeposito[0].monto" class="botonerab" type="text"
 											size="20" onkeypress="javascript:esNumericoConDecimal(event);">
+										<font class="rojoAdvertencia">*</font>	
 									</td>
 								</tr>
 								<tr>
@@ -508,7 +512,7 @@ function limpiarCamposLocalizacion(){
 												name='boletasDeposito[0].fechaVencimiento'>
 										<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 											align="top" width='17' height='21'>		
-																					
+										<font class="rojoAdvertencia">*</font>											
 										<script>
 											$(function() {
 										
@@ -568,17 +572,26 @@ function limpiarCamposLocalizacion(){
 						</option>
 					</c:forEach>
 				</select>				
-				
+				<font class="rojoAdvertencia">*</font>
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Fecha'/></td>
 			<td align="left">		
 				<input id="datepickerFecha" type="text" name="canonMinero.fecha" readonly="readonly" class="botonerab">
-				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				
+				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
+				<font class="rojoAdvertencia">*</font>				
 			</td>
 		</tr>
 		<tr>
-			<td height="10" colspan="4"></td>
+			<td height="5" colspan="4"></td>
 		</tr>
+		<tr>
+			<td colspan="4">
+				<font class="rojoAdvertenciaChico">* Campos Obligatorios</font>	
+			</td>
+		</tr>		
+		<tr>
+			<td height="5" colspan="4"></td>
+		</tr>		
 	</table>
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
