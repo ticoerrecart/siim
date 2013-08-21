@@ -192,4 +192,15 @@ public class DeclaracionDeExtraccion {
 		trimestres.add(trimestre);
 	}
 
+	public TrimestreDeclaracionDeExtraccion getTrimestre(Long nroTrimestre){
+		List<TrimestreDeclaracionDeExtraccion> trimestres = this.getTrimestres();
+		for (TrimestreDeclaracionDeExtraccion trimestre : trimestres) {
+
+			if (nroTrimestre.intValue() == trimestre.getNroTrimestre().intValue()){
+				return trimestre;
+			}
+		}
+		return null;
+	}	
+	
 }
