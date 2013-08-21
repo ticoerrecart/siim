@@ -4,14 +4,31 @@
 
 <%
 	Integer i = Integer.parseInt(request.getParameter("indice"));	
+	String modificacion = request.getParameter("modificacion");
+	request.setAttribute("modificacion", modificacion);
 									
 	String nombre = request.getParameter("nombreProductor");
-	
+	String nroBoleta = request.getParameter("nroBoleta")==null?"":request.getParameter("nroBoleta");
+	String idBoleta = request.getParameter("idBoleta")==null?"":request.getParameter("idBoleta");
+	String concepto = request.getParameter("concepto");
+	if(concepto==null){
+		concepto="Aforo";
+	}
+	String area = request.getParameter("area");
+	if(area==null){
+		area = "Direccion General de Bosques";
+	}
+	String efectivoCheque = request.getParameter("efectivoCheque")==null?"":request.getParameter("efectivoCheque");
+	String fechaDeVencimiento = request.getParameter("fechaDeVencimiento")==null?"":request.getParameter("fechaDeVencimiento");
+	String fechaDePago = request.getParameter("fechaDePago");
+	request.setAttribute("fechaDePago", fechaDePago);
+	String monto = request.getParameter("monto")==null?"":request.getParameter("monto");
 %>
 
 <table id="idTable<%=i%>" border="0" class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
-	<input type="hidden" name="boletasDeposito[<%=i%>].anulado" value="false"/>
-	
+	<input type="hidden" name="boletasDeposito[<%=(i-1)%>].anulado" value="false"/>
+	<input type="hidden" name="boletasDeposito[<%=(i-1)%>].idBoleta" value="<%=idBoleta%>"/>
+
 	<tr id="idTrBoletaEspacio<%=i%>">
 		<td height="5" colspan="4"></td>
 	</tr>
@@ -31,7 +48,7 @@
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.NroBoleta'/></td>
 					<td width="40%" align="left">
 						<input name='<%="boletasDeposito["+(i-1)+"].numero"%>' class="botonerab" type="text" 
-							size="20" onkeypress="javascript:esNumerico(event);">
+							size="20" onkeypress="javascript:esNumerico(event);" value="<%=nroBoleta%>">
 						<font class="rojoAdvertencia">*</font>	
 					</td>
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
@@ -43,26 +60,26 @@
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Concepto'/></td>
 					<td colspan="3" align="left">
 						<input name='<%="boletasDeposito["+(i-1)+"].concepto"%>' class="botonerab"
-							type="text" size="90" value="Aforo">
+							type="text" size="90" value="<%=concepto%>" >
 					</td>
 				</tr>
 				<tr>
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Area'/></td>
 					<td colspan="3" align="left">
 						<input name='<%="boletasDeposito["+(i-1)+"].area"%>' class="botonerab"
-							type="text" size="90" value="Direccion General de Bosques">
+							type="text" size="90" value="<%=area%>">
 					</td>
 				</tr>
 				<tr>
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.EfectivoCheque'/></td>
 					<td width="40%" align="left">
 						<input name='<%="boletasDeposito["+(i-1)+"].efectivoCheque"%>' class="botonerab" 
-							type="text" size="20" onkeypress="javascript:esAlfaNumerico(event);">
+							type="text" size="20" onkeypress="javascript:esAlfaNumerico(event);" value="<%=efectivoCheque%>">
 					</td>
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Monto$'/></td>
 					<td width="40%" align="left">
 						<input name='<%="boletasDeposito["+(i-1)+"].monto"%>' class="botonerab" type="text" 
-							size="20" onkeypress="javascript:esNumericoConDecimal(event);">
+							size="20" onkeypress="javascript:esNumericoConDecimal(event);" value="<%=monto%>">
 						<font class="rojoAdvertencia">*</font>	
 					</td>
 				</tr>
@@ -70,7 +87,7 @@
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaVencimiento'/></td>
 					<td colspan="3" align="left">
 						<input id="datepicker<%=i-1%>" type="text" readonly="readonly" class="botonerab" 
-								name='<%="boletasDeposito["+(i-1)+"].fechaVencimiento"%>'>
+								name='<%="boletasDeposito["+(i-1)+"].fechaVencimiento"%>' value="<%=fechaDeVencimiento %>">
 						<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 							align="top" width='17' height='21'>															
 						<font class="rojoAdvertencia">*</font>
@@ -81,8 +98,10 @@
 				</tr>
 			</table>
 		
-			<input id="idBotonEliminarCuota<%=i%>" type="button"	value="-" onclick="javascript:eliminarCuota(<%=i%>);">
-			<input style="display: none" id="idBotonRestituirCuota<%=i%>" type="button"	value="+" onclick="javascript:restituirCuota(<%=i%>);">
+			<c:if test="${modificacion=='S' && fechaDePago!=null}">
+				<input id="idBotonEliminarCuota<%=i%>" type="button"	value="-" onclick="javascript:eliminarCuota(<%=i%>);">
+				<input style="display: none" id="idBotonRestituirCuota<%=i%>" type="button"	value="+" onclick="javascript:restituirCuota(<%=i%>);">
+			</c:if>
 												
 		</td>
 	</tr>

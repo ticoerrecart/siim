@@ -210,9 +210,14 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 			request.setAttribute("productores",
 					entidadFachada.getProductoresDTO());
-			// request.setAttribute("paramForward",);
+
 			request.setAttribute("urlDetalle",
 					"../../declaracionExtraccion.do?metodo=recuperarDeclaracionesParaModificar");
+
+			String exitoGrabado = (String) request.getAttribute("exitoGrabado");
+			if (exitoGrabado != null) {
+				request.setAttribute("exitoGrabado", exitoGrabado);
+			}
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -442,7 +447,18 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String strForward = "exitoModificacionDeclaracionExtraccion";
+		WebApplicationContext ctx = getWebApplicationContext();
+		DeclaracionDeExtraccionFachada declaracionFachada = (DeclaracionDeExtraccionFachada) ctx
+				.getBean("declaracionDeExtraccionFachada");
+		DeclaracionExtraccionForm declaracionExtraccionForm = (DeclaracionExtraccionForm) form;
 
+		declaracionFachada.modificacionDeclaracionDeExtraccion(
+				declaracionExtraccionForm.getDeclaracion(),
+				declaracionExtraccionForm.getBoletasDeposito(),
+				declaracionExtraccionForm.getTrimestres());
+
+		request.setAttribute("exitoGrabado",
+				"La Declaración de Extracción se ha modificado con éxito");
 		return mapping.findForward(strForward);
 	}
 

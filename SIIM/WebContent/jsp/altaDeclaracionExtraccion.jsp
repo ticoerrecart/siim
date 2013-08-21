@@ -124,17 +124,24 @@ function volverAltaGFB(){
 //-----------------------------------------------------//
 //FUNCIONES DE DECLARACION DE EXTRACCION//
 
-var indice = 2;										 
-function agregarCuota(){
+var indice = 2;
+
+function agregarCuota(params){
+	//alert(nroBoleta + "-" + concepto +"-" + area +"-" + efectivoCheque +"-" + fechaDeVencimiento +"-" + monto);
 	var nom = $("#nomProductor").val();
 	
 	var nombre = "";
 	nombre = reemplazarCaracter(" ","%20",nom,nombre);
-	
-	$('#dummy').load('/SIIM/jsp/bloqueBoletaDeposito.jsp?nombreProductor='+ nombre +'&indice=' + indice , 
-			function(){
+	//var params = "";
+	params = reemplazarCaracter(" ","%20",params,params);
+	/*if(nroBoleta!=null && nroBoleta!=""){
+		params = '&nroBoleta='+ nroBoleta + '&idBoleta='+ idBoleta +'&concepto='+concepto + '&area='+ area + '&efectivoCheque='+efectivoCheque + '&fechaDeVencimiento='+fechaDeVencimiento + '&monto=' + monto;
+		//alert(params);
+	}*/
 
-		var i = "divPlanDePagos"+indice;																
+	$('#dummy').load('/SIIM/jsp/bloqueBoletaDeposito.jsp?nombreProductor='+ nombre +'&indice=' + indice + params, 
+			function(){
+		var i = "divPlanDePagos"+indice;
 				document.getElementById(i).innerHTML = document.getElementById("dummy").innerHTML;
 				document.getElementById("dummy").innerHTML = "";
 
@@ -198,6 +205,14 @@ function cambiarProductorCallback(productor) {
 	for(var i=0;i<=ind;i++){
 		dwr.util.setValue("idProductor"+i, productor.nombre);	
 	}
+	var params = "";
+	//esto es para la modificacion.  Va acá porque necesito que esté cargado el nombre del productor.
+	<c:forEach items="${boletas}" var="boleta" varStatus="status">
+		<c:if test="${status.index>0}">
+			params = '&nroBoleta='+ "${boleta.numero}" + '&idBoleta='+ "${boleta.id}" +'&concepto='+ "${boleta.concepto}" + '&area='+ "${boleta.area}" + '&efectivoCheque='+ "${boleta.efectivoCheque}" + '&fechaDeVencimiento='+ "${boleta.getFechaVencimientoStr()}" + '&fechaDePago=' + "${boleta.getFechaPagoStr()}" + '&monto=' + "${boleta.monto}" + '&modificacion=' + "${modificacion}";
+			agregarCuota(params);
+		</c:if>
+	</c:forEach>
 }
 
 function actualizarZonasExtraccionCallback(zonas){
@@ -301,27 +316,10 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			}
 			cambiarProductor();
 			cambiarZonaExtraccion();
-			//cambiarProductorModificacion();
-			//cambioPeriodo();
 
 		}
 	}
 	
-	/*function cambiarProductorModificacion(){
-
-		var idProductor = $('#idProductor').val();
-
-		if(idProductor != "-1"){
-			EntidadFachada.getEntidadDTO(idProductor,cambiarProductorCallback );
-
-			LocalizacionFachada.getLocalizacionesPorProductorDTO(idProductor,actualizarZonasExtraccionModificacionCallback);
-		}
-	}*/
-	
-	/*function actualizarZonasExtraccionModificacionCallback(zonas){
-		actualizarZonasExtraccionCallback(zonas);
-		$("#idZonaExtraccion option[value="+'${declaracionDeExtraccion.localizacion.id}'+"]").attr("selected",true);
-	}*/
 
 	function expBoletaNro(){
 		var idBoletaExp = $('#expBoleta').val();
@@ -358,9 +356,8 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		$("#tdBoleta" + index).addClass("tachado");
 		$("#idBotonEliminarCuota"+index).hide();
 		$("#idBotonRestituirCuota"+index).show();
-		
 	}
-	
+
 	function restituirCuota(index){
 			ind = index - 1;
 			bd = 'boletasDeposito['+ ind +'].anulado';
@@ -407,6 +404,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
+		
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Numero'/></td>
 			<td width="30%" align="left">
@@ -473,7 +471,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
-						</select>						
+						</select>
 					</c:when>
 					
 					<c:otherwise>
@@ -878,12 +876,13 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						<td colspan="5">
 							<table border="0" class="cuadrado" align="center" width="100%" cellpadding="2">
 								<input type="hidden" name="boletasDeposito[0].anulado" value="false"/>
+								<input type="hidden" name="boletasDeposito[0].idBoleta" value="${boletas[0].id}"/>
 
 								<tr onclick="$('#idTrBoleta${boletas[0].numero}').toggle();">
 									<td colspan="5" class="grisSubtitulo" id="tdBoleta1" 									
 										onmouseover="javascript:pintarFilaVale('tdBoleta1');"
 										onmouseout="javascript:despintarFilaVale('tdBoleta1');">
-										Boleta de Deposito n° ${boletas[0].numero}
+										Boleta de Deposito n° 1
 									</td>
 								</tr>
 								
@@ -998,27 +997,49 @@ function cambiarZonaExtraccionCallback(localizacion) {
 													</script>
 												</c:if>
 												
-												<td width="15%" class="botoneralNegritaRight">
-													<bean:message key='SIIM.label.FechaPago'/>
-												</td>
-												<td width="23%" align="left">
-													<input type="text" id="idFechaPago${boletas[0].id}" readonly="readonly" class="botonerab" size="17"
-														   value="<c:out value='${boletas[0].fechaPagoStr}'/>">
-													<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-														 align="top" width='17' height='21'>																						
-												</td>										
 												<c:choose>
-													<c:when test="${boletas[0].fechaPago==null}">
-														<td id="idEstadoBoleta${boletas[0].id}" width="17%" class="rojoAdvertenciaLeft">
-															<bean:message key='SIIM.label.NOPAGADA'/>
-														</td>		
+													<c:when test="${modificacion=='S' && fechaDePago!=null}">">
+														<td width="15%" class="botoneralNegritaRight">
+															<bean:message key='SIIM.label.FechaPago'/>
+														</td>
+														<td width="23%" align="left">
+															<input type="text" id="idFechaPago${boletas[0].id}" readonly="readonly" class="botonerab" size="17"
+																   value="<c:out value='${boletas[0].fechaPagoStr}'/>">
+															<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+																 align="top" width='17' height='21'>																						
+														</td>
 													</c:when>
 													<c:otherwise>
-														<td id="idEstadoBoleta${boletas[0].id}" width="17%" class="verdeExitoLeft">
-															<bean:message key='SIIM.label.PAGADA'/>
+														<td width="15%" class="botoneralNegritaRight">
+															&nbsp;
+														</td>
+														<td width="23%" align="left">
+															&nbsp;
 														</td>
 													</c:otherwise>
-												</c:choose>	
+												</c:choose>
+												
+												<c:choose>
+													<c:when test="${modificacion=='S'}">
+														<c:choose>
+															<c:when test="${boletas[0].fechaPago==null}">
+																<td id="idEstadoBoleta${boletas[0].id}" width="17%" class="rojoAdvertenciaLeft">
+																	<bean:message key='SIIM.label.NOPAGADA'/>
+																</td>		
+															</c:when>
+															<c:otherwise>
+																<td id="idEstadoBoleta${boletas[0].id}" width="17%" class="verdeExitoLeft">
+																	<bean:message key='SIIM.label.PAGADA'/>
+																</td>
+															</c:otherwise>
+														</c:choose>	
+													</c:when>
+													
+													<c:otherwise>
+														<td width="17%">
+														</td>
+													</c:otherwise>
+												</c:choose>									
 																	
 											</tr>
 											
@@ -1026,28 +1047,17 @@ function cambiarZonaExtraccionCallback(localizacion) {
 												<td height="5" colspan="5"></td>
 											</tr>
 														
-										</table>
+										</table><!-- id="tBoleta1" -->
+
+			
+										
 									</td>
 								</tr>
 								
 										
 							</table>								
-		
-		
-							<table  class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
-								<tr>
-									<td height="5" colspan="5"></td>
-								</tr>
-								<tr>
-									<td colspan="5" class="grisSubtitulo">
-										Agregar Cuotas Nuevas
-									</td>
-								</tr>
-								
-							</table>
-				
-				
-				
+
+
 							<div id="dummy" style="display: none"></div>
 							<div id="divPlanDePagos2"></div>
 							
@@ -1058,7 +1068,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<tr>
 									<td colspan="4">
 										<input id="idBotonAgregarCuota" type="button" value="+" 
-											onclick="javascript:agregarCuota();">
+											onclick="javascript:agregarCuota('');">
 										<input id="idBotonRemoverCuota" disabled="disabled" type="button"
 											value="-" onclick="javascript:removerCuota();"></td>
 								</tr>

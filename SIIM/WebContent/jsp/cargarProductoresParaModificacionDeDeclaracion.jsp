@@ -13,20 +13,22 @@
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <br>
+<div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
+
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 
 		<c:if test="${consulta == null}">
-		<td class="azulAjustado">
-			<c:choose>
-				<c:when test="${titulo != null}">
-					<c:out value="${titulo}"></c:out>
-				</c:when>
-				<c:otherwise>
-					<bean:message key='SIIM.label.ModificacionDeDeclaracion'/>
-				</c:otherwise>
-			</c:choose>			
-		</td>
+			<td class="azulAjustado">
+				<c:choose>
+					<c:when test="${titulo != null}">
+						<c:out value="${titulo}"></c:out>
+					</c:when>
+					<c:otherwise>
+						<bean:message key='SIIM.label.ModificacionDeDeclaracion'/>
+					</c:otherwise>
+				</c:choose>			
+			</td>
 		</c:if>
 		<c:if test="${consulta != null}">
 			<td class="azulAjustado"><bean:message key='SIIM.titulo.ConsultaDeclaracionExtraccion'/></td>

@@ -218,8 +218,8 @@
 			<forward name="exitoCargarProductoresParaModificacionDeDeclaracion" path=".cargarProductoresParaModificacionDeDeclaracion" />
 			<forward name="exitoRecuperarDeclaracionesParaModificar" path="/jsp/bloqueRecuperarDeclaracionesParaModificar.jsp" />
 			<forward name="exitoConsultaDeclaracion" path=".consultaDeclaracionExtraccion" />
-			
-			<forward name="exitoCargarDeclaracionParaPagoBoletas" path=".pagoBoletasDeclaracionExtraccion"/>								
+			<forward name="exitoCargarDeclaracionParaPagoBoletas" path=".pagoBoletasDeclaracionExtraccion"/>
+			<forward name="exitoModificacionDeclaracionExtraccion" path="/declaracionExtraccion.do?metodo=cargarProductoresParaModificacionDeDeclaracion"/>			
 		</action>
 		<!-- FIN DECLARACION EXTRACCION -->
 
