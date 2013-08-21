@@ -394,7 +394,7 @@ function calcularImporteTotal(){
 							</td>
 						</tr>	
 							<tr>
-							<td width="100%" >
+							<td width="100%" colspan="7">
 								&nbsp;
 							</td>
 						</tr>
@@ -600,10 +600,7 @@ function calcularImporteTotal(){
 						<td colspan="4" class="grisSubtituloCenter"><bean:message key='SIIM.label.BoletasDeposito'/></td>
 					</tr>				
 
-					
-							
-							<c:forEach items="${declaracion.volumenes}" var="volumenTrimestre" varStatus="index">									
-								<c:forEach items="${volumenTrimestre.boletas}" var="boletaDeposito" varStatus="index">
+								<c:forEach items="${declaracion.boletas}" var="boletaDeposito" varStatus="index">
 								
 									<tr>								
 										<td colspan="5" class="grisSubtitulo" id="tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>" >
@@ -698,7 +695,6 @@ function calcularImporteTotal(){
 										
 									</tr>									
 								</c:forEach>	
-							</c:forEach>	
 						</td>	
 					</tr>
 				</table>				
@@ -739,7 +735,7 @@ function calcularImporteTotal(){
 		</tr>
 		<tr>
 			<td height="20" colspan="4">
-				<input type="button" class="botonerab" value="Vovler" onclick="javascript:volver();" />
+				<input type="button" class="botonerab" value="Volver" onclick="javascript:volver();" />
 			</td>
 		</tr>
 		<tr>

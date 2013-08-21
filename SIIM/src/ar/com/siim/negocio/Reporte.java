@@ -2,11 +2,14 @@ package ar.com.siim.negocio;
 
 import java.sql.Blob;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
 public class Reporte {
@@ -18,7 +21,8 @@ public class Reporte {
 	@Column(nullable = false)	
 	public String nombreReporte;
 	
-	@Column(nullable = false)	
+	@Lob @Basic(fetch = FetchType.LAZY)
+	@Column(nullable = false, length=100000)	
 	public Blob archivoReporte;
 	
 	public String nombreReportePadre;
