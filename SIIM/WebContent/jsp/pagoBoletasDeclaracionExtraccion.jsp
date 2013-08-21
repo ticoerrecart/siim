@@ -130,7 +130,20 @@ function cerrarVentanaPagoBoleta(){
 	$('#dialogo').dialog( "close" );
 }
 
+function calcularImporteTotal(){
 
+	var vol1 = new Number($('#idTotal1').val()).toFixed(2);
+	var vol2 = new Number($('#idTotal2').val()).toFixed(2);
+	var vol3 = new Number($('#idTotal3').val()).toFixed(2);
+	var vol4 = new Number($('#idTotal4').val()).toFixed(2);
+
+	var volTotal =  parseFloat(new Number(vol1)+new Number(vol2)+new Number(vol3)+new Number(vol4));
+	$('#idVolumenTotal').val(new Number(volTotal).toFixed(2));	
+
+	var regalia = new Number($('#idRegalia').val()).toFixed(2);
+	var importeTotal = parseFloat(new Number(volTotal)*new Number(regalia));
+	$('#idImporteTotal').val(new Number(importeTotal).toFixed(2));
+}
 </script>
 
 <input id="idProductor" type="hidden" value="${declaracionDeExtraccion.entidad.id}">
@@ -388,7 +401,8 @@ function cerrarVentanaPagoBoleta(){
 								<input readonly="readonly" class="botonerab" type="text" value="${declaracionDeExtraccion.getTrimestre(1).volumenTercerMes}" size="15" >		
 							</td>
 							<td>
-								<input readonly="readonly" class="botonerab" type="text" value="${declaracionDeExtraccion.getTrimestre(1).volumenTotal}" size="15" >														
+								<input readonly="readonly" class="botonerab" type="text" value="${declaracionDeExtraccion.getTrimestre(1).volumenTotal}" 
+									size="15" id="idTotal1">														
 							</td>
 							<td>
 								<input readonly="readonly" class="botonerab"  type="text" size="14"
@@ -428,7 +442,7 @@ function cerrarVentanaPagoBoleta(){
 							</td>
 							<td>
 								<input readonly="readonly" class="botonerab" type="text" value="${declaracionDeExtraccion.getTrimestre(2).volumenTotal}" 
-										size="15" >														
+										size="15" id="idTotal2">														
 							</td>
 							<td>
 								<input readonly="readonly" class="botonerab"  type="text" size="14"
@@ -468,7 +482,7 @@ function cerrarVentanaPagoBoleta(){
 							</td>
 							<td>
 								<input readonly="readonly" class="botonerab" type="text" value="${declaracionDeExtraccion.getTrimestre(3).volumenTotal}" 
-										size="15" >														
+										size="15" id="idTotal3">														
 							</td>
 							<td>
 								<input readonly="readonly" class="botonerab"  type="text" size="14"
@@ -508,7 +522,7 @@ function cerrarVentanaPagoBoleta(){
 							</td>
 							<td>
 								<input readonly="readonly" class="botonerab" type="text" value="${declaracionDeExtraccion.getTrimestre(4).volumenTotal}" 
-										size="15" >														
+										size="15" id="idTotal4">														
 							</td>
 							<td>
 								<input readonly="readonly" class="botonerab"  type="text" size="14"
@@ -561,6 +575,9 @@ function cerrarVentanaPagoBoleta(){
 				</div>
 			</td>
 		</tr>
+		<script>
+			calcularImporteTotal();
+		</script>
 
 		<!-- PLAN DE PAGO -->
 		<tr>
@@ -593,110 +610,109 @@ function cerrarVentanaPagoBoleta(){
 					<tr>
 						<td colspan="4">
 	
-							<c:forEach items="${declaracionDeExtraccion.volumenes}" var="volumenTrimestre" varStatus="index">									
-								<c:forEach items="${volumenTrimestre.boletas}" var="boletaDeposito" varStatus="index">
+							<c:forEach items="${declaracionDeExtraccion.boletas}" var="boletaDeposito" varStatus="index">									
 								
-									<tr onclick="$('#idTrBoleta<c:out value='${boletaDeposito.numero}'/>').toggle();">								
-										<td colspan="5" class="grisSubtitulo" id="tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>" 									
-											onmouseover="javascript:pintarFila('tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>');"
-											onmouseout="javascript:despintarFila('tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>');">
-											Boleta de Deposito n° <c:out value="${boletaDeposito.numero}"></c:out>
-										</td>
-									</tr>						
-								
-									<tr id="idTrBoleta${boletaDeposito.numero}" style="display: none">
-										<td colspan="4">								
-										
-											<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
-												<tr>
-													<td height="5" colspan="5"></td>
-												</tr>
-												<tr>
-													<td width="10%" class="botoneralNegritaRight">
-														<bean:message key='SIIM.label.BoletaDeposito'/>
-													</td>
-													<td width="35%" align="left">
-														<input value="${boletaDeposito.numero}" class="botonerab" type="text"
-															   size="20" readonly="readonly">
-													</td>
-													<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIM.label.RazonSocial'/></td>
-													<td width="40%" align="left" colspan="2">
-														<input value="${declaracionDeExtraccion.localizacion.razonSocial}"
-															   class="botonerab" type="text" size="40" readonly="readonly">
-													</td>
-												</tr>
-												<tr>
-													<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Concepto'/></td>
-													<td colspan="4" align="left">
-														<input value="${boletaDeposito.concepto}" class="botonerab" type="text" size="94"
-														 	   readonly="readonly">
-													</td>
-												</tr>
-												<tr>
-													<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Area'/></td>
-													<td colspan="4" align="left">
-														<input value="${boletaDeposito.area}" class="botonerab" type="text" size="94"
-															   readonly="readonly">
-													</td>
-												</tr>
-												<tr>
-													<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.EfectivoCheque'/></td>
-													<td width="35%" align="left">
-														<input value="${boletaDeposito.efectivoCheque}" class="botonerab"
-															   type="text" size="20" readonly="readonly">
-													</td>
-													<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Monto$'/></td>
-													<td width="40%" align="left" colspan="2">
-														<input value="${boletaDeposito.monto}" class="botonerab" type="text"
-															   size="20" readonly="readonly">
-													</td>
-												</tr>
-												<tr>
-													<td width="10%" class="botoneralNegritaRight">
-														<bean:message key='SIIM.label.FechaVencimiento'/>
-													</td>
-													<td width="35%" align="left">
-														<input type="text" readonly="readonly" class="botonerab" size="17"
-															   value="<c:out value='${boletaDeposito.fechaVencimientoStr}'/>">
-														<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-															 align="top" width='17' height='21'>		
-													</td>
-													<td width="15%" class="botoneralNegritaRight">
-														<bean:message key='SIIM.label.FechaPago'/>
-													</td>
-													<td width="23%" align="left">
-														<input type="text" id="idFechaPago${boletaDeposito.id}" readonly="readonly" class="botonerab" size="17"
-															   value="<c:out value='${boletaDeposito.fechaPagoStr}'/>">
-														<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-															 align="top" width='17' height='21'>																						
-													</td>										
-													<c:choose>
-														<c:when test="${boletaDeposito.fechaPago ==null}">
-															<td id="idEstadoBoleta${boletaDeposito.id}" width="17%" class="rojoAdvertenciaLeft">
-																<bean:message key='SIIM.label.NOPAGADA'/>
-															</td>		
-														</c:when>
-														<c:otherwise>
-															<td id="idEstadoBoleta${boletaDeposito.id}" width="17%" class="verdeExitoLeft">
-																<bean:message key='SIIM.label.PAGADA'/>
-															</td>
-														</c:otherwise>
-													</c:choose>																						
-												</tr>
-												<tr>
-													<td height="5" colspan="5"></td>
-												</tr>
-											</table>
-										</td>
-										<td>
-											<c:if test="${boletaDeposito.fechaPago ==null}">
-												<input id="idBotonPago<c:out value='${boletaDeposito.id}'></c:out>"
-													   type="button" value="Registrar Pago" class="botonerab" 
-													   onclick="registrarPagoSeleccionarFecha('${boletaDeposito.id}','${boletaDeposito.numero}')">
-											</c:if>	
-										</td>
-									</tr>									
-								</c:forEach>	
+								<tr onclick="$('#idTrBoleta<c:out value='${boletaDeposito.numero}'/>').toggle();">								
+									<td colspan="5" class="grisSubtitulo" id="tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>" 									
+										onmouseover="javascript:pintarFila('tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>');"
+										onmouseout="javascript:despintarFila('tdBoleta<c:out value='${boletaDeposito.numero}'></c:out>');">
+										Boleta de Deposito n° <c:out value="${boletaDeposito.numero}"></c:out>
+									</td>
+								</tr>						
+							
+								<tr id="idTrBoleta${boletaDeposito.numero}" style="display: none">
+									<td colspan="4">								
+									
+										<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+											<tr>
+												<td height="5" colspan="5"></td>
+											</tr>
+											<tr>
+												<td width="10%" class="botoneralNegritaRight">
+													<bean:message key='SIIM.label.BoletaDeposito'/>
+												</td>
+												<td width="35%" align="left">
+													<input value="${boletaDeposito.numero}" class="botonerab" type="text"
+														   size="20" readonly="readonly">
+												</td>
+												<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIM.label.RazonSocial'/></td>
+												<td width="40%" align="left" colspan="2">
+													<input value="${declaracionDeExtraccion.localizacion.razonSocial}"
+														   class="botonerab" type="text" size="40" readonly="readonly">
+												</td>
+											</tr>
+											<tr>
+												<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Concepto'/></td>
+												<td colspan="4" align="left">
+													<input value="${boletaDeposito.concepto}" class="botonerab" type="text" size="94"
+													 	   readonly="readonly">
+												</td>
+											</tr>
+											<tr>
+												<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Area'/></td>
+												<td colspan="4" align="left">
+													<input value="${boletaDeposito.area}" class="botonerab" type="text" size="94"
+														   readonly="readonly">
+												</td>
+											</tr>
+											<tr>
+												<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.EfectivoCheque'/></td>
+												<td width="35%" align="left">
+													<input value="${boletaDeposito.efectivoCheque}" class="botonerab"
+														   type="text" size="20" readonly="readonly">
+												</td>
+												<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Monto$'/></td>
+												<td width="40%" align="left" colspan="2">
+													<input value="${boletaDeposito.monto}" class="botonerab" type="text"
+														   size="20" readonly="readonly">
+												</td>
+											</tr>
+											<tr>
+												<td width="10%" class="botoneralNegritaRight">
+													<bean:message key='SIIM.label.FechaVencimiento'/>
+												</td>
+												<td width="35%" align="left">
+													<input type="text" readonly="readonly" class="botonerab" size="17"
+														   value="<c:out value='${boletaDeposito.fechaVencimientoStr}'/>">
+													<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+														 align="top" width='17' height='21'>		
+												</td>
+												<td width="15%" class="botoneralNegritaRight">
+													<bean:message key='SIIM.label.FechaPago'/>
+												</td>
+												<td width="23%" align="left">
+													<input type="text" id="idFechaPago${boletaDeposito.id}" readonly="readonly" class="botonerab" size="17"
+														   value="<c:out value='${boletaDeposito.fechaPagoStr}'/>">
+													<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+														 align="top" width='17' height='21'>																						
+												</td>										
+												<c:choose>
+													<c:when test="${boletaDeposito.fechaPago ==null}">
+														<td id="idEstadoBoleta${boletaDeposito.id}" width="17%" class="rojoAdvertenciaLeft">
+															<bean:message key='SIIM.label.NOPAGADA'/>
+														</td>		
+													</c:when>
+													<c:otherwise>
+														<td id="idEstadoBoleta${boletaDeposito.id}" width="17%" class="verdeExitoLeft">
+															<bean:message key='SIIM.label.PAGADA'/>
+														</td>
+													</c:otherwise>
+												</c:choose>																						
+											</tr>
+											<tr>
+												<td height="5" colspan="5"></td>
+											</tr>
+										</table>
+									</td>
+									<td>
+										<c:if test="${boletaDeposito.fechaPago ==null}">
+											<input id="idBotonPago<c:out value='${boletaDeposito.id}'></c:out>"
+												   type="button" value="Registrar Pago" class="botonerab" 
+												   onclick="registrarPagoSeleccionarFecha('${boletaDeposito.id}','${boletaDeposito.numero}')">
+										</c:if>	
+									</td>
+								</tr>									
+
 							</c:forEach>	
 						</td>	
 					</tr>
