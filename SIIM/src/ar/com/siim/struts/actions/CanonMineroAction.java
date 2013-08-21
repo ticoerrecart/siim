@@ -211,9 +211,10 @@ public class CanonMineroAction extends ValidadorAction {
 						"Productor", error);
 
 				ok1 = Validator.validarLocalizacionRequerido(
-						String.valueOf(canon.getZonaExtraccion().getId()),
-						error);
-
+						canon.getZonaExtraccion().getId() == null ? null
+								: canon.getZonaExtraccion().getId().toString(),
+						error);				
+				
 				ok2 = Validator.validarDoubleMayorQue(0,
 						String.valueOf(canon.getMontoTotal()), "Monto Total",
 						error);

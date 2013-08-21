@@ -32,6 +32,7 @@
 					<td width="40%" align="left">
 						<input name='<%="boletasDeposito["+(i-1)+"].numero"%>' class="botonerab" type="text" 
 							size="20" onkeypress="javascript:esNumerico(event);">
+						<font class="rojoAdvertencia">*</font>	
 					</td>
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
 					<td width="40%" align="left">
@@ -62,6 +63,7 @@
 					<td width="40%" align="left">
 						<input name='<%="boletasDeposito["+(i-1)+"].monto"%>' class="botonerab" type="text" 
 							size="20" onkeypress="javascript:esNumericoConDecimal(event);">
+						<font class="rojoAdvertencia">*</font>	
 					</td>
 				</tr>
 				<tr>
@@ -71,7 +73,7 @@
 								name='<%="boletasDeposito["+(i-1)+"].fechaVencimiento"%>'>
 						<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 							align="top" width='17' height='21'>															
-				
+						<font class="rojoAdvertencia">*</font>
 					</td>
 				</tr>
 				<tr>

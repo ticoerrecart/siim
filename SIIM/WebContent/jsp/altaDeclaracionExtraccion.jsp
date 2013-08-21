@@ -407,12 +407,12 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
-
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Numero'/></td>
 			<td width="30%" align="left">
 				<input id="nroDeclaracion" name="declaracion.numero" class="botonerab" type="text" size="20"
 						onkeypress="javascript:esNumerico(event);" value="${declaracionDeExtraccion.numero}">
+				<font class="rojoAdvertencia">*</font>	
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
 			<td align="left">
@@ -435,7 +435,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								</c:choose>
 							</c:forEach>
 						</select>
-					
+						<font class="rojoAdvertencia">*</font>	
 					</c:when>
 
 					<c:otherwise>
@@ -452,6 +452,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			<td width="30%" align="left">
 				<input id="datepicker" type="text" name="declaracion.fecha" readonly="readonly" class="botonerab" value="${declaracionDeExtraccion.fecha}">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
+				<font class="rojoAdvertencia">*</font>					
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.AnioDeclaracion'/></td>
 			<td align="left">
@@ -472,7 +473,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
-						</select>
+						</select>						
 					</c:when>
 					
 					<c:otherwise>
@@ -561,6 +562,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 									<select id="idZonaExtraccion" name="declaracion.localizacion.id" class="botonerab" disabled="disabled" onchange="cambiarZonaExtraccion();">
 										<option value="-1">--Seleccione una Zona--</option>
 									</select>
+									<font class="rojoAdvertencia">*</font>
 								</c:when>
 								
 								<c:otherwise>
@@ -903,6 +905,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 																size="20" onkeypress="javascript:esNumerico(event);" value="${boletas[0].numero}">
 														</c:otherwise>
 													</c:choose>
+													<font class="rojoAdvertencia">*</font>
 												</td>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIM.label.Productor'/>
@@ -976,6 +979,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 																size="20" onkeypress="javascript:esNumericoConDecimal(event);" value="${boletas[0].monto}">
 														</c:otherwise>
 													</c:choose>
+													<font class="rojoAdvertencia">*</font>
 												</td>
 												<td>&nbsp;</td>
 											</tr>
@@ -986,7 +990,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 															name='<%="boletasDeposito[0].fechaVencimiento"%>' value="${boletas[0].fechaVencimientoStr}">
 													<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 														align="top" width='17' height='21'>															
-			
+													<font class="rojoAdvertencia">*</font>
 												</td>
 												<c:if test="${boletas[0].fechaPago==null}">
 													<script>
@@ -1022,13 +1026,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 												<td height="5" colspan="5"></td>
 											</tr>
 														
-										</table><!-- id="tBoleta1" -->
-
-										<!--c:if test="${boletas[0].fechaPago==null && modificacion=='S'}">
-											<input id="idBotonEliminarCuota1" type="button"	value="-" onclick="javascript:eliminarCuota(1);">
-											<input style="display: none" id="idBotonRestituirCuota1" type="button"	value="+" onclick="javascript:restituirCuota(1);">
-										</c:if-->
-										
+										</table>
 									</td>
 								</tr>
 								
@@ -1105,11 +1103,11 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						
 					</c:forEach>
 				</select>				
-				
+				<font class="rojoAdvertencia">*</font>
 			</td>
 			<td width="30%" class="botoneralNegritaRight">&nbsp;</td>
 			<td align="left">
-				&nbsp;
+				<font class="rojoAdvertenciaChico">* Campos Obligatorios</font>	
 			</td>
 		</tr>
 		<tr>
