@@ -874,7 +874,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 					</tr>
 					<tr>
 						<td colspan="5">
-							<table border="0" class="cuadrado" align="center" width="100%" cellpadding="2">
+							<table border="0" class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
 								<input type="hidden" name="boletasDeposito[0].anulado" value="false"/>
 								<input type="hidden" name="boletasDeposito[0].idBoleta" value="${boletas[0].id}"/>
 
@@ -888,12 +888,15 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								
 								<tr id="idTrBoleta${boletas[0].numero}">
 									<td>
-										<table id="tBoleta1" border="0" align="center" width="100%" cellpadding="2">
+										<table id="tBoleta1" border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+											<tr>
+												<td height="5" colspan="5"></td>
+											</tr>										
 											<tr>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIM.label.NroBoleta'/>
 												</td>
-												<td width="40%" align="left">
+												<td width="35%" align="left">
 													<c:choose>
 														<c:when test="${boletas[0].fechaPago!=null}">
 															<input name="boletasDeposito[0].numero" class="botonerab" type="text" readonly="readonly"
@@ -906,13 +909,12 @@ function cambiarZonaExtraccionCallback(localizacion) {
 													</c:choose>
 													<font class="rojoAdvertencia">*</font>
 												</td>
-												<td width="10%" class="botoneralNegritaRight">
+												<td width="15%" class="botoneralNegritaRight">
 													<bean:message key='SIIM.label.Productor'/>
 												</td>
-												<td width="40%" align="left">
+												<td width="40%" align="left" colspan="2">
 													<input id="idProductor0" value="" class="botonerab" type="text" size="40" readonly="readonly">
 												</td>
-												<td>&nbsp;</td>
 											</tr>
 											<tr>
 												<td width="10%" class="botoneralNegritaRight">
@@ -952,7 +954,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIM.label.EfectivoCheque'/>
 												</td>
-												<td width="40%" align="left">
+												<td width="35%" align="left">
 													<c:choose>
 														<c:when test="${boletas[0].fechaPago!=null}">
 															<input name="boletasDeposito[0].efectivoCheque" class="botonerab" readonly="readonly" 
@@ -964,10 +966,10 @@ function cambiarZonaExtraccionCallback(localizacion) {
 														</c:otherwise>
 													</c:choose>
 												</td>
-												<td width="10%" class="botoneralNegritaRight">
+												<td width="15%" class="botoneralNegritaRight">
 													<bean:message key='SIIM.label.Monto$'/>
 												</td>
-												<td width="40%" align="left">
+												<td width="40%" align="left" colspan="2">
 													<c:choose>
 														<c:when test="${boletas[0].fechaPago!=null}">
 															<input name="boletasDeposito[0].monto" class="botonerab" type="text" readonly="readonly"
@@ -980,11 +982,10 @@ function cambiarZonaExtraccionCallback(localizacion) {
 													</c:choose>
 													<font class="rojoAdvertencia">*</font>
 												</td>
-												<td>&nbsp;</td>
 											</tr>
 											<tr>
 												<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaVencimiento'/></td>
-												<td align="left">
+												<td align="left" width="35%">
 													<input id="datepicker0" type="text" readonly="readonly" class="botonerab"
 															name='<%="boletasDeposito[0].fechaVencimiento"%>' value="${boletas[0].fechaVencimientoStr}">
 													<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
@@ -998,11 +999,11 @@ function cambiarZonaExtraccionCallback(localizacion) {
 												</c:if>
 												
 												<c:choose>
-													<c:when test="${modificacion=='S' && fechaDePago!=null}">">
+													<c:when test="${modificacion=='S' && boletas[0].fechaPago!=null}">">
 														<td width="15%" class="botoneralNegritaRight">
 															<bean:message key='SIIM.label.FechaPago'/>
 														</td>
-														<td width="23%" align="left">
+														<td width="40%" align="left">
 															<input type="text" id="idFechaPago${boletas[0].id}" readonly="readonly" class="botonerab" size="17"
 																   value="<c:out value='${boletas[0].fechaPagoStr}'/>">
 															<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
@@ -1013,7 +1014,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 														<td width="15%" class="botoneralNegritaRight">
 															&nbsp;
 														</td>
-														<td width="23%" align="left">
+														<td width="40%" align="left">
 															&nbsp;
 														</td>
 													</c:otherwise>
@@ -1023,12 +1024,12 @@ function cambiarZonaExtraccionCallback(localizacion) {
 													<c:when test="${modificacion=='S'}">
 														<c:choose>
 															<c:when test="${boletas[0].fechaPago==null}">
-																<td id="idEstadoBoleta${boletas[0].id}" width="17%" class="rojoAdvertenciaLeft">
+																<td id="idEstadoBoleta${boletas[0].id}" class="rojoAdvertenciaLeft">
 																	<bean:message key='SIIM.label.NOPAGADA'/>
 																</td>		
 															</c:when>
 															<c:otherwise>
-																<td id="idEstadoBoleta${boletas[0].id}" width="17%" class="verdeExitoLeft">
+																<td id="idEstadoBoleta${boletas[0].id}" class="verdeExitoLeft">
 																	<bean:message key='SIIM.label.PAGADA'/>
 																</td>
 															</c:otherwise>
