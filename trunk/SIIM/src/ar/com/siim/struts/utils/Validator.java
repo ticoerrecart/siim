@@ -615,10 +615,17 @@ public abstract class Validator {
 			List<TrimestreDeclaracionDeExtraccionDTO> trimestres,
 			StringBuffer pError) {
 		boolean trimestresNulos = true;
+		boolean fechasValidas = true;
 		for (TrimestreDeclaracionDeExtraccionDTO trimestreDTO : trimestres) {
 			if (trimestreDTO.getVolumenPrimerMes() != 0
 					|| trimestreDTO.getVolumenSegundoMes() != 0
 					|| trimestreDTO.getVolumenTercerMes() != 0) {
+				fechasValidas = fechasValidas
+						&& Validator.requerido(
+								trimestreDTO.getFechaVencimiento(),
+								"La fecha de Vencimiento del Trimestre Nro."
+										+ trimestreDTO.getNroTrimestre(),
+								pError);
 				trimestresNulos = false;
 				break;
 			}
@@ -627,6 +634,6 @@ public abstract class Validator {
 		if (trimestresNulos) {
 			addErrorXML(pError, "Debe ingresar algún Trimestre");
 		}
-		return !trimestresNulos;
+		return !trimestresNulos && fechasValidas;
 	}
 }

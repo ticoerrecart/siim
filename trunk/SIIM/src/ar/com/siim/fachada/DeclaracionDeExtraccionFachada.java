@@ -185,22 +185,27 @@ public class DeclaracionDeExtraccionFachada implements
 			}
 
 			// Trimestres.
-			boolean existeTrimestre = true;
-			for (TrimestreDeclaracionDeExtraccionDTO trimestreDTO : trimestres) {
-				for (TrimestreDeclaracionDeExtraccion trimestre : declaracionDeExtraccion
-						.getTrimestres()) {
-					if (trimestreDTO.getNroTrimestre() == trimestre
-							.getNroTrimestre()) {
-						existeTrimestre = true;
-						break;
-					}
-				}
-				if (!existeTrimestre) {
-					TrimestreDeclaracionDeExtraccion trimestreNuevo = ProviderDominio
-							.getTrimestreDeclaracionDeExtraccion(trimestreDTO,
-									tipoProducto, declaracionDeExtraccion);
-					declaracionDeExtraccion.addTrimestre(trimestreNuevo);
 
+			for (TrimestreDeclaracionDeExtraccionDTO trimestreDTO : trimestres) {
+				boolean encontreTrimestre = false;
+				if (!trimestreDTO.esNulo()) {
+					for (TrimestreDeclaracionDeExtraccion trimestre : declaracionDeExtraccion
+							.getTrimestres()) {
+						encontreTrimestre = trimestreDTO.getNroTrimestre()
+								.intValue() == trimestre.getNroTrimestre()
+								.intValue();
+						if (encontreTrimestre) {
+							break;
+						}
+					}
+
+					if (!encontreTrimestre) {
+						TrimestreDeclaracionDeExtraccion trimestreNuevo = ProviderDominio
+								.getTrimestreDeclaracionDeExtraccion(
+										trimestreDTO, tipoProducto,
+										declaracionDeExtraccion);
+						declaracionDeExtraccion.addTrimestre(trimestreNuevo);
+					}
 				}
 			}
 			declaracionDeExtraccionDAO.modificacionDeclaracionExtraccion(
