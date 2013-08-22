@@ -16,7 +16,7 @@
 	}
 %>
 
-<table id="idTable<%=i%>" border="0" class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
+<table id="idTable<%=i%>" border="0" class="cuadradoSinBorde" align="center" width="90%" cellpadding="2">
 	<input type="hidden" name="boletasDeposito[<%=(i-1)%>].anulado" value="false"/>
 
 	<tr id="idTrBoletaEspacio<%=i%>">
@@ -76,7 +76,7 @@
 				<tr>
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaVencimiento'/></td>
 					<td colspan="3" align="left">
-						<input id="datepicker<%=i-1%>" type="text" readonly="readonly" class="botonerab" 
+						<input id="datepicker<%=i%>" type="text" readonly="readonly" class="botonerab" 
 								name='<%="boletasDeposito["+(i-1)+"].fechaVencimiento"%>' >
 						<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 							align="top" width='17' height='21'>															

@@ -25,8 +25,8 @@ public class TrimestreDeclaracionDeExtraccionDTO {
 	}
 
 	public boolean esNulo() {
-		return volumenPrimerMes == 0 && volumenSegundoMes == 0
-				&& volumenTercerMes == 0;
+		return volumenPrimerMes == 0.0 && volumenSegundoMes == 0.0
+				&& volumenTercerMes == 0.0;
 	}
 
 	public Long getId() {

@@ -138,10 +138,11 @@ function agregarCuota(){
 				document.getElementById(i).innerHTML = document.getElementById("dummy").innerHTML;
 				document.getElementById("dummy").innerHTML = "";
 
-				var ind = indice-1;
+				var ind = indice;
 				var indiceDate = "#datepicker"+ind;
+
 				$( indiceDate ).datepicker({ dateFormat: 'dd/mm/yy'});
-				
+
 				document.getElementById("idBotonRemoverCuota").disabled="";
 				indice++;													
 			}								
@@ -312,7 +313,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			}
 			cambiarProductor();
 			cambiarZonaExtraccion();
-
+			cambioPeriodo();
 		}
 	}
 	
@@ -893,7 +894,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 										
 										<tr id="idTrBoleta1">
 											<td>
-												<table id="tBoleta1" border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+												<table id="tBoleta1" border="0" class="cuadrado" align="center" width="100%" cellpadding="2">
 													<tr>
 														<td height="5" colspan="5"></td>
 													</tr>										
@@ -956,7 +957,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 														<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaVencimiento'/></td>
 														<td align="left" width="35%">
 															<input id="datepicker0" type="text" readonly="readonly" class="botonerab"
-																	name='<%="boletasDeposito[0].fechaVencimiento"%>'>
+																	name="boletasDeposito[0].fechaVencimiento">
 															<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 																align="top" width='17' height='21'>															
 															<font class="rojoAdvertencia">*</font>
@@ -1020,11 +1021,11 @@ function cambiarZonaExtraccionCallback(localizacion) {
 															<td width="35%" align="left">
 																<c:choose>
 																	<c:when test="${boleta.fechaPago!=null}">
-																		<input name="boletasDeposito[${status.count}].numero" class="botonerab" type="text" readonly="readonly"
+																		<input name="boletasDeposito[${status.index}].numero" class="botonerab" type="text" readonly="readonly"
 																			size="20" onkeypress="javascript:esNumerico(event);" value="${boleta.numero}">
 																	</c:when>
 																	<c:otherwise>
-																		<input name="boletasDeposito[${status.count}].numero" class="botonerab" type="text"
+																		<input name="boletasDeposito[${status.index}].numero" class="botonerab" type="text"
 																			size="20" onkeypress="javascript:esNumerico(event);" value="${boleta.numero}">
 																	</c:otherwise>
 																</c:choose>
@@ -1044,11 +1045,11 @@ function cambiarZonaExtraccionCallback(localizacion) {
 															<td colspan="4" align="left">
 																<c:choose>
 																	<c:when test="${boleta.fechaPago!=null}">
-																		<input name="boletasDeposito[${status.count}].concepto" class="botonerab" type="text" size="90" readonly="readonly"
+																		<input name="boletasDeposito[${status.index}].concepto" class="botonerab" type="text" size="90" readonly="readonly"
 																			value="Aforo" value="${boleta.concepto}">
 																	</c:when>
 																	<c:otherwise>
-																		<input name="boletasDeposito[${status.count}].concepto" class="botonerab" type="text" size="90"
+																		<input name="boletasDeposito[${status.index}].concepto" class="botonerab" type="text" size="90"
 																		value="Aforo" value="${boleta.concepto}">
 																	</c:otherwise>
 																</c:choose>
@@ -1061,11 +1062,11 @@ function cambiarZonaExtraccionCallback(localizacion) {
 															<td colspan="4" align="left">
 																<c:choose>
 																	<c:when test="${boleta.fechaPago!=null}">
-																		<input name="boletasDeposito[${status.count}].area" class="botonerab" type="text" size="90" readonly="readonly" 
+																		<input name="boletasDeposito[${status.index}].area" class="botonerab" type="text" size="90" readonly="readonly" 
 																				value="Dirección General de Minería" value="${boleta.area}">
 																	</c:when>
 																	<c:otherwise>
-																		<input name="boletasDeposito[${status.count}].area" class="botonerab" type="text" size="90" 
+																		<input name="boletasDeposito[${status.index}].area" class="botonerab" type="text" size="90" 
 																				value="Dirección General de Minería" value="${boleta.area}">
 																	</c:otherwise>
 																</c:choose>
@@ -1078,11 +1079,11 @@ function cambiarZonaExtraccionCallback(localizacion) {
 															<td width="35%" align="left">
 																<c:choose>
 																	<c:when test="${boleta.fechaPago!=null}">
-																		<input name="boletasDeposito[${status.count}].efectivoCheque" class="botonerab" readonly="readonly" 
+																		<input name="boletasDeposito[${status.index}].efectivoCheque" class="botonerab" readonly="readonly" 
 																			type="text" size="20" onkeypress="javascript:esAlfaNumerico(event);" value="${boleta.efectivoCheque}">
 																	</c:when>
 																	<c:otherwise>
-																		<input name="boletasDeposito[${status.count}].efectivoCheque" class="botonerab" 
+																		<input name="boletasDeposito[${status.index}].efectivoCheque" class="botonerab" 
 																			type="text" size="20" onkeypress="javascript:esAlfaNumerico(event);" value="${boleta.efectivoCheque}">
 																	</c:otherwise>
 																</c:choose>
@@ -1093,11 +1094,11 @@ function cambiarZonaExtraccionCallback(localizacion) {
 															<td width="40%" align="left" colspan="2">
 																<c:choose>
 																	<c:when test="${boleta.fechaPago!=null}">
-																		<input name="boletasDeposito[${status.count}].monto" class="botonerab" type="text" readonly="readonly"
+																		<input name="boletasDeposito[${status.index}].monto" class="botonerab" type="text" readonly="readonly"
 																			size="20" onkeypress="javascript:esNumericoConDecimal(event);" value="${boleta.monto}">
 																	</c:when>
 																	<c:otherwise>
-																		<input name="boletasDeposito[${status.count}].monto" class="botonerab" type="text"
+																		<input name="boletasDeposito[${status.index}].monto" class="botonerab" type="text"
 																			size="20" onkeypress="javascript:esNumericoConDecimal(event);" value="${boleta.monto}">
 																	</c:otherwise>
 																</c:choose>
@@ -1108,7 +1109,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 															<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaVencimiento'/></td>
 															<td align="left" width="35%">
 																<input id="datepicker${status.count}" type="text" readonly="readonly" class="botonerab"
-																		name='<%="boletasDeposito[${status.count}].fechaVencimiento"%>' value="${boleta.fechaVencimientoStr}">
+																		name="boletasDeposito[${status.index}].fechaVencimiento" value="${boleta.fechaVencimientoStr}">
 																<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 																	align="top" width='17' height='21'>															
 																<font class="rojoAdvertencia">*</font>
@@ -1157,30 +1158,27 @@ function cambiarZonaExtraccionCallback(localizacion) {
 																				
 														</tr>
 														
-														<tr>
-															<td height="5" colspan="5">
-																<c:choose>
-																	<c:when test="${boleta.fechaPago==null}">
-																		<input id="idBotonEliminarCuota${status.count}" type="button"	value="-" onclick="javascript:eliminarCuota(${status.count});">
-																		<input style="display: none" id="idBotonRestituirCuota${status.count}" type="button"	value="+" onclick="javascript:restituirCuota(${status.count});">
-																	</c:when>
-																	<c:otherwise>
-																		&nbsp;
-																	</c:otherwise>
-																</c:choose>
-															</td>
-														</tr>
-																	
 													</table><!-- id="tBoletaN" -->
+												</td>
+											</tr>
+											
+											<tr>
+												<td height="5" colspan="5">
+													<c:choose>
+														<c:when test="${boleta.fechaPago==null}">
+															<input id="idBotonEliminarCuota${status.count}" type="button"	value="-" onclick="javascript:eliminarCuota(${status.count});">
+															<input style="display: none" id="idBotonRestituirCuota${status.count}" type="button"	value="+" onclick="javascript:restituirCuota(${status.count});">
+														</c:when>
+														<c:otherwise>
+															&nbsp;
+														</c:otherwise>
+													</c:choose>
 												</td>
 											</tr>
 										</table>								
 									</td>
 								</tr>
 								
-								<script>
-									indice++;
-								</script>
 							</c:forEach>
 						</c:otherwise>
 						
@@ -1245,7 +1243,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		</tr>
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Localidad'/></td>
-			<td width="30%" align="left">				
+			<td width="30%" align="left">
 				<select id="idLocalidad" class="botonerab" name="declaracion.localidad.id">
 					<option value="-1">- Seleccione una Localidad -</option>
 					<c:forEach items="${localidades}" var="localidad">
