@@ -21,6 +21,7 @@ import ar.com.siim.negocio.Entidad;
 import ar.com.siim.negocio.Localidad;
 import ar.com.siim.negocio.Localizacion;
 import ar.com.siim.negocio.TipoProducto;
+import ar.com.siim.negocio.TrimestreDeclaracionDeExtraccion;
 import ar.com.siim.negocio.Usuario;
 import ar.com.siim.negocio.exception.NegocioException;
 import ar.com.siim.providers.ProviderDominio;
@@ -130,6 +131,9 @@ public class DeclaracionDeExtraccionFachada implements
 			Localidad localidad = localidadDAO.getLocalidadPorId(declaracionDTO
 					.getLocalidad().getId());
 
+			TipoProducto tipoProducto = tipoProductoDAO
+					.recuperarTipoProducto(1L);
+
 			declaracionDeExtraccion.setLocalidad(localidad);
 			declaracionDeExtraccion.setNumero(declaracionDTO.getNumero());
 			declaracionDeExtraccion.setFecha(declaracionDTO.getFecha());
@@ -180,6 +184,25 @@ public class DeclaracionDeExtraccionFachada implements
 				}
 			}
 
+			// Trimestres.
+			boolean existeTrimestre = true;
+			for (TrimestreDeclaracionDeExtraccionDTO trimestreDTO : trimestres) {
+				for (TrimestreDeclaracionDeExtraccion trimestre : declaracionDeExtraccion
+						.getTrimestres()) {
+					if (trimestreDTO.getNroTrimestre() == trimestre
+							.getNroTrimestre()) {
+						existeTrimestre = true;
+						break;
+					}
+				}
+				if (!existeTrimestre) {
+					TrimestreDeclaracionDeExtraccion trimestreNuevo = ProviderDominio
+							.getTrimestreDeclaracionDeExtraccion(trimestreDTO,
+									tipoProducto, declaracionDeExtraccion);
+					declaracionDeExtraccion.addTrimestre(trimestreNuevo);
+
+				}
+			}
 			declaracionDeExtraccionDAO.modificacionDeclaracionExtraccion(
 					declaracionDeExtraccion, boletasABorrar);
 		} else {
