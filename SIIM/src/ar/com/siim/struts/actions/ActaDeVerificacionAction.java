@@ -105,7 +105,9 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 			boolean ok5 = true;
 			boolean ok6 = true;
 			boolean ok7 = true;
-
+			boolean ok8 = true;
+			boolean ok9 = true;
+			
 			ok = Validator.validarLongMayorQue(0, Long.toString(actaForm.getActa().getNumero()), "Número de Acta", error);
 
 			if (ok) {
@@ -116,9 +118,11 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 				}
 			}
 
-			ok2 = Validator.requerido(actaForm.getActa().getAgenteVerificacion(), "Agente Verificación", error);
-			ok3 = Validator.requerido(actaForm.getActa().getTransporte().getDominio(), "Dominio del Transporte", error);
-			ok4 = Validator.validarComboRequeridoSinNull("-1",String.valueOf(actaForm.getActa().getYacimiento().getId()),"Yacimiento",error);
+			ok8 = Validator.validarComboRequeridoSinNull("-1",String.valueOf(actaForm.getActa().getProductor().getId()), "Productor", error);
+			ok9 = Validator.requerido(actaForm.getActa().getFechaVerificacion(), "Fecha Verificación", error);
+			ok2 = Validator.validarComboRequeridoSinNull("-1",actaForm.getActa().getAgenteVerificacion(), "Agente Verificación", error);
+			ok4 = Validator.validarComboRequeridoSinNull("-1",String.valueOf(actaForm.getActa().getYacimiento().getId()),"Razón Social",error);
+			ok3 = Validator.requerido(actaForm.getActa().getTransporte().getDominio(), "Dominio del Transporte", error);			
 			ok5 = Validator.validarEnteroMayorQue(0, String.valueOf(actaForm.getActa().getNumeroDeRemito()), "Numero de Remito", error);
 			ok6 = Validator.validarComboRequeridoSinNull("-1",String.valueOf(actaForm.getActa().getDestino().getId()), "Localidad Destino", error);
 			
@@ -127,7 +131,7 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 				ok7 = false;
 			}
 			
-			return ok && ok2 && ok3 && ok4 && ok5 && ok6 && ok7;
+			return ok && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9;
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);

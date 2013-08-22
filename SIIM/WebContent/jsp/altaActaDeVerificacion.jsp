@@ -245,6 +245,7 @@ function calcularVolTotal(){
 			<td width="35%" align="left">
 				<input name="acta.numero" class="botonerab" type="text" size="20" 
 						onkeypress="javascript:esNumerico(event);">
+				<font class="rojoAdvertencia">*</font>
 			</td>
 			<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Productor'/></td>
 			<td width="35%" align="left">
@@ -255,7 +256,8 @@ function calcularVolTotal(){
 							<c:out value="${prod.nombre}"></c:out>
 						</option>
 					</c:forEach>
-				</select>				
+				</select>
+				<font class="rojoAdvertencia">*</font>				
 			</td>
 		</tr>
 
@@ -264,6 +266,7 @@ function calcularVolTotal(){
 			<td width="35%" align="left">
 				<input id="datepicker" type="text" name="acta.fechaVerificacion" readonly="readonly" class="botonerab">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
+				<font class="rojoAdvertencia">*</font>
 			</td>
 
 			<td width="15%" class="botoneralNegritaRight">Area De Verificación</td>
@@ -282,7 +285,8 @@ function calcularVolTotal(){
 							<c:out value="${user.nombreUsuario}"></c:out>
 						</option>
 					</c:forEach>
-				</select>			
+				</select>	
+				<font class="rojoAdvertencia">*</font>		
 			</td>
 
 			<td width="15%" class="botoneralNegritaRight">Area Fiscalizadora</td>
@@ -381,7 +385,8 @@ function calcularVolTotal(){
 						<td align="left">
 							<select id="idZonaExtraccion" class="botonerab" disabled="disabled" name="acta.yacimiento.id" onchange="cambiarZonaExtraccion();">
 								<option value="-1">--Seleccione una Zona--</option>
-							</select>					
+							</select>
+							<font class="rojoAdvertencia">*</font>					
 						</td>						
 					</tr>	
 					<tr>
@@ -430,7 +435,7 @@ function calcularVolTotal(){
 					</tr>			
 					
 					<tr>
-						<td width="12%" class="botoneralNegritaRight">
+						<td width="11%" class="botoneralNegritaRight">
 							Marca
 						</td>
 						<td width="12%" align="left">
@@ -439,8 +444,9 @@ function calcularVolTotal(){
 						<td width="12%" class="botoneralNegritaRight">
 							Dominio
 						</td>
-						<td width="12%"  align="left">
+						<td width="13%"  align="left">
 							<input id="dominio" class="botonerab" type="text" size="15" name="acta.transporte.dominio" />
+							<font class="rojoAdvertencia">*</font>
 						</td>
 						
 						<td width="12%" class="botoneralNegritaRight">
@@ -458,7 +464,7 @@ function calcularVolTotal(){
 					</tr>
 
 					<tr>
-						<td width="12%" class="botoneralNegritaRight">
+						<td width="11%" class="botoneralNegritaRight">
 							Ticket Balanza
 						</td>
 						<td width="12%" align="left">
@@ -467,7 +473,7 @@ function calcularVolTotal(){
 						<td width="12%" class="botoneralNegritaRight">
 							Empresa de Pesaje
 						</td>
-						<td width="12%"  align="left">
+						<td width="13%"  align="left">
 							<input id="dominio" class="botonerab" type="text" size="15" name="acta.transporte.empresaDePesaje" />
 						</td>
 						
@@ -487,7 +493,7 @@ function calcularVolTotal(){
 					</tr>					
 					
 					<tr>
-						<td width="12%" class="botoneralNegritaRight">
+						<td width="11%" class="botoneralNegritaRight">
 							Empresa de Transporte
 						</td>
 						<td width="12%" align="left">
@@ -496,7 +502,7 @@ function calcularVolTotal(){
 						<td width="12%" class="botoneralNegritaRight">
 							Nombre Chofer
 						</td>
-						<td width="12%"  align="left">
+						<td width="13%"  align="left">
 							<input id="dominio" class="botonerab" type="text" size="15" name="acta.transporte.nombreChofer" />
 						</td>
 						
@@ -540,15 +546,16 @@ function calcularVolTotal(){
 						<td width="15%" class="botoneralNegritaRight">
 							Yacimiento de Origen
 						</td>
-						<td width="15%" align="left">
+						<td width="22%" align="left">
 							<input id="idYacimientoOrigen" class="botonerab" type="text" size="15" readonly="readonly">
 						</td>
 						
-						<td width="15%"  class="botoneralNegritaRight">
+						<td width="11%"  class="botoneralNegritaRight">
 							Número de Remito
 						</td>
-						<td width="15%" align="left">
+						<td width="22%" align="left">
 							<input name="acta.numeroDeRemito" class="botonerab" type="text" size="15" />
+							<font class="rojoAdvertencia">*</font>
 						</td>
 						
 						<td width="15%" class="botoneralNegritaRight">
@@ -565,7 +572,7 @@ function calcularVolTotal(){
 						</td>
 									
 						
-						<td width="15">
+						<td width="22">
 							<select id="idProvinciaSelect" class="botonerab" onchange="mostrarLocalidades();">
 								<option value="-1">-Seleccione una Provincia-</option>
 								<c:forEach items="${provincias}" var="provincia" varStatus="i">
@@ -574,17 +581,19 @@ function calcularVolTotal(){
 									</option>						
 								</c:forEach>							
 							</select>
+							<font class="rojoAdvertencia">*</font>
 						</td>
 					
-						<td width="15%" class="botoneralNegritaRight">
+						<td width="11%" class="botoneralNegritaRight">
 							<bean:message key='SIIM.label.LocalidadDestino'/>
 						</td>
 
-						<td width="15%" align="left">
+						<td width="22%" align="left">
 							<select id="idLocalidadSelect" class="botonerab" disabled="disabled" 
 									name="acta.destino.id">
 								<option value="-1">-Seleccione una Localidad-</option>
-							</select>																
+							</select>	
+							<font class="rojoAdvertencia">*</font>															
 						</td>	
 						
 						<td width="15%" class="botoneralNegritaRight">
@@ -626,65 +635,67 @@ function calcularVolTotal(){
 					</tr>
 					
 					<tr>
-						<td width="15%" colspan="1" class="botoneralNegritaRight">
+						<td width="10%" class="botoneralNegritaRight">
 							Volumen Declarado(m3)
 						</td>
-						<td width="15%" colspan="2" align="left">
+						<td width="25%" colspan="2" align="left">
 							<input id="granelVolumenTotal" name="acta.granelVolumenM3Declarado" class="botonerab" type="text" size="15" onchange="calcularVolTotal();">
+							<font class="rojoAdvertencia">*</font>
 						</td>
 						
 						<td width="15%" colspan="1" class="botoneralNegritaRight">
 							Volumen Medido(m3)
 						</td>
-						<td width="15%" colspan="2" align="left">
+						<td width="50%" colspan="4" align="left">
 							<input name="acta.granelVolumenM3Medido" class="botonerab" type="text" size="15">			
 						</td>
 					</tr>	
 					<tr>	
-						<td width="15%" class="botoneralNegritaRight">
+						<td width="10%" class="botoneralNegritaRight">
 							Observaciones
 						</td>
 						<td  colspan="7" align="left">
-							<textarea name="acta.granelObservaciones" class="botonerab" type="text" cols="120" rows="4"></textarea>
+							<textarea name="acta.granelObservaciones" class="botonerab" type="text" cols="135" rows="4"></textarea>
 						</td>
 					</tr>	
 					<tr>
 						<td colspan="8" class="grisMuyClaroSubtituloCenter ">En Bolsa</td>
 					</tr>	
 					<tr>
-						<td width="15%" class="botoneralNegritaRight" >
+						<td width="10%" class="botoneralNegritaRight" >
 							Cantidad
 						</td>
 						<td width="15%" align="left">
 							<input name="acta.bolsaCantidad" class="botonerab" type="text" size="15" onchange="calcularVolBolsa();">
 						</td>
-						<td width="15%" class="botoneralNegritaRight">
+						<td width="10%" class="botoneralNegritaRight">
 							Volumen De Bolsa(dm3)
 						</td>
 						<td width="15%" align="left">
 							<input name="acta.bolsaVolumenD3" class="botonerab" type="text" size="15" onchange="calcularVolBolsa();">
+							<font class="rojoAdvertencia">*</font>
 						</td>
 						
-						<td width="15%"  class="botoneralNegritaRight">
+						<td width="10%"  class="botoneralNegritaRight">
 							Volumen Total Embolsado(m3)
 						</td>
-						<td width="15%" align="left">
-							<input id="bolsaVolumenTotal" class="botonerab" type="text" size="15" readonly="readonly" onchange="calcularVolTotal();">			
+						<td width="10%" align="left">
+							<input id="bolsaVolumenTotal" class="botonerab" type="text" size="10" readonly="readonly" onchange="calcularVolTotal();">			
 						</td>
 						
-						<td width="15%" class="botoneralNegritaRight">
+						<td width="8%" class="botoneralNegritaRight">
 							Titular Membrete
 						</td>
-						<td width="15%" align="left">
-							<input name="acta.bolsaTitularMembrete" class="botonerab" type="text" size="50">
+						<td width="22%" align="left">
+							<input name="acta.bolsaTitularMembrete" class="botonerab" type="text" size="25">
 						</td>
 					</tr>							
 					<tr>	
-						<td width="15%"  class="botoneralNegritaRight">
+						<td width="10%"  class="botoneralNegritaRight">
 							Observaciones
 						</td>
 						<td colspan="7" align="left">
-							<textarea name="acta.bolsaObservaciones" class="botonerab" type="text" cols="120" rows="4"></textarea>
+							<textarea name="acta.bolsaObservaciones" class="botonerab" type="text" cols="135" rows="4"></textarea>
 						</td>
 					</tr>	
 						
