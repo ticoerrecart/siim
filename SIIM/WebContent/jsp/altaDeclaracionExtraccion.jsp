@@ -1107,7 +1107,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 														<tr>
 															<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.FechaVencimiento'/></td>
 															<td align="left" width="35%">
-																<input id="datepicker0" type="text" readonly="readonly" class="botonerab"
+																<input id="datepicker${status.count}" type="text" readonly="readonly" class="botonerab"
 																		name='<%="boletasDeposito[${status.count}].fechaVencimiento"%>' value="${boleta.fechaVencimientoStr}">
 																<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 																	align="top" width='17' height='21'>															
@@ -1115,7 +1115,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 															</td>
 															<c:if test="${boleta.fechaPago==null}">
 																<script>
-																	$( "#datepicker0" ).datepicker({ dateFormat: 'dd/mm/yy'});
+																	$( "#datepicker${status.count}" ).datepicker({ dateFormat: 'dd/mm/yy'});
 																</script>
 															</c:if>
 															
@@ -1153,12 +1153,22 @@ function cambiarZonaExtraccionCallback(localizacion) {
 																	</td>
 																</c:otherwise>
 																
-															</c:choose>									
+															</c:choose>
 																				
 														</tr>
 														
 														<tr>
-															<td height="5" colspan="5"></td>
+															<td height="5" colspan="5">
+																<c:choose>
+																	<c:when test="${boleta.fechaPago==null}">
+																		<input id="idBotonEliminarCuota${status.count}" type="button"	value="-" onclick="javascript:eliminarCuota(${status.count});">
+																		<input style="display: none" id="idBotonRestituirCuota${status.count}" type="button"	value="+" onclick="javascript:restituirCuota(${status.count});">
+																	</c:when>
+																	<c:otherwise>
+																		&nbsp;
+																	</c:otherwise>
+																</c:choose>
+															</td>
 														</tr>
 																	
 													</table><!-- id="tBoletaN" -->
