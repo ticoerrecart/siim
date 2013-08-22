@@ -394,7 +394,14 @@ function cambiarZonaExtraccionCallback(localizacion) {
 		cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">
-				<bean:message key='SIIM.titulo.AltaDeclaracionExtraccion'/>
+				<c:choose>
+					<c:when test="${modificacion!='S'}">
+						<bean:message key='SIIM.titulo.AltaDeclaracionExtraccion'/>
+					</c:when>
+					<c:otherwise>
+						<bean:message key='SIIM.label.ModificacionDeDeclaracion'/>
+					</c:otherwise>
+				</c:choose>
 			</td>
 		</tr>
 		<tr>
