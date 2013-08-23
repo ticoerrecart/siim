@@ -221,6 +221,18 @@ function calcularImporteTotal(){
 	$('#idImporteTotal').val(new Number(importeTotal).toFixed(2));
 }
 
+function imprimir(){
+	
+	var idDeclaracion = $('#idDecExt').val();
+	
+	var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
+	if(type == "IE"){
+		window.open("./reportes.do?metodo=generarReporteDeclaracionExtraccion&idDeclaracion="+idDeclaracion,"",especificaciones);
+	}else{
+		window.open("../../reportes.do?metodo=generarReporteDeclaracionExtraccion&idDeclaracion="+idDeclaracion,"",especificaciones);
+	}
+}
+
 </script>
 
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
@@ -234,7 +246,7 @@ function calcularImporteTotal(){
 <input id="idProductor" type="hidden" value="${declaracion.entidad.id}">
 <input id="idLocalizacion" type="hidden" value="${declaracion.localizacion.id}">
 <input id="idPeriodo" type="hidden" value="${declaracion.periodo}">
-
+<input id="idDecExt" type="hidden" value="${declaracion.id}">
 
 
 	<table border="0" class="cuadrado" align="center" width="80%"
@@ -731,15 +743,19 @@ function calcularImporteTotal(){
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
 		<tr>
-			<td height="10" colspan="4"></td>
+			<td height="10" colspan="3"></td>
 		</tr>
 		<tr>
-			<td height="20" colspan="4">
+			<td width="48%" align="right">
+				<input type="button" class="botonerab" value="Imprimir" onclick="javascript:imprimir();" />
+			</td>	
+			<td width="4%"></td> 	
+			<td width="48%" align="left">
 				<input type="button" class="botonerab" value="Volver" onclick="javascript:volver();" />
 			</td>
 		</tr>
 		<tr>
-			<td height="10" colspan="4"></td> 
+			<td height="10" colspan="3"></td> 
 		</tr>
 	</table>
 

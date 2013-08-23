@@ -157,6 +157,8 @@ public class Constantes {
 	public static final String REPORTE_VOLUMEN_DECLARADO_VERIFICADO = "reporteVolumenDeclaradoVerificado";
 	
 	public static final String REPORTE_ESTADO_DEUDA_GENERAL_POR_PRODUCTOR = "reporteEstadoDeDeudaGeneralPorProductor";
+	
+	public static final String REPORTE_DECLARACION_EXTRACCION = "reporteDeclaracionDeExtraccion";	
 	//FIN REPORTES
 	
 	public static long TURBA = 1L;
