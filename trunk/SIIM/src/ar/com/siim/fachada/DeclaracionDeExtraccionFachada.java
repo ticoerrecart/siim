@@ -184,12 +184,7 @@ public class DeclaracionDeExtraccionFachada implements
 				}
 			}
 
-			// actualizo el importe total.
-			declaracionDeExtraccion.setImporteTotal(declaracionDeExtraccion
-					.getImporteTotalCalculado(tipoProducto.getRegaliaMinera()));
-
 			// Trimestres.
-
 			for (TrimestreDeclaracionDeExtraccionDTO trimestreDTO : trimestres) {
 				boolean encontreTrimestre = false;
 				if (!trimestreDTO.esNulo()) {
@@ -212,6 +207,12 @@ public class DeclaracionDeExtraccionFachada implements
 					}
 				}
 			}
+
+			// actualizo el importe total.
+			declaracionDeExtraccion.setImporteTotal(declaracionDeExtraccion
+					.getImporteTotalCalculado());
+
+
 			declaracionDeExtraccionDAO.modificacionDeclaracionExtraccion(
 					declaracionDeExtraccion, boletasABorrar);
 		} else {
