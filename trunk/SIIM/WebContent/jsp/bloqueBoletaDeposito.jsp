@@ -12,7 +12,7 @@
 	}
 	String area = request.getParameter("area");
 	if(area==null){
-		area = "Direccion General de Bosques";
+		area = "Direccion General de Minería";
 	}
 %>
 
@@ -33,7 +33,7 @@
 	
 	<tr id="idTrBoleta<%=i%>">
 		<td>
-			<table id="tBoleta<%=i%>" border="0" align="center" width="100%" cellpadding="2">
+			<table id="tBoleta<%=i%>" class="cuadrado" border="0" align="center" width="100%" cellpadding="2">
 				<tr>
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.NroBoleta'/></td>
 					<td width="40%" align="left">
@@ -50,14 +50,14 @@
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Concepto'/></td>
 					<td colspan="3" align="left">
 						<input name='<%="boletasDeposito["+(i-1)+"].concepto"%>' class="botonerab"
-							type="text" size="90" value="<%=concepto%>" >
+							type="text" size="100" value="<%=concepto%>" >
 					</td>
 				</tr>
 				<tr>
 					<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Area'/></td>
 					<td colspan="3" align="left">
 						<input name='<%="boletasDeposito["+(i-1)+"].area"%>' class="botonerab"
-							type="text" size="90" value="<%=area%>">
+							type="text" size="100" value="<%=area%>">
 					</td>
 				</tr>
 				<tr>

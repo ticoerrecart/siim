@@ -23,8 +23,6 @@
 	
 <link rel="stylesheet" href="<html:rewrite page='/css/ui-lightness/jquery-ui-1.8.10.custom.css'/>"
 	type="text/css">
-<link rel="stylesheet" href="<html:rewrite page='/css/main.css'/>"
-	type="text/css">
 
 <script>
 	$(function() {
@@ -880,7 +878,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						<c:when test="${modificacion!='S'}"><!-- ALTA -->
 							<tr>
 								<td colspan="5">
-									<table border="0" class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
+									<table border="0" class="cuadradoSinBorde" align="center" width="90%" cellpadding="2">
 										<input type="hidden" name="boletasDeposito[0].anulado" value="false"/>
 										<input type="hidden" name="boletasDeposito[0].idBoleta" value="}"/>
 		
@@ -987,7 +985,10 @@ function cambiarZonaExtraccionCallback(localizacion) {
 												</table><!-- id="tBoleta1" -->
 											</td>
 										</tr>
-									</table>								
+									</table>
+									
+									<div id="divPlanDePagos2"></div>
+																	
 								</td>
 							</tr>
 						</c:when>
@@ -996,7 +997,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 							<c:forEach items="${boletas}" var="boleta" varStatus="status">
 								<tr>
 									<td colspan="5">
-										<table border="0" class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
+										<table border="0" class="cuadradoSinBorde" align="center" width="90%" cellpadding="2">
 											<input type="hidden" name="boletasDeposito[${status.index}].anulado" value="false"/>
 											<input type="hidden" name="boletasDeposito[${status.index}].idBoleta" value="${boleta.id}"/>
 			
@@ -1007,13 +1008,10 @@ function cambiarZonaExtraccionCallback(localizacion) {
 													Boleta de Deposito n° ${status.count} 
 												</td>
 											</tr>
-											
+
 											<tr id="idTrBoleta${status.count}">
 												<td>
-													<table id="tBoleta${status.count}" border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
-														<tr>
-															<td height="5" colspan="5"></td>
-														</tr>										
+													<table id="tBoleta${status.count}" border="0" class="cuadrado" align="center" width="100%" cellpadding="2">
 														<tr>
 															<td width="10%" class="botoneralNegritaRight">
 																<bean:message key='SIIM.label.NroBoleta'/>
@@ -1158,7 +1156,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 																				
 														</tr>
 														
-													</table><!-- id="tBoletaN" -->
+													</table>												
 												</td>
 											</tr>
 											
@@ -1186,30 +1184,36 @@ function cambiarZonaExtraccionCallback(localizacion) {
 					</c:choose>
 				</table>
 				
-				
-				<table  class="cuadradoSinBorde" align="center" width="100%" cellpadding="2">
-					<tr>
-						<td height="5" colspan="5"></td>
-					</tr>
-					<tr>
-						<td colspan="5" class="grisSubtitulo">
-							Agregar Cuotas Nuevas
-						</td>
-					</tr>
-					
-				</table>
+				<c:if test="${modificacion=='S'}"><!-- MODIFICACION -->
+					<table  class="cuadradoSinBorde" align="center" width="90%" cellpadding="2">
+						<tr>
+							<td height="5" colspan="5"></td>
+						</tr>
+						<tr>
+							<td colspan="5" class="grisSubtitulo">
+								Agregar Cuotas Nuevas
+							</td>
+						</tr>
+						
+					</table>
+				</c:if>
 
 				<div id="dummy" style="display: none"></div>
 				<c:choose>
-					<c:when test="${modificacion!='S'}"><!-- ALTA -->
-						<div id="divPlanDePagos2"></div>
-					</c:when>
-					<c:otherwise><!-- MODIFICACION -->
-						<div id="divPlanDePagos${fn:length(boletas)+1}"></div>
+					<c:when test="${modificacion=='S'}"><!-- MODIFICACION -->
+						<table class="cuadrado" align="center" width="90%" cellpadding="2">
+							<tr>
+								<td>
+									<div id="divPlanDePagos${fn:length(boletas)+1}"></div>
+								</td>	
+							</tr>		
+						</table>	
+							
 						<script>
 							indice = ${fn:length(boletas)} + 1;
 						</script>
-					</c:otherwise>
+						
+					</c:when>
 				</c:choose>
 				
 				
@@ -1264,13 +1268,18 @@ function cambiarZonaExtraccionCallback(localizacion) {
 				</select>				
 				<font class="rojoAdvertencia">*</font>
 			</td>
-			<td width="30%" class="botoneralNegritaRight">&nbsp;</td>
-			<td align="left">
-				<font class="rojoAdvertenciaChico">* Campos Obligatorios</font>	
-			</td>
+			<td class="botoneralNegritaRight" colspan="2">&nbsp;</td>
 		</tr>
 		<tr>
-			<td height="10" colspan="4"></td>
+			<td height="5" colspan="4"></td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<font class="rojoAdvertenciaChico">* Campos Obligatorios</font>	
+			</td>
+		</tr>		
+		<tr>
+			<td height="5" colspan="4"></td>
 		</tr>
 	</table>
 	<table border="0" class="cuadrado" align="center" width="80%"
