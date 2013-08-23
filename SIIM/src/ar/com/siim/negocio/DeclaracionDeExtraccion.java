@@ -96,13 +96,14 @@ public class DeclaracionDeExtraccion {
 		return importeTotal;
 	}
 
-	public double getImporteTotalCalculado(Double regaliaMinera) {
+	public double getImporteTotalCalculado() {
 		Double importeTotal = 0.0;
 		for (TrimestreDeclaracionDeExtraccion trimestre : this.getTrimestres()) {
-			importeTotal = importeTotal + trimestre.getVolumenTotal();
+			importeTotal = importeTotal + trimestre.getVolumenTotal()
+					* trimestre.getTipoProducto().getRegaliaMinera();
 		}
 
-		return importeTotal * regaliaMinera;
+		return importeTotal;
 	}
 
 	public void setImporteTotal(double importeTotal) {
