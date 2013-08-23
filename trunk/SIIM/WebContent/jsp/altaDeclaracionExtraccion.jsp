@@ -567,7 +567,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								
 								<c:otherwise>
 									<input type="hidden" id="idZonaExtraccion" name="declaracion.localizacion.id" value="${declaracionDeExtraccion.localizacion.id}">
-									<input type="text" value="${declaracionDeExtraccion.localizacion.razonSocial}" class="botonerab">
+									<input type="text" value="${declaracionDeExtraccion.localizacion.razonSocial}" class="botonerab" readonly="readonly">
 								</c:otherwise>
 							</c:choose>
 						</td>						
@@ -690,7 +690,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[1].volumenPrimerMes" value=""${trimestres['2'].volumenPrimerMes} onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[1].volumenPrimerMes" value="${trimestres['2'].volumenPrimerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_1">																	
 							</td>
 							<td>
@@ -730,7 +730,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[2].volumenPrimerMes" value="${trimestres['3'].volumenPrimeroMes}" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[2].volumenPrimerMes" value="${trimestres['3'].volumenPrimerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_1">																	
 							</td>
 							<td>
@@ -770,7 +770,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
 							</td>
 							<td>
-								<input class="botonerab" type="text" name="trimestres[3].volumenPrimerMes" value="${trimestres['4'].volumenPrimeroMes}" onkeypress="javascript:esNumericoConDecimal(event);"
+								<input class="botonerab" type="text" name="trimestres[3].volumenPrimerMes" value="${trimestres['4'].volumenPrimerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
 									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_1">																	
 							</td>
 							<td>
