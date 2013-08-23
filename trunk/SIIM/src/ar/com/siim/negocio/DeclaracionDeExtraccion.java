@@ -96,6 +96,15 @@ public class DeclaracionDeExtraccion {
 		return importeTotal;
 	}
 
+	public double getImporteTotalCalculado(Double regaliaMinera) {
+		Double importeTotal = 0.0;
+		for (TrimestreDeclaracionDeExtraccion trimestre : this.getTrimestres()) {
+			importeTotal = importeTotal + trimestre.getVolumenTotal();
+		}
+
+		return importeTotal * regaliaMinera;
+	}
+
 	public void setImporteTotal(double importeTotal) {
 		this.importeTotal = importeTotal;
 	}
@@ -192,15 +201,17 @@ public class DeclaracionDeExtraccion {
 		trimestres.add(trimestre);
 	}
 
-	public TrimestreDeclaracionDeExtraccion getTrimestre(Long nroTrimestre){
-		List<TrimestreDeclaracionDeExtraccion> trimestres = this.getTrimestres();
+	public TrimestreDeclaracionDeExtraccion getTrimestre(Long nroTrimestre) {
+		List<TrimestreDeclaracionDeExtraccion> trimestres = this
+				.getTrimestres();
 		for (TrimestreDeclaracionDeExtraccion trimestre : trimestres) {
 
-			if (nroTrimestre.intValue() == trimestre.getNroTrimestre().intValue()){
+			if (nroTrimestre.intValue() == trimestre.getNroTrimestre()
+					.intValue()) {
 				return trimestre;
 			}
 		}
 		return null;
-	}	
-	
+	}
+
 }
