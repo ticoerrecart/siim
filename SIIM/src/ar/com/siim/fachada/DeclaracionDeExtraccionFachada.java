@@ -184,6 +184,10 @@ public class DeclaracionDeExtraccionFachada implements
 				}
 			}
 
+			// actualizo el importe total.
+			declaracionDeExtraccion.setImporteTotal(declaracionDeExtraccion
+					.getImporteTotalCalculado(tipoProducto.getRegaliaMinera()));
+
 			// Trimestres.
 
 			for (TrimestreDeclaracionDeExtraccionDTO trimestreDTO : trimestres) {
