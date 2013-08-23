@@ -6,5 +6,8 @@ public interface IReportesFachada {
 			String path, String periodo, Long idProductor, Long idLocalizacion) throws Exception;
 	
 	public byte[] generarReporteEstadoDeDeudaGeneralPorProductor(
-			String path, String periodo, Long idProductor) throws Exception;	
+			String path, String periodo, Long idProductor) throws Exception;
+
+	public byte[] generarReporteDeclaracionExtraccion(String path, Long idDeclaracion) throws Exception;
+	
 }

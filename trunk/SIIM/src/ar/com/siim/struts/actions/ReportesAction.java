@@ -137,5 +137,38 @@ public class ReportesAction extends ValidadorAction {
 		}
 
 		return null;
+	}
+	
+	public ActionForward generarReporteDeclaracionExtraccion(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		try {
+			String path = request.getSession().getServletContext()
+					.getRealPath("jasper");
+
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			IReportesFachada reportesFachada = (IReportesFachada) ctx
+					.getBean("reportesFachada");
+
+			String idDeclaracion = request.getParameter("idDeclaracion");			
+			
+			byte[] bytes = reportesFachada.generarReporteDeclaracionExtraccion(path,Long.valueOf(idDeclaracion));
+
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			// response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
+		}
+
+		return null;
 	}	
 }

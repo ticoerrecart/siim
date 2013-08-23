@@ -40,5 +40,14 @@ public class ReportesFachada implements IReportesFachada {
 		parameters.put("idProductor", idProductor);
 
 		return reportesDAO.generarReporte(Constantes.REPORTE_ESTADO_DEUDA_GENERAL_POR_PRODUCTOR,parameters);
+	}
+	
+	public byte[] generarReporteDeclaracionExtraccion(String path, Long idDeclaracion) throws Exception{
+
+		Map parameters = new HashMap();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("idDeclaracion", idDeclaracion);
+		
+		return reportesDAO.generarReporte(Constantes.REPORTE_DECLARACION_EXTRACCION,parameters);		
 	}	
 }
