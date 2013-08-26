@@ -440,6 +440,8 @@ public abstract class ProviderDominio {
 		trimestre.setVolumenPrimerMes(trimestreDTO.getVolumenPrimerMes());
 		trimestre.setVolumenSegundoMes(trimestreDTO.getVolumenSegundoMes());
 		trimestre.setVolumenTercerMes(trimestreDTO.getVolumenTercerMes());
+
+		trimestre.setRegaliaMinera(trimestreDTO.getRegaliaMinera());
 		return trimestre;
 	}
 

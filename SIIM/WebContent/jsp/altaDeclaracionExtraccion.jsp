@@ -26,13 +26,7 @@
 
 <script>
 	$(function() {
-		
 		$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy'});
-
-		$( "#datepickerFechaTrim1" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#datepickerFechaTrim2" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#datepickerFechaTrim3" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#datepickerFechaTrim4" ).datepicker({ dateFormat: 'dd/mm/yy'});	
 	});
 
 var type;
@@ -42,6 +36,14 @@ if (!document.all && document.getElementById) type="MO";
 
 function volverAltaDeclaracionExtraccion(){
 	parent.location = contextRoot() + '/jsp.do?page=.index';		
+}
+
+function volverModificacionDeclaracionExtraccion(){
+	var idProductor = $("#idProductor").val();
+	var idLocalizacion = $("#idZonaExtraccion").val();
+	var idPeriodo = $("#periodo").val();
+	var params = "&idProductor=" + idProductor + "&idLocalizacion=" + idLocalizacion + "&idPeriodo=" + idPeriodo; 
+	parent.location = contextRoot() + '/declaracionExtraccion.do?metodo=cargarProductoresParaModificacionDeDeclaracion' + params;		
 }
 
 function setValorLocalizacion(valor){
@@ -218,18 +220,18 @@ function actualizarZonasExtraccionCallback(zonas){
 }
 
 function calcularImporteTotal(){
+	
+	var imp1 = new Number($('#idVolxRegalia1').val()).toFixed(2);
+	var imp2 = new Number($('#idVolxRegalia2').val()).toFixed(2);
+	var imp3 = new Number($('#idVolxRegalia3').val()).toFixed(2);
+	var imp4 = new Number($('#idVolxRegalia4').val()).toFixed(2);
 
-	var vol1 = new Number($('#idTotal1').val()).toFixed(2);
-	var vol2 = new Number($('#idTotal2').val()).toFixed(2);
-	var vol3 = new Number($('#idTotal3').val()).toFixed(2);
-	var vol4 = new Number($('#idTotal4').val()).toFixed(2);
+	var impTotal =  parseFloat(new Number(imp1)+new Number(imp2)+new Number(imp3)+new Number(imp4));
+	$('#idImporteTotal').val(new Number(impTotal).toFixed(2));	
 
-	var volTotal =  parseFloat(new Number(vol1)+new Number(vol2)+new Number(vol3)+new Number(vol4));
-	$('#idVolumenTotal').val(new Number(volTotal).toFixed(2));	
-
-	var regalia = new Number($('#idRegalia').val()).toFixed(2);
+	/*var regalia = new Number($('#idRegalia').val()).toFixed(2);
 	var importeTotal = parseFloat(new Number(volTotal)*new Number(regalia));
-	$('#idImporteTotal').val(new Number(importeTotal).toFixed(2));
+	$('#idImporteTotal').val(new Number(importeTotal).toFixed(2));*/
 }
 
 function calcularVolumenTotalTrimestre(nroTrimestre){
@@ -243,7 +245,11 @@ function calcularVolumenTotalTrimestre(nroTrimestre){
 	
 	var volSubTotal =  parseFloat(new Number(mes1)+new Number(mes2)+new Number(mes3));
 	$('#idTotal'+nroTrimestre).val(new Number(volSubTotal).toFixed(2));
+	
+	var volTotal =  new Number($("#idTotal1").val()) + new Number($("#idTotal2").val()) + new Number($("#idTotal3").val()) + new Number($("#idTotal4").val());
+	$('#idVolumenTotal').val(volTotal);
 
+	$('#idVolxRegalia' +nroTrimestre).val( $('#idTotal'+nroTrimestre).val() * $('#idRegalia' + nroTrimestre).val());
 	calcularImporteTotal();
 }
 
@@ -628,169 +634,87 @@ function cambiarZonaExtraccionCallback(localizacion) {
 						<BR>
 					</label>
 					<br>
-					<table border="0" class="cuadrado" align="center" width="90%"
+
+					<table border="0" class="cuadrado" align="center" width="100%"
 						cellpadding="2" cellspacing="0" id="tablaImportes">
 						
-						<!-- 1er TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Enero</td>
-							<td width="13%" class="grisSubtituloCenter">Febrero</td>
-							<td width="13%" class="grisSubtituloCenter">Marzo</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" name="trimestres[0].nroTrimestre" type="text" value="1" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" name="trimestres[0].tipoProducto.id" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[0].volumenPrimerMes" value="${trimestres['1'].volumenPrimerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_1">																	
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[0].volumenSegundoMes" value="${trimestres['1'].volumenSegundoMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-								size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_2">
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[0].volumenTercerMes" value="${trimestres['1'].volumenTercerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-								size="15" onblur="calcularVolumenTotalTrimestre(1);" id="id1_3">		
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-								size="15" readonly="readonly" id="idTotal1">														
-							</td>
-							<td>
-								<input id="datepickerFechaTrim1" name="trimestres[0].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
-							</td>
-						</tr>
+						<!-- TRIMESTRE x-->
+						<c:forEach var="indMes" begin="1" end="4">
+							<tr>
+								<td class="grisSubtituloCenter">Trimestre</td>						
+								<td class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
+								<c:forEach items="${meses[indMes]}" var="mes">
+									<td class="grisSubtituloCenter">${mes}</td>
+								</c:forEach>
+								<td class="grisSubtituloCenter">Vol. Total</td>
+								<td class="grisSubtituloCenter">Regalía Minera</td>
+								<td class="grisSubtituloCenter">Importe</td>
+								<td class="grisSubtituloCenter">Vencimiento</td>
+							</tr>
+							<tr>
+								<td >
+									<input class="botonerab" name="trimestres[${indMes-1}].nroTrimestre" type="text" value="${indMes}" readonly="readonly" size="4">																						
+								</td>						
+								<td >
+									<input type="hidden" name="trimestres[${indMes-1}].tipoProducto.id" value="${productoTurba.id}">
+									<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
+								</td>
+								
+								<td >
+									<input class="botonerab" type="text" name="trimestres[${indMes-1}].volumenPrimerMes" value="${trimestres[indMes].volumenPrimerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
+										size="10" onblur="calcularVolumenTotalTrimestre(${indMes});" id="id${indMes}_1">																	
+								</td>
+								<td >
+									<input class="botonerab" type="text" name="trimestres[${indMes-1}].volumenSegundoMes" value="${trimestres[indMes].volumenSegundoMes}" onkeypress="javascript:esNumericoConDecimal(event);"
+									size="10" onblur="calcularVolumenTotalTrimestre(${indMes});" id="id${indMes}_2">
+								</td>
+								<td >
+									<input class="botonerab" type="text" name="trimestres[${indMes-1}].volumenTercerMes" value="${trimestres[indMes].volumenTercerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
+									size="10" onblur="calcularVolumenTotalTrimestre(${indMes});" id="id${indMes}_3">		
+								</td>
+								
+								<td >
+									<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
+									size="10" readonly="readonly" id="idTotal${indMes}">
+								</td>
+								<td>
+									<c:choose>
+										<c:when test="${trimestres[indMes].regaliaMinera!=null && trimestres[indMes].regaliaMinera>0}">
+											<input id="idRegalia${indMes}" readonly="readonly" class="botonerab" type="text"
+												value="${trimestres[indMes].regaliaMinera}" size="5">
+										</c:when>
+										<c:otherwise>
+											<input id="idRegalia${indMes}" readonly="readonly" class="botonerab" type="text"
+												value="${productoTurba.regaliaMinera}" size="5">
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td>
+									<c:choose>
+										<c:when test="${trimestres[indMes].regaliaMinera!=null && trimestres[indMes].regaliaMinera>0}">
+											<input id="idVolxRegalia${indMes}" readonly="readonly" class="botonerab" type="text"
+														value="${trimestres[indMes].importeTotal}" size="10">
+										</c:when>
+										<c:otherwise>
+											<input id="idVolxRegalia${indMes}" readonly="readonly" class="botonerab" type="text"
+														value="0" size="10">
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td >
+									<input id="datepickerFechaTrim${indMes}" name="trimestres[${indMes-1}].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="11">
+									<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
+								</td>
+							</tr>
+							
+							<c:if test="${trimestres[indMes].importeTotal== null || trimestres[indMes].importeTotal== 0}">
+								<script>
+									$( "#datepickerFechaTrim${indMes}" ).datepicker({ dateFormat: 'dd/mm/yy'});
+								</script>
+							</c:if>
+							
+						</c:forEach>
 						
-						<!-- 2do TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Abril</td>
-							<td width="13%" class="grisSubtituloCenter">Mayo</td>
-							<td width="13%" class="grisSubtituloCenter">Junio</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[1].nroTrimestre" value="2" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" name="trimestres[1].tipoProducto.id" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[1].volumenPrimerMes" value="${trimestres['2'].volumenPrimerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_1">																	
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[1].volumenSegundoMes" value="${trimestres['2'].volumenSegundoMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_2">
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[1].volumenTercerMes" value="${trimestres['2'].volumenTercerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(2);" id="id2_3">		
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" id="idTotal2" readonly="readonly">														
-							</td>
-							<td>
-								<input id="datepickerFechaTrim2" name="trimestres[1].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
-							</td>
-						</tr>						
-						
-						<!-- 3er TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Julio</td>
-							<td width="13%" class="grisSubtituloCenter">Agosto</td>
-							<td width="13%" class="grisSubtituloCenter">Septiembre</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[2].nroTrimestre" value="3" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" name="trimestres[2].tipoProducto.id" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[2].volumenPrimerMes" value="${trimestres['3'].volumenPrimerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_1">																	
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[2].volumenSegundoMes" value="${trimestres['3'].volumenSegundoMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_2">
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[2].volumenTercerMes" value="${trimestres['3'].volumenTercerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(3);" id="id3_3">		
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" id="idTotal3" readonly="readonly">														
-							</td>
-							<td>
-								<input id="datepickerFechaTrim3" name="trimestres[2].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
-							</td>
-						</tr>						
-												
-						<!-- 4to TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Octubre</td>
-							<td width="13%" class="grisSubtituloCenter">Noviembre</td>
-							<td width="13%" class="grisSubtituloCenter">Diciembre</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[3].nroTrimestre" value="4" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" name="trimestres[3].tipoProducto.id" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[3].volumenPrimerMes" value="${trimestres['4'].volumenPrimerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_1">																	
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[3].volumenSegundoMes" value="${trimestres['4'].volumenSegundoMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_2">
-							</td>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[3].volumenTercerMes" value="${trimestres['4'].volumenTercerMes}" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" onblur="calcularVolumenTotalTrimestre(4);" id="id4_3">		
-							</td>
-							<td>
-								<input class="botonerab" type="text" value="" onkeypress="javascript:esNumericoConDecimal(event);"
-									size="15" id="idTotal4" readonly="readonly">														
-							</td>
-							<td>
-								<input id="datepickerFechaTrim4" name="trimestres[3].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="14">
-								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
-							</td>
-						</tr>
-
 					</table>
 
 					<table border="0" class="cuadrado" align="center" width="90%"
@@ -804,15 +728,6 @@ function cambiarZonaExtraccionCallback(localizacion) {
 							<td width="14%">
 								<input id="idVolumenTotal" readonly="readonly" class="botonerab" type="text" size="15">
 							</td>
-							<td width="18%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td width="13%" class="botoneralNegritaRight">Regalía Minera</td>
-							<td width="14%">
-								<input id="idRegalia" readonly="readonly" class="botonerab" type="text" 
-										value="${productoTurba.regaliaMinera}" size="15">
-							</td> 
 							<td width="18%">&nbsp;</td>
 						</tr>
 						<tr>
@@ -1291,7 +1206,15 @@ function cambiarZonaExtraccionCallback(localizacion) {
 			<td height="20" colspan="4">
 				<input type="button" value="Aceptar" id="enviar" 
 					class="botonerab" onclick="javascript:submitir();" > 
-				<input type="button" class="botonerab" value="Cancelar" onclick="javascript:volverAltaDeclaracionExtraccion();">
+				<c:choose>
+					<c:when test="${modificacion!='S'}">
+						<input type="button" class="botonerab" value="Cancelar" onclick="javascript:volverAltaDeclaracionExtraccion();">
+					</c:when>
+					<c:otherwise>
+						<input type="button" class="botonerab" value="Cancelar" onclick="javascript:volverModificacionDeclaracionExtraccion();">
+					</c:otherwise>
+				</c:choose>
+				
 			</td>
 		</tr>
 		<tr>

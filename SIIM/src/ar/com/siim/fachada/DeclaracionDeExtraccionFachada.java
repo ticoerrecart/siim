@@ -131,9 +131,6 @@ public class DeclaracionDeExtraccionFachada implements
 			Localidad localidad = localidadDAO.getLocalidadPorId(declaracionDTO
 					.getLocalidad().getId());
 
-			TipoProducto tipoProducto = tipoProductoDAO
-					.recuperarTipoProducto(1L);
-
 			declaracionDeExtraccion.setLocalidad(localidad);
 			declaracionDeExtraccion.setNumero(declaracionDTO.getNumero());
 			declaracionDeExtraccion.setFecha(declaracionDTO.getFecha());
@@ -184,7 +181,8 @@ public class DeclaracionDeExtraccionFachada implements
 				}
 			}
 
-			// Trimestres.
+			// Trimestres.Sólo se dan de alta nuevos Trimestres, no se
+			// actualizan.
 			for (TrimestreDeclaracionDeExtraccionDTO trimestreDTO : trimestres) {
 				boolean encontreTrimestre = false;
 				if (!trimestreDTO.esNulo()) {
@@ -199,6 +197,13 @@ public class DeclaracionDeExtraccionFachada implements
 					}
 
 					if (!encontreTrimestre) {
+						TipoProducto tipoProducto = tipoProductoDAO
+								.recuperarTipoProducto(trimestreDTO
+										.getTipoProducto().getId());
+						// como el trimestre es nuevo, la regalía minera la
+						// copio de la del tipo de producto.
+						trimestreDTO.setRegaliaMinera(tipoProducto
+								.getRegaliaMinera());
 						TrimestreDeclaracionDeExtraccion trimestreNuevo = ProviderDominio
 								.getTrimestreDeclaracionDeExtraccion(
 										trimestreDTO, tipoProducto,
@@ -211,7 +216,6 @@ public class DeclaracionDeExtraccionFachada implements
 			// actualizo el importe total.
 			declaracionDeExtraccion.setImporteTotal(declaracionDeExtraccion
 					.getImporteTotalCalculado());
-
 
 			declaracionDeExtraccionDAO.modificacionDeclaracionExtraccion(
 					declaracionDeExtraccion, boletasABorrar);
