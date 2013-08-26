@@ -680,11 +680,11 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<td>
 									<c:choose>
 										<c:when test="${trimestres[indMes].regaliaMinera!=null && trimestres[indMes].regaliaMinera>0}">
-											<input id="idRegalia${indMes}" readonly="readonly" class="botonerab" type="text"
+											<input id="idRegalia${indMes}" name="trimestres[${indMes-1}].regaliaMinera" readonly="readonly" class="botonerab" type="text"
 												value="${trimestres[indMes].regaliaMinera}" size="5">
 										</c:when>
 										<c:otherwise>
-											<input id="idRegalia${indMes}" readonly="readonly" class="botonerab" type="text"
+											<input id="idRegalia${indMes}" name="trimestres[${indMes-1}].regaliaMinera" readonly="readonly" class="botonerab" type="text"
 												value="${productoTurba.regaliaMinera}" size="5">
 										</c:otherwise>
 									</c:choose>
@@ -701,15 +701,15 @@ function cambiarZonaExtraccionCallback(localizacion) {
 										</c:otherwise>
 									</c:choose>
 								</td>
-								<td >
-									<input id="datepickerFechaTrim${indMes}" name="trimestres[${indMes-1}].fechaVencimiento" type="text" readonly="readonly" class="botonerab" size="11">
+								<td>
+									<input id="datepickerFechaTrim${indMes}" name="trimestres[${indMes-1}].fechaVencimiento" value="" type="text" readonly="readonly" class="botonerab" size="11">
 									<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
 								</td>
 							</tr>
 							
 							<c:if test="${trimestres[indMes].importeTotal== null || trimestres[indMes].importeTotal== 0}">
 								<script>
-									$( "#datepickerFechaTrim${indMes}" ).datepicker({ dateFormat: 'dd/mm/yy'});
+									//$( "#datepickerFechaTrim${indMes}" ).datepicker({ dateFormat: 'dd/mm/yy'});
 								</script>
 							</c:if>
 							
