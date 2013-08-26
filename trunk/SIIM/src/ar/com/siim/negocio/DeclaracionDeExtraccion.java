@@ -100,7 +100,7 @@ public class DeclaracionDeExtraccion {
 		Double importeTotal = 0.0;
 		for (TrimestreDeclaracionDeExtraccion trimestre : this.getTrimestres()) {
 			importeTotal = importeTotal + trimestre.getVolumenTotal()
-					* trimestre.getTipoProducto().getRegaliaMinera();
+					* trimestre.getRegaliaMinera();
 		}
 
 		return importeTotal;

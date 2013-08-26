@@ -30,6 +30,8 @@ public class TrimestreDeclaracionDeExtraccion {
 
 	private Date fechaVencimiento;
 
+	private Double regaliaMinera;
+
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
 	@JoinColumn(name = "tipoProducto_fk")
@@ -104,6 +106,10 @@ public class TrimestreDeclaracionDeExtraccion {
 				+ this.getVolumenTercerMes();
 	}
 
+	public Double getImporteTotal() {
+		return this.getVolumenTotal() * this.getRegaliaMinera();
+	}
+
 	public DeclaracionDeExtraccion getDeclaracionDeExtraccion() {
 		return declaracionDeExtraccion;
 	}
@@ -119,5 +125,13 @@ public class TrimestreDeclaracionDeExtraccion {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public Double getRegaliaMinera() {
+		return regaliaMinera;
+	}
+
+	public void setRegaliaMinera(Double regaliaMinera) {
+		this.regaliaMinera = regaliaMinera;
 	}
 }

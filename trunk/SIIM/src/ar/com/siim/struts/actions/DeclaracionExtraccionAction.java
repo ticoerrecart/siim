@@ -1,6 +1,8 @@
 package ar.com.siim.struts.actions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,6 +69,7 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 						"Se ha dado de alta con éxito la Declaración de Extracción");
 			}
 
+			request.setAttribute("meses", getMapMeses());
 			request.setAttribute("metodo", "altaDeclaracionExtraccion");
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -262,6 +265,38 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
+	private Map<Integer, List<String>> getMapMeses() {
+		Map<Integer, List<String>> mapMeses = new HashMap<Integer, List<String>>();
+		for (int i = 1; i < 5; i++) {
+			List<String> meses = new ArrayList<String>();
+			if (i == 1) {
+				meses.add("Enero");
+				meses.add("Febrero");
+				meses.add("Marzo");
+			}
+			if (i == 2) {
+				meses.add("Abril");
+				meses.add("Mayo");
+				meses.add("Junio");
+			}
+			if (i == 3) {
+				meses.add("Julio");
+				meses.add("Agosto");
+				meses.add("Septiembre");
+			}
+			if (i == 4) {
+				meses.add("Octubre");
+				meses.add("Noviembre");
+				meses.add("Diciembre");
+			}
+
+			mapMeses.put(i, meses);
+		}
+
+		return mapMeses;
+
+	}
+
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarModificacionDeclaracionExtraccion(
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -300,14 +335,15 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 
 			request.setAttribute("declaracionDeExtraccion", declaracion);
 
-			Map<String, TrimestreDeclaracionDeExtraccion> mapTrimestres = new HashMap<String, TrimestreDeclaracionDeExtraccion>();
+			Map<Integer, TrimestreDeclaracionDeExtraccion> mapTrimestres = new HashMap<Integer, TrimestreDeclaracionDeExtraccion>();
 			for (TrimestreDeclaracionDeExtraccion trimestre : declaracion
 					.getTrimestres()) {
-				mapTrimestres.put(trimestre.getNroTrimestre().toString(),
-						trimestre);
+				mapTrimestres.put(trimestre.getNroTrimestre(), trimestre);
 			}
 
 			request.setAttribute("trimestres", mapTrimestres);
+			request.setAttribute("meses", getMapMeses());
+
 			request.setAttribute("boletas", declaracion.getBoletas());
 
 			request.setAttribute("modificacion", "S");

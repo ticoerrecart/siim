@@ -16,6 +16,8 @@ public class TrimestreDeclaracionDeExtraccionDTO {
 
 	private TipoProductoDTO tipoProducto;
 
+	private Double regaliaMinera;
+
 	// private VolumenDeclaracionDeExtraccionDTO volumenDeclaracionDeExtraccion;
 
 	public TrimestreDeclaracionDeExtraccionDTO() {
@@ -83,6 +85,14 @@ public class TrimestreDeclaracionDeExtraccionDTO {
 
 	public void setTipoProducto(TipoProductoDTO tipoProducto) {
 		this.tipoProducto = tipoProducto;
+	}
+
+	public Double getRegaliaMinera() {
+		return regaliaMinera;
+	}
+
+	public void setRegaliaMinera(Double regaliaMinera) {
+		this.regaliaMinera = regaliaMinera;
 	}
 
 	/*
