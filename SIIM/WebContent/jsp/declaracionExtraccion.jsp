@@ -398,202 +398,80 @@ function imprimir(){
 		<!-- Volumenes -->
 		<tr>
 			<td colspan="4" align="left">
-					<table border="0" class="cuadrado" align="center" width="90%"
-						cellpadding="2" cellspacing="0" id="tablaImportes">
-						<tr>
-							<td width="100%" colspan="7" class="grisSubtituloCenter">
-								<bean:message key='SIIM.label.Volumenes'/>
-							</td>
-						</tr>	
-							<tr>
-							<td width="100%" colspan="7">
-								&nbsp;
-							</td>
-						</tr>
-						<!-- 1er TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Enero</td>
-							<td width="13%" class="grisSubtituloCenter">Febrero</td>
-							<td width="13%" class="grisSubtituloCenter">Marzo</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" name="trimestres[0].nroTrimestre" type="text" value="1" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" name="trimestres[0].tipoProducto.id" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[0].volumenPrimerMes" value="${declaracion.getTrimestre(1).volumenPrimerMes}"  size="15" >																	
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[0].volumenSegundoMes" value="${declaracion.getTrimestre(1).volumenSegundoMes}" size="15" >
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[0].volumenTercerMes" value="${declaracion.getTrimestre(1).volumenTercerMes}" size="15" >		
-							</td>
-							<td>
-								<input id="idTotal1" readonly="readonly" class="botonerab" type="text" value="${declaracion.getTrimestre(1).volumenTotal}" size="15" >														
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab"  type="text" value="<fmt:formatDate value="${declaracion.getTrimestre(1).fechaVencimiento}" pattern="dd/MM/yyyy" />" size="14">
-																
-							</td>
-						</tr>
-						
-						<!-- 2do TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Abril</td>
-							<td width="13%" class="grisSubtituloCenter">Mayo</td>
-							<td width="13%" class="grisSubtituloCenter">Junio</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[1].nroTrimestre" value="2" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" name="trimestres[1].tipoProducto.id" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[1].volumenPrimerMes" value="${declaracion.getTrimestre(2).volumenPrimerMes}" size="15" >																	
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[1].volumenSegundoMes" value="${declaracion.getTrimestre(2).volumenSegundoMes}" size="15" >
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[1].volumenTercerMes" value="${declaracion.getTrimestre(2).volumenTercerMes}" size="15" >		
-							</td>
-							<td>
-								<input id="idTotal2" readonly="readonly" class="botonerab" type="text" value="${declaracion.getTrimestre(2).volumenTotal}" size="15" >														
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab"  type="text" value="<fmt:formatDate value="${declaracion.getTrimestre(2).fechaVencimiento}" pattern="dd/MM/yyyy" />" size="14">								
-							</td>
-						</tr>						
-						
-						<!-- 3er TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Julio</td>
-							<td width="13%" class="grisSubtituloCenter">Agosto</td>
-							<td width="13%" class="grisSubtituloCenter">Septiembre</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[2].nroTrimestre" value="3" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" name="trimestres[2].tipoProducto.id" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[2].volumenPrimerMes" value="${declaracion.getTrimestre(3).volumenPrimerMes}" size="15" >																	
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[2].volumenSegundoMes" value="${declaracion.getTrimestre(3).volumenSegundoMes}" size="15">
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[2].volumenTercerMes" value="${declaracion.getTrimestre(3).volumenTercerMes}" size="15">		
-							</td>
-							<td>
-								<input id="idTotal3" readonly="readonly" class="botonerab" type="text" value="${declaracion.getTrimestre(3).volumenTotal}" size="15" >														
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab"  type="text" value="<fmt:formatDate value="${declaracion.getTrimestre(3).fechaVencimiento}" pattern="dd/MM/yyyy" />" size="14">								
-							</td>
-						</tr>						
-												
-						<!-- 4to TRIMESTRE -->
-						<tr>
-							<td width="13%" class="grisSubtituloCenter">Trimestre</td>						
-							<td width="16%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
-							<td width="13%" class="grisSubtituloCenter">Octubre</td>
-							<td width="13%" class="grisSubtituloCenter">Noviembre</td>
-							<td width="13%" class="grisSubtituloCenter">Diciembre</td>
-							<td width="14%" class="grisSubtituloCenter">Total</td>
-							<td width="18%" class="grisSubtituloCenter">Vencimiento</td>
-						</tr>
-						<tr>
-							<td>
-								<input class="botonerab" type="text" name="trimestres[3].nroTrimestre" value="4" readonly="readonly" size="15">																						
-							</td>						
-							<td>
-								<input type="hidden" name="trimestres[3].tipoProducto.id" value="${productoTurba.id}">
-								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[3].volumenPrimerMes" value="${declaracion.getTrimestre(4).volumenPrimerMes}" size="15" >																	
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[3].volumenSegundoMes" value="${declaracion.getTrimestre(4).volumenSegundoMes}" size="15" >
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab" type="text" name="trimestres[3].volumenTercerMes" value="${declaracion.getTrimestre(4).volumenTercerMes}" size="15" >
-							</td>
-							<td>
-								<input id="idTotal4" readonly="readonly" class="botonerab" type="text" value="${declaracion.getTrimestre(4).volumenTotal}" size="15" >														
-							</td>
-							<td>
-								<input readonly="readonly" class="botonerab"  type="text" value="<fmt:formatDate value="${declaracion.getTrimestre(4).fechaVencimiento}" pattern="dd/MM/yyyy" />" size="14">								
-							</td>
-						</tr>
+				<table border="0" class="cuadrado" align="center" width="90%"
+					cellpadding="2" cellspacing="0" id="tablaImportes">
 
-					</table>
+					<!-- TRIMESTRE x-->
+					<c:forEach var="indMes" begin="1" end="4">
+						<tr>
+							<td width="9%" class="grisSubtituloCenter">Trimestre</td>						
+							<td width="14%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
+							<c:forEach items="${meses[indMes]}" var="mes">
+								<td width="10%" class="grisSubtituloCenter">${mes}</td>
+							</c:forEach>
+							<td width="10%" class="grisSubtituloCenter">Vol. Total</td>
+							<td width="13%" class="grisSubtituloCenter">Regalía Minera</td>
+							<td width="10%" class="grisSubtituloCenter">Importe</td>
+							<td width="14%" class="grisSubtituloCenter">Vencimiento</td>
+						</tr>
+						<tr>
+							<td >
+								<input class="botonerab" type="text" value="${indMes}" readonly="readonly" size="4">																						
+							</td>						
+							<td >
+								<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="12">																						
+							</td>
+							
+							<td >
+								<input class="botonerab" type="text" value="${trimestres[indMes].volumenPrimerMes}" size="10" readonly="readonly">																	
+							</td>
+							<td >
+								<input class="botonerab" type="text" value="${trimestres[indMes].volumenSegundoMes}" size="10" readonly="readonly">
+							</td>
+							<td >
+								<input class="botonerab" type="text" value="${trimestres[indMes].volumenTercerMes}" size="10" readonly="readonly">		
+							</td>
+							
+							<td >
+								<input class="botonerab" type="text" value="${trimestres[indMes].volumenTotal}" size="10" readonly="readonly">
+							</td>
+							<td>x
+								<input readonly="readonly" class="botonerab" type="text" value="${trimestres[indMes].regaliaMinera}" size="11">
+								=
+							</td>
+							<td>
+								<input readonly="readonly" class="botonerab" type="text"value="${trimestres[indMes].importeTotal}" size="10">
+							</td>
+							<td>
+								<input value="<fmt:formatDate value="${trimestres[indMes].fechaVencimiento}" pattern="dd/MM/yyyy" />" 
+									type="text" readonly="readonly" class="botonerab" size="11">
+								<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
+							</td>
+						</tr>
+					</c:forEach>
 					
-					<table border="0" class="cuadrado" align="center" width="90%"
-						cellpadding="2" cellspacing="0">
-						<tr>
-							<td colspan="4">&nbsp;</td>
-						</tr>										
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td width="13%" class="botoneralNegritaRight">Volúmen Total</td>
-							<td width="14%">
-								<input id="idVolumenTotal" readonly="readonly" class="botonerab" type="text" size="15">
-							</td>
-							<td width="18%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td width="13%" class="botoneralNegritaRight">Regalía Minera</td>
-							<td width="14%">
-								<input id="idRegalia" readonly="readonly" class="botonerab" type="text" 
-										value="${productoTurba.regaliaMinera}" size="15">
-							</td> 
-							<td width="18%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td colspan="2"><hr></td>
-							<td width="18%">&nbsp;</td>
-						</tr>						
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td width="13%" class="botoneralNegritaRight">IMPORTE TOTAL</td>
-							<td width="14%">
-								<input id="idImporteTotal" name="declaracion.importeTotal" readonly="readonly" class="botonerab" type="text" size="15">
-							</td>
-							<td width="18%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td colspan="4">&nbsp;</td>
-						</tr>
-					</table>
-
+				</table>					
 				
+				<table border="0" class="cuadrado" align="center" width="90%"
+					cellpadding="2" cellspacing="0">
+					<tr>
+						<td colspan="5">&nbsp;</td>
+					</tr>
+					<tr>							
+						<td width="53%" class="botoneralNegritaRight">Volúmen Total</td>
+						<td width="10%">
+							<input readonly="readonly" class="botonerab" type="text" size="10" value="${declaracion.volumenTotal}">
+						</td>
+						<td width="13%" class="botoneralNegritaRight">IMPORTE TOTAL</td>
+						<td width="10%">
+							<input readonly="readonly" class="botonerab" type="text" size="10" value="${declaracion.importeTotal}">
+						</td>
+						<td width="14%">&nbsp;</td>							
+					</tr>
+					<tr>
+						<td colspan="5">&nbsp;</td>
+					</tr>
+				</table>				
 			</td>
 		</tr>
 
