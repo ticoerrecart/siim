@@ -329,7 +329,7 @@ function calcularImporteTotal(){
 						<td width="4%"></td>						
 						<td align="left">
 							<input id="supZona" class="botonerab" type="text" size="25" readonly="readonly"
-								value="${declaracionDeExtraccion.localizacion.superficie}">
+								value="${declaracionDeExtraccion.localizacion.superficie} m²">
 						</td>						
 					</tr>																					
 					<tr>
@@ -384,7 +384,7 @@ function calcularImporteTotal(){
 								</c:forEach>
 								<td width="10%" class="grisSubtituloCenter">Vol. Total</td>
 								<td width="13%" class="grisSubtituloCenter">Regalía Minera</td>
-								<td width="10%" class="grisSubtituloCenter">Importe</td>
+								<td width="10%" class="grisSubtituloCenter">Importe $</td>
 								<td width="14%" class="grisSubtituloCenter">Vencimiento</td>
 							</tr>
 							<tr>
@@ -406,7 +406,14 @@ function calcularImporteTotal(){
 								</td>
 								
 								<td >
-									<input class="botonerab" type="text" value="${trimestres[indMes].volumenTotal}" size="10" readonly="readonly">
+									<c:choose>
+										<c:when test="${trimestres[indMes] != null}">
+											<input class="botonerab" type="text" value="${trimestres[indMes].volumenTotal} m³" size="10" readonly="readonly">
+										</c:when>
+										<c:otherwise>
+											<input class="botonerab" type="text" value="${trimestres[indMes].volumenTotal}" size="10" readonly="readonly">
+										</c:otherwise>
+									</c:choose>
 								</td>
 								<td>x
 									<input readonly="readonly" class="botonerab" type="text" value="${trimestres[indMes].regaliaMinera}" size="11">
@@ -433,9 +440,9 @@ function calcularImporteTotal(){
 						<tr>							
 							<td width="53%" class="botoneralNegritaRight">Volúmen Total</td>
 							<td width="10%">
-								<input readonly="readonly" class="botonerab" type="text" size="10" value="${declaracionDeExtraccion.volumenTotal}">
+								<input readonly="readonly" class="botonerab" type="text" size="10" value="${declaracionDeExtraccion.volumenTotal} m³">
 							</td>
-							<td width="13%" class="botoneralNegritaRight">IMPORTE TOTAL</td>
+							<td width="13%" class="botoneralNegritaRight">IMPORTE TOTAL $</td>
 							<td width="10%">
 								<input readonly="readonly" class="botonerab" type="text" size="10" value="${declaracionDeExtraccion.importeTotal}">
 							</td>

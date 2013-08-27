@@ -247,7 +247,7 @@ function calcularVolumenTotalTrimestre(nroTrimestre){
 	$('#idTotal'+nroTrimestre).val(new Number(volSubTotal).toFixed(2));
 	
 	var volTotal =  new Number($("#idTotal1").val()) + new Number($("#idTotal2").val()) + new Number($("#idTotal3").val()) + new Number($("#idTotal4").val());
-	$('#idVolumenTotal').val(volTotal);
+	$('#idVolumenTotal').val(volTotal + " m³");
 
 	$('#idVolxRegalia' +nroTrimestre).val( $('#idTotal'+nroTrimestre).val() * $('#idRegalia' + nroTrimestre).val());
 	calcularImporteTotal();
@@ -270,7 +270,7 @@ function cambiarZonaExtraccion(){
 function cambiarZonaExtraccionCallback(localizacion) {
 	
 	dwr.util.setValue("domZona", localizacion.domicilio);
-	dwr.util.setValue("supZona", localizacion.superficie);				
+	dwr.util.setValue("supZona", localizacion.superficie+" m²");				
 }
 
 	//recupera las fechas de vencimiento
@@ -646,9 +646,9 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<c:forEach items="${meses[indMes]}" var="mes">
 									<td width="10%" class="grisSubtituloCenter">${mes}</td>
 								</c:forEach>
-								<td width="10%" class="grisSubtituloCenter">Vol. Total</td>
+								<td width="10%" class="grisSubtituloCenter">Vol. Total m³</td>
 								<td width="13%" class="grisSubtituloCenter">Regalía Minera</td>
-								<td width="10%" class="grisSubtituloCenter">Importe</td>
+								<td width="10%" class="grisSubtituloCenter">Importe $</td>
 								<td width="14%" class="grisSubtituloCenter">Vencimiento</td>
 							</tr>
 							<tr>
@@ -731,7 +731,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 							<td width="10%">
 								<input id="idVolumenTotal" readonly="readonly" class="botonerab" type="text" size="10">
 							</td>
-							<td width="13%" class="botoneralNegritaRight">IMPORTE TOTAL</td>
+							<td width="13%" class="botoneralNegritaRight">IMPORTE TOTAL $</td>
 							<td width="10%">
 								<input id="idImporteTotal" name="declaracion.importeTotal" readonly="readonly" class="botonerab" type="text" size="10">
 							</td>
