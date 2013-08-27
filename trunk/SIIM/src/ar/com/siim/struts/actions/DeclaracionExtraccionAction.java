@@ -470,6 +470,15 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 					.getDeclaracionDeExtraccionById(Long.valueOf(id));
 			request.setAttribute("declaracionDeExtraccion", declaracion);
 
+			Map<Integer, TrimestreDeclaracionDeExtraccion> mapTrimestres = new HashMap<Integer, TrimestreDeclaracionDeExtraccion>();
+			for (TrimestreDeclaracionDeExtraccion trimestre : declaracion
+					.getTrimestres()) {
+				mapTrimestres.put(trimestre.getNroTrimestre(), trimestre);
+			}
+
+			request.setAttribute("trimestres", mapTrimestres);			
+			request.setAttribute("meses", getMapMeses());			
+			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
@@ -535,6 +544,16 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 					.getDeclaracionDeExtraccionById(Long.valueOf(id));
 
 			request.setAttribute("declaracion", declaracion);
+			
+			Map<Integer, TrimestreDeclaracionDeExtraccion> mapTrimestres = new HashMap<Integer, TrimestreDeclaracionDeExtraccion>();
+			for (TrimestreDeclaracionDeExtraccion trimestre : declaracion
+					.getTrimestres()) {
+				mapTrimestres.put(trimestre.getNroTrimestre(), trimestre);
+			}
+
+			request.setAttribute("trimestres", mapTrimestres);			
+			request.setAttribute("meses", getMapMeses());
+			
 			/*
 			 * String msjeExito = request.getParameter("msjeExito"); if
 			 * (msjeExito != null) { request.setAttribute("exitoGrabado",

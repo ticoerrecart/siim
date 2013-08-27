@@ -215,4 +215,12 @@ public class DeclaracionDeExtraccion {
 		return null;
 	}
 
+	public double getVolumenTotal(){
+		double volTotal = 0.0;
+		for (TrimestreDeclaracionDeExtraccion trimestre : this.getTrimestres()) {
+			
+			volTotal = volTotal + trimestre.getVolumenTotal();
+		}
+		return volTotal;
+	}
 }

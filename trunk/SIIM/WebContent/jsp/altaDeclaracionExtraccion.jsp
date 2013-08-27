@@ -635,21 +635,21 @@ function cambiarZonaExtraccionCallback(localizacion) {
 					</label>
 					<br>
 
-					<table border="0" class="cuadrado" align="center" width="100%"
+					<table border="0" class="cuadrado" align="center" width="90%"
 						cellpadding="2" cellspacing="0" id="tablaImportes">
 						
 						<!-- TRIMESTRE x-->
 						<c:forEach var="indMes" begin="1" end="4">
 							<tr>
-								<td class="grisSubtituloCenter">Trimestre</td>						
-								<td class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
+								<td width="9%" class="grisSubtituloCenter">Trimestre</td>						
+								<td width="14%" class="grisSubtituloCenter"><bean:message key='SIIM.label.TipoDeProducto'/></td>
 								<c:forEach items="${meses[indMes]}" var="mes">
-									<td class="grisSubtituloCenter">${mes}</td>
+									<td width="10%" class="grisSubtituloCenter">${mes}</td>
 								</c:forEach>
-								<td class="grisSubtituloCenter">Vol. Total</td>
-								<td class="grisSubtituloCenter">Regalía Minera</td>
-								<td class="grisSubtituloCenter">Importe</td>
-								<td class="grisSubtituloCenter">Vencimiento</td>
+								<td width="10%" class="grisSubtituloCenter">Vol. Total</td>
+								<td width="13%" class="grisSubtituloCenter">Regalía Minera</td>
+								<td width="10%" class="grisSubtituloCenter">Importe</td>
+								<td width="14%" class="grisSubtituloCenter">Vencimiento</td>
 							</tr>
 							<tr>
 								<td >
@@ -657,7 +657,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								</td>						
 								<td >
 									<input type="hidden" name="trimestres[${indMes-1}].tipoProducto.id" value="${productoTurba.id}">
-									<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="17">																						
+									<input class="botonerab" type="text" value="${productoTurba.nombre}" readonly="readonly" size="12">																						
 								</td>
 								
 								<td >
@@ -680,12 +680,16 @@ function cambiarZonaExtraccionCallback(localizacion) {
 								<td>
 									<c:choose>
 										<c:when test="${trimestres[indMes].regaliaMinera!=null && trimestres[indMes].regaliaMinera>0}">
+											x
 											<input id="idRegalia${indMes}" name="trimestres[${indMes-1}].regaliaMinera" readonly="readonly" class="botonerab" type="text"
-												value="${trimestres[indMes].regaliaMinera}" size="5">
+												value="${trimestres[indMes].regaliaMinera}" size="11">
+											=	
 										</c:when>
 										<c:otherwise>
+											x
 											<input id="idRegalia${indMes}" name="trimestres[${indMes-1}].regaliaMinera" readonly="readonly" class="botonerab" type="text"
-												value="${productoTurba.regaliaMinera}" size="5">
+												value="${productoTurba.regaliaMinera}" size="11">
+											=	
 										</c:otherwise>
 									</c:choose>
 								</td>
@@ -720,31 +724,21 @@ function cambiarZonaExtraccionCallback(localizacion) {
 					<table border="0" class="cuadrado" align="center" width="90%"
 						cellpadding="2" cellspacing="0">
 						<tr>
-							<td colspan="4">&nbsp;</td>
+							<td colspan="5">&nbsp;</td>
 						</tr>
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td width="13%" class="botoneralNegritaRight">Volúmen Total</td>
-							<td width="14%">
-								<input id="idVolumenTotal" readonly="readonly" class="botonerab" type="text" size="15">
+						<tr>							
+							<td width="53%" class="botoneralNegritaRight">Volúmen Total</td>
+							<td width="10%">
+								<input id="idVolumenTotal" readonly="readonly" class="botonerab" type="text" size="10">
 							</td>
-							<td width="18%">&nbsp;</td>
-						</tr>
-						<tr>
-							<td width="55%">&nbsp;</td>
-							<td colspan="2"><hr></td>
-							<td width="18%">&nbsp;</td>
-						</tr>						
-						<tr>
-							<td width="55%">&nbsp;</td>
 							<td width="13%" class="botoneralNegritaRight">IMPORTE TOTAL</td>
-							<td width="14%">
-								<input id="idImporteTotal" name="declaracion.importeTotal" readonly="readonly" class="botonerab" type="text" size="15">
+							<td width="10%">
+								<input id="idImporteTotal" name="declaracion.importeTotal" readonly="readonly" class="botonerab" type="text" size="10">
 							</td>
-							<td width="18%">&nbsp;</td>
+							<td width="14%">&nbsp;</td>							
 						</tr>
 						<tr>
-							<td colspan="4">&nbsp;</td>
+							<td colspan="5">&nbsp;</td>
 						</tr>
 					</table>
 
