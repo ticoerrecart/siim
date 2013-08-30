@@ -133,6 +133,18 @@ function col(sec) {
 		$('#'+idTd).attr("class", "grisSubtitulo");		
 	}
 
+	function imprimir(){
+		
+		var idCanon = $('#idCanon').val();
+		
+		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
+		if(type == "IE"){
+			window.open("./reportes.do?metodo=generarReporteCanonMinero&idCanon="+idCanon,"",especificaciones);
+		}else{
+			window.open("../../reportes.do?metodo=generarReporteCanonMinero&idCanon="+idCanon,"",especificaciones);
+		}
+	}
+	
 </script>
 
 
@@ -188,6 +200,8 @@ function col(sec) {
 
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${warning}</div>
+
+<input type="hidden" id="idCanon" value="${canonMinero.id}" />
 
 <html:form action="canonMinero" styleId="canonMineroFormId">
 	<html:hidden property="metodo" value="altaCanonMinero" />
@@ -498,6 +512,9 @@ function col(sec) {
 		</tr>
 		<tr>
 			<td height="20" colspan="4">
+				<c:if test="${habilitarPagar == null}">
+					<input type="button" class="botonerab" value="Imprimir" onclick="javascript:imprimir();" />
+				</c:if>			
 				<input type="button" class="botonerab" value="Volver"
 						onclick="javascript:parent.location= contextRoot() + '${volver}'+'&idProductor=${canonMinero.entidad.id}&idLocalizacion=${canonMinero.localizacion.id}&idPeriodo=${canonMinero.periodo}'">
 			</td>
