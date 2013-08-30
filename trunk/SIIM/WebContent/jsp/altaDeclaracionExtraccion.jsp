@@ -270,7 +270,7 @@ function cambiarZonaExtraccion(){
 function cambiarZonaExtraccionCallback(localizacion) {
 	
 	dwr.util.setValue("domZona", localizacion.domicilio);
-	dwr.util.setValue("supZona", localizacion.superficie+" m²");				
+	dwr.util.setValue("supZona", localizacion.superficie);				
 }
 
 	//recupera las fechas de vencimiento
@@ -589,7 +589,7 @@ function cambiarZonaExtraccionCallback(localizacion) {
 					</tr>
 					<tr>
 						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIM.label.Superficie'/>
+							<bean:message key='SIIM.label.Superficie'/>(ha)
 						</td>
 						<td width="4%"></td>						
 						<td align="left">

@@ -324,12 +324,12 @@ function calcularImporteTotal(){
 					</tr>
 					<tr>
 						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIM.label.Superficie'/>
+							<bean:message key='SIIM.label.Superficie'/>(ha)
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
 							<input id="supZona" class="botonerab" type="text" size="25" readonly="readonly"
-								value="${declaracionDeExtraccion.localizacion.superficie} m²">
+								value="${declaracionDeExtraccion.localizacion.superficie}">
 						</td>						
 					</tr>																					
 					<tr>
