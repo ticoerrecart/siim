@@ -49,5 +49,14 @@ public class ReportesFachada implements IReportesFachada {
 		parameters.put("idDeclaracion", idDeclaracion);
 		
 		return reportesDAO.generarReporte(Constantes.REPORTE_DECLARACION_EXTRACCION,parameters);		
+	}
+	
+	public byte[] generarReporteCanonMinero(String path, Long idCanon) throws Exception{
+		
+		Map parameters = new HashMap();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("idCanonMinero", idCanon);
+		
+		return reportesDAO.generarReporte(Constantes.REPORTE_CANON_MINERO,parameters);		
 	}	
 }
