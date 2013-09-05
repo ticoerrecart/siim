@@ -11,4 +11,9 @@ public interface IReportesFachada {
 	public byte[] generarReporteDeclaracionExtraccion(String path, Long idDeclaracion) throws Exception;
 	
 	public byte[] generarReporteCanonMinero(String path, Long idCanon) throws Exception;
+	
+	public byte[] generarReporteActaVerificacion(String path, Long idActa) throws Exception;
+	
+	public byte[] generarReporteVolumenFiscalizado(
+			String path,String periodo,Long idProductor,Long idLocalizacion) throws Exception;	
 }

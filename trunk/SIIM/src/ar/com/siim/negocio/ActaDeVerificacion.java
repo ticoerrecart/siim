@@ -74,15 +74,15 @@ public class ActaDeVerificacion {
 
 	private String domicilioDestinatario;
 
-	private int granelVolumenM3Declarado;
+	private double granelVolumenM3Declarado;
 
-	private int granelVolumenM3Medido;
+	private double granelVolumenM3Medido;
 
 	private String granelObservaciones;
 
 	private int bolsaCantidad;
 
-	private int bolsaVolumenD3;
+	private double bolsaVolumenD3;
 
 	private String bolsaTitularMembrete;
 
@@ -234,7 +234,7 @@ public class ActaDeVerificacion {
 		this.domicilioDestinatario = domicilioDestinatario;
 	}
 
-	public int getGranelVolumenM3Declarado() {
+	public double getGranelVolumenM3Declarado() {
 		return granelVolumenM3Declarado;
 	}
 
@@ -242,7 +242,7 @@ public class ActaDeVerificacion {
 		this.granelVolumenM3Declarado = granelVolumenM3Declarado;
 	}
 
-	public int getGranelVolumenM3Medido() {
+	public double getGranelVolumenM3Medido() {
 		return granelVolumenM3Medido;
 	}
 
@@ -266,15 +266,15 @@ public class ActaDeVerificacion {
 		this.bolsaCantidad = bolsaCantidad;
 	}
 
-	public int getBolsaVolumenD3() {
+	public double getBolsaVolumenD3() {
 		return bolsaVolumenD3;
 	}
 
-	public int getBolsaVolumenTotal() {
+	public double getBolsaVolumenTotal() {
 		return bolsaVolumenD3 * bolsaCantidad / 1000;
 	}
 
-	public int getVolumenTotal() {
+	public double getVolumenTotal() {
 		return getBolsaVolumenTotal() + getGranelVolumenM3Declarado();
 	}
 	

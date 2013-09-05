@@ -80,7 +80,7 @@
 						${acta.destino.nombre}
 					</td>
 					<td>
-						${acta.volumenTotal}
+						${acta.volumenTotal} m³
 					</td>
 					<td>
 						<a href="javascript:recuperarActa(${acta.id});">${tituloLinkDetalle}</a>

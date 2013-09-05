@@ -51,14 +51,15 @@ function cambiarProductor(){
 
 	var idProductor = $('#selectProductores').val();
 
-	if(idProductor != "-1"){
+	if(idProductor != "-1" && idProductor != "0"){
 		$('#idLocalizacion').attr('disabled',false);
 
 		LocalizacionFachada.getLocalizacionesPorProductorDTO(idProductor,actualizarZonasExtraccionCallback);
 	}
 	else{
 		dwr.util.removeAllOptions("idLocalizacion");
-		var data = [ { razonSocial:"-Seleccione una Localización-", id:-1 }];
+		//var data = [ { razonSocial:"-Seleccione una Localización-", id:-1 }];
+		var data = [ { razonSocial:"-Seleccione una Localización-", id:idProductor }];
 		dwr.util.addOptions("idLocalizacion", data, "id", "razonSocial");		
 		$('#idLocalizacion').attr('disabled','disabled');		
 	}
@@ -106,6 +107,9 @@ function actualizarZonasExtraccionCallback(zonas){
 					<td class="botonerab" align="left">
 						<select id="selectProductores" class="botonerab" onchange="cambiarProductor();">
 							<option value="-1">- Seleccione un Productor -</option>
+							<c:if test="${permitirTodosLosProductores != 'N'}">
+								<option value="0">Todos los Productores</option>
+							</c:if>								
 							<c:forEach items="${productores}" var="productor" varStatus="i">
 								<option value="<c:out value='${productor.id}'></c:out>">
 									<c:out value="${productor.nombre}"></c:out>

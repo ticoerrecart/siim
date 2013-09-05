@@ -47,7 +47,7 @@
 					 ${declaracion.localidad.nombre}
 				</td>
 				<td class="botonerab">
-					${declaracion.importeTotal}
+					$ ${declaracion.importeTotal}
 				</td>
 				<td class="botonerab">
 					<a href="javascript:recuperarDeclaracion(${declaracion.id});">${tituloLinkDetalle}</a>

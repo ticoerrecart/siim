@@ -107,6 +107,7 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 			boolean ok7 = true;
 			boolean ok8 = true;
 			boolean ok9 = true;
+			boolean ok10 = true;
 			
 			ok = Validator.validarLongMayorQue(0, Long.toString(actaForm.getActa().getNumero()), "Número de Acta", error);
 
@@ -131,7 +132,10 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 				ok7 = false;
 			}
 			
-			return ok && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9;
+			ok10 = Validator.validarComboRequerido("-1",String.valueOf(actaForm.getActa().getOficinaMinera().getId()),
+					"Oficina Minera", error);			
+			
+			return ok && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10;
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);

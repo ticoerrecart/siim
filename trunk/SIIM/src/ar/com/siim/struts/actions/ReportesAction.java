@@ -203,5 +203,101 @@ public class ReportesAction extends ValidadorAction {
 		}
 
 		return null;
-	}		
+	}
+	
+	public ActionForward generarReporteActaVerificacion(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		try {
+			String path = request.getSession().getServletContext()
+					.getRealPath("jasper");
+
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			IReportesFachada reportesFachada = (IReportesFachada) ctx
+					.getBean("reportesFachada");
+
+			String idActa = request.getParameter("idActa");			
+			
+			byte[] bytes = reportesFachada.generarReporteActaVerificacion(path,Long.valueOf(idActa));
+
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			// response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
+		}
+
+		return null;
+	}
+	
+	public ActionForward cargarReporteVolumenFiscalizado(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String strForward = "exitoCargarReportePorProductorLocalizacionYPeriodo";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			
+			request.setAttribute("periodos",periodoFachada.getPeriodosDTO());			
+			request.setAttribute("productores",entidadFachada.getProductoresDTO());
+			request.setAttribute("titulo","Reporte Volumen Fiscalizado");
+			request.setAttribute("action","reportes");
+			request.setAttribute("metodo","generarReporteVolumenFiscalizado");
+			request.setAttribute("permitirTodosLosProductores","S");
+			request.setAttribute("permitirTodosLosPeriodos","S");
+			request.setAttribute("permitirTodasLasLocalizaciones","S");
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}	
+	
+	public ActionForward generarReporteVolumenFiscalizado(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		try {
+			String path = request.getSession().getServletContext()
+					.getRealPath("jasper");
+
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			IReportesFachada reportesFachada = 
+					(IReportesFachada) ctx.getBean("reportesFachada");
+			
+			String productor = request.getParameter("productor");
+			String localizacion = request.getParameter("localizacion");
+			String periodo = request.getParameter("periodo");
+
+			byte[] bytes = reportesFachada
+					.generarReporteVolumenFiscalizado(path,periodo,Long.valueOf(productor),Long.valueOf(localizacion));
+
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			// response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
+		}
+
+		return null;
+	}	
 }

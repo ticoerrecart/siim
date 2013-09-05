@@ -45,11 +45,11 @@
 				</td>
 			
 				<td>
-					${canonMinero.canonMineroXPertenencia}
+					$ ${canonMinero.canonMineroXPertenencia}
 				</td>
 				
 				<td>
-					${canonMinero.montoTotal}
+					$ ${canonMinero.montoTotal}
 				</td>
 				<td>
 					<a href="javascript:pagarBoletas(${canonMinero.id});">${tituloLinkDetalle}</a>

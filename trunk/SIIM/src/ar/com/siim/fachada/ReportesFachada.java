@@ -59,4 +59,25 @@ public class ReportesFachada implements IReportesFachada {
 		
 		return reportesDAO.generarReporte(Constantes.REPORTE_CANON_MINERO,parameters);		
 	}	
+
+	public byte[] generarReporteActaVerificacion(String path, Long idActa) throws Exception{
+		
+		Map parameters = new HashMap();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("idActaVerificacion", idActa);
+		
+		return reportesDAO.generarReporte(Constantes.REPORTE_ACTA_VERIFICACION,parameters);		
+	}		
+	
+	public byte[] generarReporteVolumenFiscalizado(
+			String path,String periodo,Long idProductor,Long idLocalizacion) throws Exception{
+		
+		Map parameters = new HashMap();
+		parameters.put("PATH_SUB_REPORTES", path);		
+		parameters.put("idProductor", idProductor);
+		parameters.put("idLocalizacion", idLocalizacion);
+		parameters.put("periodo", periodo);
+
+		return reportesDAO.generarReporte(Constantes.REPORTE_VOLUMEN_FISCALIZADO,parameters);		
+	}	
 }
