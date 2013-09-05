@@ -57,10 +57,23 @@ function calcularVolTotal(){
 	n2 = isNaN(parseInt(n2)) ? 0 : parseInt(n2);
 	$('#totalVol').text(n + n2);
 }
+function imprimir(){
+	
+	var idActa = $('#idActaVerificacion').val();
+	
+	var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
+	if(type == "IE"){
+		window.open("./reportes.do?metodo=generarReporteActaVerificacion&idActa="+idActa,"",especificaciones);
+	}else{
+		window.open("../../reportes.do?metodo=generarReporteActaVerificacion&idActa="+idActa,"",especificaciones);
+	}
+}
 
 </script>
 
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
+
+<input id="idActaVerificacion" type="hidden" value="${acta.id}">
 
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${warning}</div>
@@ -215,7 +228,7 @@ function calcularVolTotal(){
 					</tr>
 					<tr>
 						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIM.label.Superficie'/>
+							<bean:message key='SIIM.label.Superficie'/>(ha)
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
@@ -437,17 +450,17 @@ function calcularVolTotal(){
 					
 					<tr>
 						<td width="15%" colspan="1" class="botoneralNegritaRight">
-							Volumen Declarado(m3)
+							Volumen Declarado
 						</td>
 						<td width="15%" colspan="2" align="left">
-							<input id="granelVolumenTotal" name="acta.granelVolumenM3Declarado" class="botonerab" type="text" size="15" readonly="readonly" value="${acta.granelVolumenM3Declarado}" >
+							<input id="granelVolumenTotal" name="acta.granelVolumenM3Declarado" class="botonerab" type="text" size="15" readonly="readonly" value="${acta.granelVolumenM3Declarado} m³" >
 						</td>
 						
 						<td width="15%" colspan="1" class="botoneralNegritaRight">
-							Volumen Medido(m3)
+							Volumen Medido
 						</td>
 						<td width="15%" colspan="2" align="left">
-							<input name="acta.granelVolumenM3Medido" class="botonerab" type="text" size="15" readonly="readonly" value="${acta.granelVolumenM3Medido}" >			
+							<input name="acta.granelVolumenM3Medido" class="botonerab" type="text" size="15" readonly="readonly" value="${acta.granelVolumenM3Medido} m³" >			
 						</td>
 					</tr>	
 					<tr>	
@@ -469,17 +482,17 @@ function calcularVolTotal(){
 							<input name="acta.bolsaCantidad" class="botonerab" type="text" size="15" readonly="readonly" value="${acta.bolsaCantidad}">
 						</td>
 						<td width="15%" class="botoneralNegritaRight">
-							Volumen De Bolsa(dm3)
+							Volumen De Bolsa
 						</td>
 						<td width="15%" align="left">
-							<input name="acta.bolsaVolumenD3" class="botonerab" type="text" size="15" readonly="readonly" value="${acta.bolsaVolumenD3}">
+							<input name="acta.bolsaVolumenD3" class="botonerab" type="text" size="15" readonly="readonly" value="${acta.bolsaVolumenD3} dm³">
 						</td>
 						
 						<td width="15%"  class="botoneralNegritaRight">
-							Volumen Total Embolsado(m3)
+							Volumen Total Embolsado
 						</td>
 						<td width="15%" align="left">
-							<input id="bolsaVolumenTotal" class="botonerab" type="text" size="15" readonly="readonly" value="${acta.bolsaVolumenTotal}">			
+							<input id="bolsaVolumenTotal" class="botonerab" type="text" size="15" readonly="readonly" value="${acta.bolsaVolumenTotal} m³">			
 						</td>
 						
 						<td width="15%" class="botoneralNegritaRight">
@@ -500,7 +513,7 @@ function calcularVolTotal(){
 						
 						 
 					<tr>
-						<td colspan="8" class="grisMuyClaroSubtituloCenter ">Volumen Total(m3): <div id="totalVol">${acta.volumenTotal}</div></td>
+						<td colspan="8" class="grisMuyClaroSubtituloCenter ">Volumen Total: <div id="totalVol">${acta.volumenTotal} m³</div></td>
 						
 					</tr>															
 					<tr>
@@ -536,21 +549,23 @@ function calcularVolTotal(){
 	</table>
 	
 	
-	
-	
 	<table border="0" class="cuadrado" align="center" width="90%"
 		cellpadding="2">
 		<tr>
-			<td height="10" colspan="4"></td>
+			<td height="10" colspan="3"></td>
 		</tr>
 		<tr>
-			<td height="20" colspan="4">
-				<input type="button" class="botonerab" value="Volver" onclick="javascript:volverAltaActa();">
+			<td width="48%" align="right">
+				<input type="button" class="botonerab" value="Imprimir" onclick="javascript:imprimir();" />
+			</td>	
+			<td width="4%"></td> 	
+			<td width="48%" align="left">
+				<input type="button" class="botonerab" value="Volver" onclick="javascript:volverAltaActa();" />
 			</td>
 		</tr>
 		<tr>
-			<td height="10" colspan="4"></td> 
+			<td height="10" colspan="3"></td> 
 		</tr>
-	</table>
+	</table>	
 
 </div>	 				  

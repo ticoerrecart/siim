@@ -32,5 +32,17 @@ public class ReportesDeclaracionExtraccionFachada implements
 		return reportesDAO.generarReporte(
 				Constantes.REPORTE_ESTADO_DEUDA_DECLARACION_EXTRACCION_POR_PRODUCTOR,
 				parameters);				
+	}
+	
+	public byte[] generarReporteVolumenDeclarado(
+			String path,String periodo,Long idProductor,Long idLocalizacion) throws Exception{
+		
+		Map parameters = new HashMap();
+		parameters.put("PATH_SUB_REPORTES", path);		
+		parameters.put("idProductor", idProductor);
+		parameters.put("idLocalizacion", idLocalizacion);
+		parameters.put("periodo", periodo);
+
+		return reportesDAO.generarReporte(Constantes.REPORTE_VOLUMEN_DECLARADO,parameters);		
 	}	
 }

@@ -725,14 +725,14 @@ function calcularVolTotal(){
 			<td width="12%" class="botoneralNegritaRight">Oficina Minera</td>
 			<td width="30%" align="left">				
 				<select id="idLocalidad" class="botonerab" name="acta.oficinaMinera.id">
-					<option value="">- Seleccione una Localidad -</option>
+					<option value="-1">- Seleccione una Localidad -</option>
 					<c:forEach items="${localidades}" var="localidad">
 						<option value="${localidad.id}">
 							<c:out value="${localidad.nombre}"></c:out>
 						</option>
 					</c:forEach>
 				</select>				
-				
+				<font class="rojoAdvertencia">*</font>
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIM.label.Fecha'/></td>
 			<td align="left">		
@@ -741,7 +741,15 @@ function calcularVolTotal(){
 			</td>
 		</tr>
 		<tr>
-			<td height="10" colspan="4"></td>
+			<td height="5" colspan="4"></td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<font class="rojoAdvertenciaChico">* Campos Obligatorios</font>	
+			</td>
+		</tr>		
+		<tr>
+			<td height="5" colspan="4"></td>
 		</tr>
 	</table>
 	

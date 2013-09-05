@@ -258,7 +258,10 @@
 			<forward name="exitoCargarReporteVolDeclaradoFiscalizado" 
 					 path=".reporteGralPorProductorLocalizacionYPeriodo" />	
 			<forward name="exitoCargarReporteEstadoDeDeudaGeneralPorProductor" 
-					 path=".reporteGralPorProductorYPeriodo" />					 									 					
+					 path=".reporteGralPorProductorYPeriodo" />
+			<forward name="exitoCargarReportePorProductorLocalizacionYPeriodo" 
+					 path=".reporteGralPorProductorLocalizacionYPeriodo" />					 					 
+					 					 									 					
 		</action>				
 		
 		<!-- FIN REPORTES-->		
