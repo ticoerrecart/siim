@@ -80,9 +80,13 @@ public class TipoProductoAction extends ValidadorAction {
 
 			WebApplicationContext ctx = getWebApplicationContext();
 			ITipoProductoFachada tipoProductoFachada = (ITipoProductoFachada) ctx.getBean("tipoProductoFachada");
-
 			tipoProductoForm = (TipoProductoForm) form;
 
+			// valido nuevamente por seguridad.  
+			if (!validarTipoProductoForm(new StringBuffer(), tipoProductoForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			tipoProductoFachada.modificacionTipoProducto(tipoProductoForm.getTipoProducto());
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_TIPO_PRODUCTO);

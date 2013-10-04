@@ -73,6 +73,11 @@ public class LocalizacionAction extends ValidadorAction {
 			ILocalizacionFachada localizacionFachada = 
 									(ILocalizacionFachada) ctx.getBean("localizacionFachada");
 			
+			// valido nuevamente por seguridad.  
+			if (!validarLocalizacionForm(new StringBuffer(), localizacionForm)) {
+				throw new Exception("Error de Seguridad");
+			}				
+			
 			LocalizacionDTO localizacionDTO = localizacionForm.getLocalizacionDTO();
 			localizacionForm.getEstudioVigente().setVigente(true);
 			
@@ -171,6 +176,11 @@ public class LocalizacionAction extends ValidadorAction {
 			ILocalizacionFachada localizacionFachada = 
 									(ILocalizacionFachada) ctx.getBean("localizacionFachada");
 			
+			// valido nuevamente por seguridad.  
+			if (!validarLocalizacionForm(new StringBuffer(), localizacionForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			localizacionFachada.modificacionLocalizacion(localizacionForm.getLocalizacionDTO(),localizacionForm.getEstudioVigente());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_LOCALIZACION);			
 			
@@ -261,6 +271,11 @@ public class LocalizacionAction extends ValidadorAction {
 			LocalizacionForm localizacionForm = (LocalizacionForm)form;
 			ILocalizacionFachada localizacionFachada = 
 									(ILocalizacionFachada) ctx.getBean("localizacionFachada");
+			
+			// valido nuevamente por seguridad.  
+			if (!validarLocalizacionForm(new StringBuffer(), localizacionForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
 			
 			LocalizacionDTO localizacionDTO = localizacionForm.getLocalizacionDTO();
 			EstudioImpactoAmbientalDTO eiaDTO = localizacionForm.getEstudioVigente();
