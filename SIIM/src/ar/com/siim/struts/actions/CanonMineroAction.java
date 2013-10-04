@@ -169,6 +169,12 @@ public class CanonMineroAction extends ValidadorAction {
 					.getBean("canonMineroFachada");
 
 			CanonMineroForm canonMineroForm = (CanonMineroForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarValorCanonMineroForm(new StringBuffer(), canonMineroForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			CanonMineroDTO canonDTO = canonMineroForm.getCanonMinero();
 
 			canonMineroFachada.modificacionValorCanonMinero(canonDTO

@@ -14,6 +14,7 @@ import ar.com.siim.dto.PeriodoDTO;
 import ar.com.siim.dto.UsuarioDTO;
 import ar.com.siim.fachada.IPeriodoFachada;
 import ar.com.siim.negocio.exception.NegocioException;
+import ar.com.siim.struts.actions.forms.LocalizacionForm;
 import ar.com.siim.struts.actions.forms.PeriodoForm;
 import ar.com.siim.struts.utils.Validator;
 import ar.com.siim.utils.Constantes;
@@ -62,9 +63,11 @@ public class PeriodoAction extends ValidadorAction {
 					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
-			// IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			// rolFachada.verificarMenu(Constantes.ALTA_LOCALIDAD_MENU,usuario.getRol());
-
+			// valido nuevamente por seguridad.  
+			if (!validarPeriodoForm(new StringBuffer(), periodoForm)) {
+				throw new Exception("Error de Seguridad");
+			}						
+			
 			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
 					.getBean("periodoFachada");
 			periodoFachada.altaPeriodo(periodoForm.getPeriodoDTO());
@@ -120,11 +123,16 @@ public class PeriodoAction extends ValidadorAction {
 		try {
 			PeriodoForm periodoForm = (PeriodoForm) form;
 			WebApplicationContext ctx = getWebApplicationContext();
-			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
-					.getBean("periodoFachada");
+			
+			// valido nuevamente por seguridad.  
+			if (!validarPeriodoForm(new StringBuffer(), periodoForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
 			periodoFachada.modificacionPeriodo(periodoForm.getPeriodoDTO());
-			request.setAttribute("exitoGrabado",
-					Constantes.EXITO_MODIFICACION_PERIODO);
+			
+			request.setAttribute("exitoGrabado",Constantes.EXITO_MODIFICACION_PERIODO);
 
 		} catch (NegocioException n) {
 			MyLogger.log(n.getMessage());

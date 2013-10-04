@@ -63,6 +63,11 @@ public class EntidadAction extends ValidadorAction {
 			EntidadForm entidadForm = (EntidadForm) form;
 			EntidadDTO entidadDTO = entidadForm.getEntidadDTO();
 
+			// valido nuevamente por seguridad.  
+			if (!validarEntidadForm(new StringBuffer(), entidadForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
 			entidadFachada.altaEntidad(entidadDTO);
@@ -167,6 +172,11 @@ public class EntidadAction extends ValidadorAction {
 			EntidadForm entidadForm = (EntidadForm) form;
 			EntidadDTO entidad = entidadForm.getEntidadDTO();
 
+			// valido nuevamente por seguridad.  
+			if (!validarEntidadForm(new StringBuffer(), entidadForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
 			entidadFachada.modificacionEntidad(entidad);

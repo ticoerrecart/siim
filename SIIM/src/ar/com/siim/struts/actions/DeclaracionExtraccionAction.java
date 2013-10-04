@@ -68,9 +68,9 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 				request.setAttribute("exitoGrabado",
 						"Se ha dado de alta con éxito la Declaración de Extracción");
 			}
-
 			request.setAttribute("meses", getMapMeses());
 			request.setAttribute("metodo", "altaDeclaracionExtraccion");
+			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
@@ -161,6 +161,11 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
 					.getAttribute(Constantes.USER_LABEL_SESSION);
 
+			// valido nuevamente por seguridad.  
+			if (!validarAltaDeclaracionExtraccionForm(new StringBuffer(), declaracionDeExtraccionForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			OperacionDeclaracionExtraccionDTO operacionDTO = new OperacionDeclaracionExtraccionDTO();
 			operacionDTO.setUsuario(usuario);
 			operacionDTO.setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
@@ -491,19 +496,33 @@ public class DeclaracionExtraccionAction extends ValidadorAction {
 	public ActionForward modificacionDeclaracionExtraccion(
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		
 		String strForward = "exitoModificacionDeclaracionExtraccion";
-		WebApplicationContext ctx = getWebApplicationContext();
-		DeclaracionDeExtraccionFachada declaracionFachada = (DeclaracionDeExtraccionFachada) ctx
-				.getBean("declaracionDeExtraccionFachada");
-		DeclaracionExtraccionForm declaracionExtraccionForm = (DeclaracionExtraccionForm) form;
-
-		declaracionFachada.modificacionDeclaracionDeExtraccion(
-				declaracionExtraccionForm.getDeclaracion(),
-				declaracionExtraccionForm.getBoletasDeposito(),
-				declaracionExtraccionForm.getTrimestres());
-
-		request.setAttribute("exitoGrabado",
-				"La Declaración de Extracción se ha modificado con éxito");
+		try{			
+			WebApplicationContext ctx = getWebApplicationContext();
+			DeclaracionDeExtraccionFachada declaracionFachada = (DeclaracionDeExtraccionFachada) ctx
+					.getBean("declaracionDeExtraccionFachada");
+			DeclaracionExtraccionForm declaracionExtraccionForm = (DeclaracionExtraccionForm) form;
+	
+			// valido nuevamente por seguridad.  
+			if (!validarAltaDeclaracionExtraccionForm(new StringBuffer(), declaracionExtraccionForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
+			declaracionFachada.modificacionDeclaracionDeExtraccion(
+					declaracionExtraccionForm.getDeclaracion(),
+					declaracionExtraccionForm.getBoletasDeposito(),
+					declaracionExtraccionForm.getTrimestres());
+	
+			request.setAttribute("exitoGrabado",
+					"La Declaración de Extracción se ha modificado con éxito");
+		
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}			
+			
 		return mapping.findForward(strForward);
 	}
 

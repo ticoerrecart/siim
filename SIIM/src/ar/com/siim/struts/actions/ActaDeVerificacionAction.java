@@ -75,6 +75,11 @@ public class ActaDeVerificacionAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IActaDeVerificacionFachada actaDeVerificacionFachada = (IActaDeVerificacionFachada) ctx.getBean("actaDeVerificacionFachada");
 			
+			// valido nuevamente por seguridad.  
+			if (!validarActaDeVerificacionForm(new StringBuffer(), actaForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			OperacionActaVerificacionDTO operacionDTO = new OperacionActaVerificacionDTO();
 			operacionDTO.setUsuario(usuario);
 			operacionDTO.setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());

@@ -68,6 +68,11 @@ public class UsuarioAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IUsuarioFachada usuarioFachada = (IUsuarioFachada) ctx.getBean("usuarioFachada");
 
+			// valido nuevamente por seguridad.  
+			if (!validarUsuarioForm(new StringBuffer(), usuarioForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			// el Usuario nuevo siempre se crea habilitado
 			usuarioForm.getUsuarioDTO().setHabilitado(true);
 			usuarioFachada.altaUsuario(usuarioForm.getUsuarioDTO());
@@ -158,6 +163,11 @@ public class UsuarioAction extends ValidadorAction {
 			IUsuarioFachada usuarioFachada = (IUsuarioFachada) ctx.getBean("usuarioFachada");
 			UsuarioForm usuarioForm = (UsuarioForm) form;
 
+			// valido nuevamente por seguridad.  
+			if (!validarUsuarioForm(new StringBuffer(), usuarioForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			usuarioFachada.modificacionUsuario(usuarioForm.getUsuarioDTO());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_USUARIO);
 
