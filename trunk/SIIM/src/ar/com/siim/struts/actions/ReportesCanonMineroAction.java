@@ -31,6 +31,7 @@ public class ReportesCanonMineroAction extends ValidadorAction {
 			request.setAttribute("titulo","Reporte Canon Minero - Estado de Deuda");
 			request.setAttribute("action","reportesCanonMinero");
 			request.setAttribute("metodo","generarReporteCanonMineroEstadoDeudaPorProductorLocalizacionYPeriodo");
+			request.setAttribute("permitirTodosLosProductores","N");
 			request.setAttribute("permitirTodosLosPeriodos","S");
 			request.setAttribute("permitirTodasLasLocalizaciones","S");			
 			
