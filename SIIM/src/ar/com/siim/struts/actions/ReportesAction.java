@@ -31,6 +31,7 @@ public class ReportesAction extends ValidadorAction {
 			request.setAttribute("titulo","Reporte Volumen Declarado - Fiscalizado");
 			request.setAttribute("action","reportes");
 			request.setAttribute("metodo","generarReporteVolDeclaradoFiscalizado");
+			request.setAttribute("permitirTodosLosProductores","N");
 			request.setAttribute("permitirTodosLosPeriodos","N");
 			request.setAttribute("permitirTodasLasLocalizaciones","N");
 			
