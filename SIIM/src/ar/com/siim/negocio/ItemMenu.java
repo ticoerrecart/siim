@@ -87,13 +87,18 @@ public class ItemMenu implements Comparable<ItemMenu> {
 	}
 
 	public int compareTo(ItemMenu o) {
-
+		
 		if (this.getOrden() == null) {
-			return 1;
+			if (o.getOrden() == null) {
+				return 0;
+			} else {
+				return 1;
+			}
 		}
 		if (o.getOrden() == null) {
 			return -1;
 		}
+
 		return this.getOrden().compareTo(o.getOrden());
 	}
 }
